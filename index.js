@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const WebSocket = require('ws');
 const fs = require('fs');
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -9,4 +8,3 @@ console.log(`Loading ${commandFiles.length} command(s), ${eventFiles.length} eve
 
 const config = JSON.parse(fs.readFileSync('./config/config.json'));
 const client = new Discord.Client();
-
