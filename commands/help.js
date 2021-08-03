@@ -6,6 +6,5 @@ module.exports = {
     requireManageGuild: false,
     guildOwnerOnly: false,
 execute(message) {
- 
     }
-  }
+}
