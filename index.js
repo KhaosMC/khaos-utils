@@ -9,8 +9,10 @@ console.log(`Loading ${commandFiles.length} command(s), ${eventFiles.length} eve
 
 const config = JSON.parse(fs.readFileSync('./config/config.json'));
 const chatbridge = JSON.parse(fs.readFileSync('./config/chatbridge.json'));
-const client = new Discord.Client();
-// var socket = new WebSocket(chatbridge.server_url);
+const client = new Discord.Client({
+   intents: Discord.Intents.ALL
+});
+var socket = new WebSocket(chatbridge.server_url).catch(err => console.log("Websocket is disabled or can't find server."));
 
 client.login(config.token);
 

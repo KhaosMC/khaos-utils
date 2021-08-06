@@ -15,7 +15,7 @@ module.exports = {
         const embed = new MessageEmbed()
         .setTitle('Help command')
         .setDescription(allCommands)
-        .setFooter(message.author.tag)
+        .setFooter('[] = required, () = optional')
         .setColor(message.guild.me.displayColor)
 
         message.channel.send(embed);
