@@ -1,4 +1,7 @@
-module.exports = function handleWebsocket(message, websocketEvents) {
+module.exports = function handleWebsocket(message, websocketEvents, chatbridge, client, config) {
     const data = JSON.parse(message);
-    if (!websocketEvents.includes(data.type));
+    if (!data.type) return;
+    if (!websocketEvents.includes(data.type)) return;
+    const event = websocketEvents.get(data.type);
+    event.run(data, websocketEvents, chatbridge, client, config);
 }

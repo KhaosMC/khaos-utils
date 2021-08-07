@@ -1,5 +1,7 @@
 module.exports = {
     description: 'Chat connections',
-execute(data, client) {
+    payloadType: null,
+    run: async (data, websocketEvents, chatbridge, client, config) => {
+        // do shit
     }
 }

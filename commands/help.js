@@ -16,18 +16,20 @@ module.exports = {
             if (args[0] != null) {
                 title = `Commands in group ${args[0]}!`
                 footer = '[] = required, () = optional'
-                for (i = 0; i < commands.length; i++) {
-                    const command = require(`./${commands[i] + '.js'}`)
-                    if ((command.requireRole == null || message.member.roles.cache.get(command.requiredRole)) && args[0] == command.commandGroup) {
+                var commandNames = commands.keys();
+                commands.forEach((value, commandName, commands) => {
+                    const command = commands.get(commandName);
+
+                    if ((command.requireRole == null || message.member.roles.cache.get(requiredRole)) && args[0] == command.commandGroup) {
                         if (command.requireManageGuild && !(message.member.hasPermission('MANAGE_GUILD'))) {
-                            break;
+                            
                         } else if (command.guildOwnerOnly && !(message.author == message.guild.owner)) {
-                            break;
+                            
                         } else {
-                            allCommands.push(`${config.prefix}${commands[i]} ${command.usage} - ${command.description}`);
+                            allCommands.push(`${config.prefix}${commandName} ${command.usage} - ${command.description}`)
                         }
                     }
-                }
+                })
             } else {
                 title = 'Command categories!'
                 footer = `${config.prefix}help [command group] for commands inside each command group`
