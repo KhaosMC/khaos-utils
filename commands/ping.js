@@ -4,6 +4,7 @@ module.exports = {
     description: 'Check your ping to the bot',
     usage: '',
     commandGroup: 'ping',
+    requiredRole: null,
     guildOnly: false,
     requireManageGuild: false,
     guildOwnerOnly: false,

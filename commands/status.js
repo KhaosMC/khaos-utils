@@ -1,11 +1,12 @@
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
-const servers = JSON.parse(require('fs').readFileSync('../config/servers.json'))
+const servers = JSON.parse(require('fs').readFileSync('./config/servers.json'));
 
 module.exports = {
     description: 'Get status of servers',
     usage: '(server name)',
     commandGroup: 'status',
+    requiredRole: null,
     guildOnly: false,
     requireManageGuild: false,
     guildOwnerOnly: false,
