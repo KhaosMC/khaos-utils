@@ -12,7 +12,8 @@ module.exports = {
     run: async (client, message, args, commands, config) => {
         //check if they've sent a token with the command, if not return and send a message that they need to input a token
         if (!args[0]) return message.channel.send('You need to input a token!');
-        if (args[0] == 'all') return fs.writeFileSync('./logs/authTokens', '', message.channel.send('Removed all tokens'));
+        message.delete().catch();
+        if (args[0] == 'all') return fs.writeFileSync('./logs/authTokens', '', message.guild.channels.cache.get(config.staffChannel).send(`${message.author.tag} removed all tokens`));
 
         var authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
         //else remove the specified token in the array
@@ -26,8 +27,7 @@ module.exports = {
             if (err) return console.log(err)
         })
         //send message that the specified token has been removed
-        message.guild.channels.cache.get(config.staffChannel).send(`Removed token ${args[0]}`);
+        message.guild.channels.cache.get(config.staffChannel).send(`${message.author.tag} removed token ${args[0]}`);
         
-        if (config.LoggingLevel > 0) { log(`${message.author.tag} removed token ${args[0]}`) }
     }
 }
