@@ -12,12 +12,14 @@ module.exports = {
                 const data = {
                     "type": "chat_message",
                     "targets": [],
-                    "user": {
-                        "id": message.author.id,
-                        "name": message.author.username,
-                        "display_color": message.author.display_color
-                    },
-                    "message": message.content
+                    "payload": {
+                        "user": {
+                            "id": message.author.id,
+                            "name": message.author.username,
+                            "display_color": message.member.displayHexColor.replace('#', '')
+                        },
+                        "message": message.content
+                    }
                 };
                 socket.send(JSON.stringify(data));
             } catch (err) {

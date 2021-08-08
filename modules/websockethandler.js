@@ -26,11 +26,12 @@ module.exports = function handleWebsocket(client, config, chatbridge, socket, fs
     })
 
     socket.on('message', async data => {
+        data = JSON.parse(data);
         if (!data.type) return;
-        if(!events.includes(data.type)) return;
+        if(!events.has(data.type)) return;
         const event = events.get(data.type);
         
-        const toLog = await event.run(client, message, args, commands, config);
+        const toLog = await event.run(data, chatbridge, client, config);
         if (toLog == undefined) return;
         toLog.forEach(string => {
             log(string, `websocket event ${command}`);
