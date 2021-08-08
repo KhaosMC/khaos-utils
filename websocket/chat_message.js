@@ -1,6 +1,6 @@
 module.exports = {
-    description: 'Chat connections',
+    description: 'Chat messages',
     run: async (data, chatbridge, client, config) => {
-        // do shit
+        
     }
 }

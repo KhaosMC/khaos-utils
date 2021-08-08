@@ -16,7 +16,6 @@ module.exports = {
             if (args[0] != null) {
                 title = `Commands in group ${args[0]}!`
                 footer = '[] = required, () = optional'
-                var commandNames = commands.keys();
                 commands.forEach((value, commandName, commands) => {
                     const command = commands.get(commandName);
 
