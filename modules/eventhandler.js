@@ -10,11 +10,10 @@ module.exports = async function eventHandler(client, config, socket, fs, log) {
         const event = events.get(eventName);
         client.on(eventName, async (...args) => {
             const toLog = await event.run(client, config, socket, ...args);
-
-            if (toLog == undefined) return;
-            toLog.forEach(string => {
-                log(string, `event ${eventName}`);
-            }) 
+            if (toLog == undefined || toLog.length == 0) return;
+            for (i = 0; i < toLog.length; i++) {
+                log(`${toLog[i]} at event ${eventName}`)
+            }
         })
     })
 }

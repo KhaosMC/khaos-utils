@@ -9,7 +9,7 @@ module.exports = function handleWebsocket(client, config, chatbridge, socket, fs
         events.set(eventFiles[i].replace('.js', ''), require(`../websocket/${eventFiles[i]}`));
     }
 
-    socket.on('connect', function() {
+    socket.on('open', function() {
         const authData = {
             "type": "auth",
             "token": chatbridge.auth_token,
@@ -20,6 +20,10 @@ module.exports = function handleWebsocket(client, config, chatbridge, socket, fs
         }
         socket.send(JSON.stringify(authData));
     });
+
+    socket.on('close', function() {
+        socket = new WebSocket(chatbridge.server_url);
+    })
 
     socket.on('message', async data => {
         if (!data.type) return;
@@ -32,4 +36,6 @@ module.exports = function handleWebsocket(client, config, chatbridge, socket, fs
             log(string, `websocket event ${command}`);
         })
     })
+
+    socket.on('err', async err => log(err))
 }

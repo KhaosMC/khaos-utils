@@ -4,12 +4,12 @@ module.exports = {
         client.user.setActivity('over Khaos Applications', {
             type: "WATCHING"
         })
+        
+        // websocket related
         const data = {
             "type": "client_connection",
             "targets": [],
         }
-
-        // websocket related
         try {
             socket.send(JSON.stringify(data));
         } catch {
