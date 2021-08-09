@@ -2,7 +2,7 @@ module.exports = {
     description: 'Chat messages',
     run: async (data, chatbridge, client, config) => {
         // Parse message to prevent discord markdown
-        const discordMD = ['`', '*', '_', '~~'];
+        const discordMD = ['`', '*', '_', '~~', '||'];
         var message = data.payload.message;
         discordMD.forEach(char => {
             message = message.replace(char, `\\${char}`)
