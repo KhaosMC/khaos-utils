@@ -1,0 +1,10 @@
+{
+    "channel_id": "channel id",
+    "launch_server": false,
+    "server_path": "./bridge-the-gap",
+    "client_name": "Discord",
+    "client_type": "discord",
+    "color": "7289da",
+    "server_url": "ws://localhost:8080",
+    "auth_token": "auth token from server"
+}
