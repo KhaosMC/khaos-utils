@@ -9,6 +9,24 @@ module.exports = {
         // websocket related
         if (message.channel.id == chatbridge.channel_id && !(message.author.bot)) {
             try {
+                var messagePayload = message.content;
+                // Parse mentioned users from <@id> to @username
+                var mentionedUsers = message.mentions.members;
+                mentionedUsers.forEach(user => {
+                    messagePayload = messagePayload.replace(`<@${user.id}>`, `@${user.user.username}`);
+                    messagePayload = messagePayload.replace(`<@!${user.id}>`, `@${user.user.username}`);
+                })
+                // Parse mentioned channels from <#id> to #name
+                var mentionedChannels = message.mentions.channels;
+                mentionedChannels.forEach(channel => {
+                    messagePayload = messagePayload.replace(`<#${channel.id}>`, `#${channel.name}`)
+                })
+                // Parse used emojis from <:name:id> to :name:
+                var usedEmojis = messagePayload.match(/<:.+?:\d+>/g);
+                usedEmojis.forEach(emoji => {
+                    emojiFixed = emoji.split(':')[1]
+                    messagePayload = messagePayload.replace(emoji, `:${emojiFixed}:`)
+                })
                 const data = {
                     "type": "chat_message",
                     "targets": [],
@@ -18,7 +36,7 @@ module.exports = {
                             "name": message.author.username,
                             "display_color": message.member.displayHexColor.replace('#', '')
                         },
-                        "message": message.content
+                        "message": messagePayload
                     }
                 };
                 socket.send(JSON.stringify(data));
