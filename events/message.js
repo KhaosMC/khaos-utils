@@ -13,13 +13,13 @@ module.exports = {
                 // Parse mentioned users from <@id> to @username
                 var mentionedUsers = message.mentions.members;
                 mentionedUsers.forEach(user => {
-                    messagePayload = messagePayload.replace(`<@${user.id}>`, `@${user.user.username}`);
-                    messagePayload = messagePayload.replace(`<@!${user.id}>`, `@${user.user.username}`);
+                    messagePayload = messagePayload.replace(`<@${user.id}>`, `<@${user.user.username}>`);
+                    messagePayload = messagePayload.replace(`<@!${user.id}>`, `<@${user.user.username}>`);
                 })
                 // Parse mentioned channels from <#id> to #name
                 var mentionedChannels = message.mentions.channels;
                 mentionedChannels.forEach(channel => {
-                    messagePayload = messagePayload.replace(`<#${channel.id}>`, `#${channel.name}`)
+                    messagePayload = messagePayload.replace(`<#${channel.id}>`, `<#${channel.name}>`)
                 })
                 // Parse used emojis from <:name:id> to :name:
                 var usedEmojis = messagePayload.match(/<:.+?:\d+>/g);
@@ -34,7 +34,7 @@ module.exports = {
                         "user": {
                             "id": message.author.id,
                             "name": message.author.username,
-                            "display_color": message.member.displayHexColor.replace('#', '')
+                            "color": message.member.displayHexColor.replace('#', '')
                         },
                         "message": messagePayload
                     }

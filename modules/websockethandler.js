@@ -15,7 +15,8 @@ module.exports = function handleWebsocket(client, config, chatbridge, socket, fs
             "token": chatbridge.auth_token,
             "client": {
                 "type": chatbridge.client_type,
-                "name": chatbridge.client_name
+                "name": chatbridge.client_name,
+                "color": chatbridge.color
             }
         }
         socket.send(JSON.stringify(authData));
