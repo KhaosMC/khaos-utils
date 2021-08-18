@@ -1,0 +1,12 @@
+{
+    "applications": true,
+    "help": true,
+    "poll": true,
+    "promote": true,
+    "inactive": true,
+    "tag": true,
+    "status": true,
+    "reload": true,
+    "commands": true,
+    "chatbridge": true,
+}
