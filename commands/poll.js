@@ -1,10 +1,10 @@
 const { MessageEmbed } = require('discord.js');
-
+const { memberRole } = require('./config/config.json');
 module.exports = {
     description: 'Start a poll',
     usage: '[options(2-9)] [title], (description), (url)',
     commandGroup: 'poll',
-    requiredRole: '726562209617936414',
+    requiredRole: memberRole,
     guildOnly: false,
     requireManageGuild: false,
     guildOwnerOnly: false,

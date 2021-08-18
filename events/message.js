@@ -11,22 +11,37 @@ module.exports = {
             try {
                 var messagePayload = message.content;
                 // Parse mentioned users from <@id> to @username
-                var mentionedUsers = message.mentions.members;
+                var mentionedUsers = message.mentions.members || [];
                 mentionedUsers.forEach(user => {
-                    messagePayload = messagePayload.replace(`<@${user.id}>`, `<@${user.user.username}>`);
-                    messagePayload = messagePayload.replace(`<@!${user.id}>`, `<@${user.user.username}>`);
+                    messagePayload = messagePayload.replace(`<@${user.id}>`, `@${user.user.username}`);
+                    messagePayload = messagePayload.replace(`<@!${user.id}>`, `@${user.user.username}`);
                 })
                 // Parse mentioned channels from <#id> to #name
-                var mentionedChannels = message.mentions.channels;
+                var mentionedChannels = message.mentions.channels || [];
                 mentionedChannels.forEach(channel => {
-                    messagePayload = messagePayload.replace(`<#${channel.id}>`, `<#${channel.name}>`)
+                    messagePayload = messagePayload.replace(`<#${channel.id}>`, `#${channel.name}`)
                 })
                 // Parse used emojis from <:name:id> to :name:
-                var usedEmojis = messagePayload.match(/<:.+?:\d+>/g);
+                var usedEmojis = messagePayload.match(/<:.+?:\d+>/g) || [];
                 usedEmojis.forEach(emoji => {
                     emojiFixed = emoji.split(':')[1]
                     messagePayload = messagePayload.replace(emoji, `:${emojiFixed}:`)
                 })
+                // Parse used animated emojis from <a:name:id> to :name:
+                var usedAnimatedEmojis = messagePayload.match(/<a:.+?:\d+>/g) || [];
+                usedAnimatedEmojis.forEach(emoji => {
+                    emojiFixed = emoji.split(':')[1]
+                    messagePayload = messagePayload.replace(emoji, `:${emojiFixed}:`)
+                })
+                // Parse images for name of each image
+                var attachments = message.attachments
+                if (message.attachments.size > 0) { 
+                    messagePayload += ' '
+                    attachments.forEach(attachment => {
+                        messagePayload += `[${attachment.name}] `
+                    })
+                }
+
                 const data = {
                     "type": "chat_message",
                     "targets": [],
@@ -34,6 +49,7 @@ module.exports = {
                         "user": {
                             "id": message.author.id,
                             "name": message.author.username,
+                            "display_color": message.member.displayHexColor.replace('#', ''),
                             "color": message.member.displayHexColor.replace('#', '')
                         },
                         "message": messagePayload
@@ -41,7 +57,7 @@ module.exports = {
                 };
                 socket.send(JSON.stringify(data));
             } catch (err) {
-                errors.push(err)
+                console.log(err)
             }
         }
 

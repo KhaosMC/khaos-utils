@@ -1,10 +1,11 @@
 const { MessageEmbed } = require('discord.js');
+const { fullMemberRole } = require('./config/config.json');
 
 module.exports = {
     description: 'Declares inactive status',
     usage: '(reason)',
     commandGroup: 'inactive',
-    requiredRole: '760393585408999467',
+    requiredRole: fullMemberRole,
     guildOnly: false,
     requireManageGuild: false,
     guildOwnerOnly: false,

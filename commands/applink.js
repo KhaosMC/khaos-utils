@@ -1,12 +1,13 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
+const { fullMemberRole } = require('./config/config.json');
 
 
 module.exports = {
     description: 'Send application link with valid token in channel',
     usage: '',
     commandGroup: 'applications',
-    requiredRole: '760393585408999467',
+    requiredRole: fullMemberRole,
     guildOnly: false,
     requireManageGuild: false,
     guildOwnerOnly: false,
