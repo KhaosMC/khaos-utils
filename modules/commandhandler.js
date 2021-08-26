@@ -16,9 +16,9 @@ module.exports = async function handleCommand(client, config, socket, fs, log) {
         
             if (!commandInfo.commandGroup) return message.delete({ timeout: 3000 }).catch();
         
-            if (commandInfo.requiredRole != null && !(message.member.roles.cache.get(commandInfo.requiredRole))) return message.delete({ timeout: 3000 }).catch();
+            if (commandInfo.requiredRole !== null && !(message.member.roles.cache.get(commandInfo.requiredRole))) return message.delete({ timeout: 3000 }).catch();
             
-            if (commandInfo.guildOnly && !(message.guild == null)) return message.delete({ timeout: 3000 }).catch();
+            if (commandInfo.guildOnly && !(message.guild === null)) return message.delete({ timeout: 3000 }).catch();
         
             if (commandInfo.requireGuildManager && !(message.member.hasPermission('MANAGE_GUILD'))) return message.delete({ timeout: 3000 }).catch();
         

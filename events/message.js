@@ -68,7 +68,7 @@ module.exports = {
             if (message.embeds.length === 0 && !(message.member.hasPermission('MANAGE_GUILD'))) return message.delete().catch();
             let attemptedAuthToken = message.embeds[0].fields[0].value.toString()
             let authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
-            if (authTokens.includes(attemptedAuthToken) && (message.webhookID != null)) {
+            if (authTokens.includes(attemptedAuthToken) && (message.webhookID !== null)) {
                 await message.react(reactionEmojis[0]) // These 3 message.react() are for voting, remove them if you do not want them.
                 await message.react(reactionEmojis[1])
                 await message.react(reactionEmojis[2])

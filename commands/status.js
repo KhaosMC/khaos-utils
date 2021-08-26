@@ -12,7 +12,7 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         if (servers.serverIps.length !== servers.serverNames.length) return message.channel.send('Amount of server names and ips are not the same!')
-        if (args[0] == null) {
+        if (args[0] === null) {
             let statusMsg = await message.channel.send('Retreiving server status..')
             let descriptions = ''
             // Fetch status for each individual server.
