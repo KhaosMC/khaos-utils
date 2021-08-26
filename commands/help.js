@@ -13,13 +13,13 @@ module.exports = {
         let allCommands = [];
         let title;
         let footer;
-            if (args[0] != null) {
+            if (args[0] !== null) {
                 title = `Commands in group ${args[0]}!`
                 footer = '[] = required, () = optional'
                 commands.forEach((value, commandName, commands) => {
                     const command = commands.get(commandName);
 
-                    if ((command.requireRole == null || message.member.roles.cache.get(requiredRole)) && args[0] == command.commandGroup) {
+                    if ((command.requireRole === null || message.member.roles.cache.get(requiredRole)) && args[0] == command.commandGroup) {
                         if (command.requireManageGuild && !(message.member.hasPermission('MANAGE_GUILD'))) {
                             
                         } else if (command.guildOwnerOnly && !(message.author === message.guild.owner)) {
