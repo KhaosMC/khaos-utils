@@ -8,7 +8,7 @@ const chatbridge = JSON.parse(fs.readFileSync('./config/chatbridge.json'));
 const commandsConfig = JSON.parse(fs.readFileSync('./config/commands.json'));
 const client = new Discord.Client();
 
-var socket;
+let socket;
 if (commandsConfig.chatbridge) { socket = new WebSocket(chatbridge.server_url) };
 
 client.login(config.token);

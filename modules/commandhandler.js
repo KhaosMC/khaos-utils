@@ -1,7 +1,7 @@
 module.exports = async function handleCommand(client, config, socket, fs, log) {
     const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
     console.log(`Loading ${commandFiles.length} command(s)`);
-    var commands = new Map();
+    let commands = new Map();
     for (i = 0; i < commandFiles.length; i++) {
         commands.set(commandFiles[i].replace('.js', ''), require(`../commands/${commandFiles[i]}`));
     };
@@ -22,10 +22,10 @@ module.exports = async function handleCommand(client, config, socket, fs, log) {
         
             if (commandInfo.requireGuildManager && !(message.member.hasPermission('MANAGE_GUILD'))) return message.delete({ timeout: 3000 }).catch();
         
-            if (commandInfo.guildOwnerOnly && !(message.author == message.guild.owner)) return message.delete({ timeout: 3000 }).catch();
+            if (commandInfo.guildOwnerOnly && !(message.author === message.guild.owner)) return message.delete({ timeout: 3000 }).catch();
         
             const toLog = await commandInfo.run(client, message, args, commands, config, socket);
-            if (toLog == undefined) return;
+            if (toLog === undefined) return;
             toLog.forEach(string => {
                 log(string, `command ${command}`);
             })

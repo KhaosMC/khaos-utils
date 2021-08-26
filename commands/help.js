@@ -10,9 +10,9 @@ module.exports = {
     requireManageGuild: false,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
-        var allCommands = [];
-        var title;
-        var footer;
+        let allCommands = [];
+        let title;
+        let footer;
             if (args[0] != null) {
                 title = `Commands in group ${args[0]}!`
                 footer = '[] = required, () = optional'
@@ -22,7 +22,7 @@ module.exports = {
                     if ((command.requireRole == null || message.member.roles.cache.get(requiredRole)) && args[0] == command.commandGroup) {
                         if (command.requireManageGuild && !(message.member.hasPermission('MANAGE_GUILD'))) {
                             
-                        } else if (command.guildOwnerOnly && !(message.author == message.guild.owner)) {
+                        } else if (command.guildOwnerOnly && !(message.author === message.guild.owner)) {
                             
                         } else {
                             allCommands.push(`${config.prefix}${commandName} ${command.usage} - ${command.description}`)

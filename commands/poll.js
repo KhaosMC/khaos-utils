@@ -36,7 +36,7 @@ module.exports = {
         }
         // Send poll message and wait for poll reactions
         let pollMsg = await message.guild.channels.cache.get(config.pollChannel).send(embed);
-        if (args[0] == 2) {
+        if (args[0] === 2) {
             await pollMsg.react(reactionEmojis[0]);
             await pollMsg.react(reactionEmojis[1]);
             await pollMsg.react(reactionEmojis[2]);

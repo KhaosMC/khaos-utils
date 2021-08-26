@@ -5,36 +5,36 @@ const commands = JSON.parse(fs.readFileSync('./config/commands.json'));
 module.exports = {
     description: 'Ready event',
     run: async (client, config, socket, message) => {
-        var errors = []
+        let errors = []
         // websocket related
-        if (message.channel.id == chatbridge.channel_id && !(message.author.bot)) {
+        if (message.channel.id === chatbridge.channel_id && !(message.author.bot)) {
             try {
-                var messagePayload = message.content;
+                let messagePayload = message.content;
                 // Parse mentioned users from <@id> to @username
-                var mentionedUsers = message.mentions.members || [];
+                let mentionedUsers = message.mentions.members || [];
                 mentionedUsers.forEach(user => {
                     messagePayload = messagePayload.replace(`<@${user.id}>`, `@${user.user.username}`);
                     messagePayload = messagePayload.replace(`<@!${user.id}>`, `@${user.user.username}`);
                 })
                 // Parse mentioned channels from <#id> to #name
-                var mentionedChannels = message.mentions.channels || [];
+                let mentionedChannels = message.mentions.channels || [];
                 mentionedChannels.forEach(channel => {
                     messagePayload = messagePayload.replace(`<#${channel.id}>`, `#${channel.name}`)
                 })
                 // Parse used emojis from <:name:id> to :name:
-                var usedEmojis = messagePayload.match(/<:.+?:\d+>/g) || [];
+                let usedEmojis = messagePayload.match(/<:[^:]+:\d+>/) || [];
                 usedEmojis.forEach(emoji => {
                     emojiFixed = emoji.split(':')[1]
                     messagePayload = messagePayload.replace(emoji, `:${emojiFixed}:`)
                 })
                 // Parse used animated emojis from <a:name:id> to :name:
-                var usedAnimatedEmojis = messagePayload.match(/<a:.+?:\d+>/g) || [];
+                let usedAnimatedEmojis = messagePayload.match(/<a:[^:]+:\d+>/) || [];
                 usedAnimatedEmojis.forEach(emoji => {
                     emojiFixed = emoji.split(':')[1]
                     messagePayload = messagePayload.replace(emoji, `:${emojiFixed}:`)
                 })
                 // Parse images for name of each image
-                var attachments = message.attachments
+                let attachments = message.attachments
                 if (message.attachments.size > 0) { 
                     messagePayload += ' '
                     attachments.forEach(attachment => {
@@ -63,11 +63,11 @@ module.exports = {
 
         // Verify incoming applicationd
         let reactionEmojis = ['780549171089637376', '780549170770870292', '780548158068621355']
-        if (message.channel == config.applicationChannel && commands.applications) {
-            if (message.embeds[0] == undefined) return message.delete().catch();
-            if (message.embeds.length == 0 && !(message.member.hasPermission('MANAGE_GUILD'))) return message.delete().catch();
-            var attemptedAuthToken = message.embeds[0].fields[0].value.toString()
-            var authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/); 
+        if (message.channel === config.applicationChannel && commands.applications) {
+            if (message.embeds[0] === undefined) return message.delete().catch();
+            if (message.embeds.length === 0 && !(message.member.hasPermission('MANAGE_GUILD'))) return message.delete().catch();
+            let attemptedAuthToken = message.embeds[0].fields[0].value.toString()
+            let authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
             if (authTokens.includes(attemptedAuthToken) && (message.webhookID != null)) {
                 await message.react(reactionEmojis[0]) // These 3 message.react() are for voting, remove them if you do not want them.
                 await message.react(reactionEmojis[1])
