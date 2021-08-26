@@ -20,11 +20,7 @@ module.exports = {
             for (i = 0; i < servers.serverIps.length; i++) {
                 var link = 'https://api.mcsrvstat.us/simple/' + servers.serverIps[n]
                 await fetch(link).then(function(response) {
-                    if (response.status == '200') {
-                        descriptions = descriptions + (servers.serverNames[n] + ': Online ✅\n')
-                    } else {
-                        descriptions = descriptions + (servers.serverNames[n] + ': Offline ❌\n')
-                        }
+                    descriptions = response.status == '200' ? descriptions + (servers.serverNames[n] + ': Online ✅\n') : descriptions + (servers.serverNames[n] + ': Offline ❌\n');
                         n = n + 1
                     })
             }
