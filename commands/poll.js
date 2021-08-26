@@ -13,7 +13,7 @@ module.exports = {
         // Delete message and check for arguments, setup & check time and create embed for question.
         message.delete().catch();
                 
-        if (!(1 < args[0] && args[0] < 10)) return message.channel.send('Your poll option is too big!');
+        if (!(args[0] > 1 && args[0] < 10)) return message.channel.send('Your poll option is too big!');
 
         if (!args[0]) return message.channel.send("You're missing a poll option!");
 
