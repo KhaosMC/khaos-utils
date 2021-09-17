@@ -28,15 +28,12 @@ module.exports = async function handleCommand(client, config, socket, fs, log, c
             if (commandInfo.guildOwnerOnly && !(message.author === message.guild.owner)) return message.delete({ timeout: 3000 }).catch();
         
             const toLog = await commandInfo.run(client, message, args, commands, config, socket);
-<<<<<<< HEAD
             onCooldown.add(message.author.id)
             setTimeout(() => {
                 onCooldown.delete(message.author.id);
             }, 2500)
             if (toLog == undefined) return;
-=======
             if (toLog === undefined) return;
->>>>>>> a0dffdf2d7618d1352573c0393f43466becb6758
             toLog.forEach(string => {
                 log(string, `command ${command}`);
             })
