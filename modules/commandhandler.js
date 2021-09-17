@@ -1,4 +1,6 @@
-module.exports = async function handleCommand(client, config, socket, fs, log) {
+const onCooldown = new Set();
+
+module.exports = async function handleCommand(client, config, socket, fs, log, commandsConfig) {
     const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
     console.log(`Loading ${commandFiles.length} command(s)`);
     let commands = new Map();
@@ -14,7 +16,8 @@ module.exports = async function handleCommand(client, config, socket, fs, log) {
             if (!commands.has(command)) return;
             const commandInfo = commands.get(command);
         
-            if (!commandInfo.commandGroup) return message.delete({ timeout: 3000 }).catch();
+            if (onCooldown.has(message.author.id)) return
+            if (!commandsConfig[commandInfo.commandGroup]) return message.delete({ timeout: 3000 }).catch();
         
             if (commandInfo.requiredRole !== null && !(message.member.roles.cache.get(commandInfo.requiredRole))) return message.delete({ timeout: 3000 }).catch();
             
@@ -25,7 +28,15 @@ module.exports = async function handleCommand(client, config, socket, fs, log) {
             if (commandInfo.guildOwnerOnly && !(message.author === message.guild.owner)) return message.delete({ timeout: 3000 }).catch();
         
             const toLog = await commandInfo.run(client, message, args, commands, config, socket);
+<<<<<<< HEAD
+            onCooldown.add(message.author.id)
+            setTimeout(() => {
+                onCooldown.delete(message.author.id);
+            }, 2500)
+            if (toLog == undefined) return;
+=======
             if (toLog === undefined) return;
+>>>>>>> a0dffdf2d7618d1352573c0393f43466becb6758
             toLog.forEach(string => {
                 log(string, `command ${command}`);
             })

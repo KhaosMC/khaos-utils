@@ -13,6 +13,6 @@ if (commandsConfig.chatbridge) { socket = new WebSocket(chatbridge.server_url) }
 
 client.login(config.token);
 
-require('./modules/commandhandler.js')(client, config, socket, fs, log);
+require('./modules/commandhandler.js')(client, config, socket, fs, log, commandsConfig);
 require('./modules/eventhandler')(client, config, socket, fs, log);
 if (commandsConfig.chatbridge) { require('./modules/websockethandler')(client, config, chatbridge, socket, fs, log) }
