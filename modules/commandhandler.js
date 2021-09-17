@@ -3,7 +3,7 @@ const onCooldown = new Set();
 module.exports = async function handleCommand(client, config, socket, fs, log, commandsConfig) {
     const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
     console.log(`Loading ${commandFiles.length} command(s)`);
-    let commands = new Map();
+    const commands = new Map();
     for (i = 0; i < commandFiles.length; i++) {
         commands.set(commandFiles[i].replace('.js', ''), require(`../commands/${commandFiles[i]}`));
     };
@@ -32,7 +32,6 @@ module.exports = async function handleCommand(client, config, socket, fs, log, c
             setTimeout(() => {
                 onCooldown.delete(message.author.id);
             }, 2500)
-            if (toLog == undefined) return;
             if (toLog === undefined) return;
             toLog.forEach(string => {
                 log(string, `command ${command}`);
