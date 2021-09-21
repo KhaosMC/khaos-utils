@@ -9,4 +9,5 @@
     "reload": true,
     "commands": true,
     "chatbridge": true,
+    "misc": true,
 }
