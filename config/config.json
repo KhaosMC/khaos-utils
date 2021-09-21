@@ -2,6 +2,7 @@
   "prefix": "Bot prefix here",
   "token": "Bot token here",
   "applicationURL": "URL for app form with prefilled link for auth token (minus the prefilled part after the last =",
+  "catApiToken": "api token for cat command"
   
   "memberRole": "role id for general members role",
   "trialRole": "id for trial role",
