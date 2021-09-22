@@ -31,7 +31,7 @@ module.exports = {
             .setTitle(`${args[0]} payload!`)
             .setURL(url)
             .setImage(url)
-            .setFooter("Image provied by Flickr")
+            .setFooter("Image provied by Flickr, photos may not always relate to the animal.")
 
             message.channel.send(embed);
         } else if (args[0] === 'list') {
