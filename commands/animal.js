@@ -11,7 +11,7 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         switch (args[0]) {
-            case 'cat':
+            case 'cat': {
                 const catRequest = await fetch(`https://api.thecatapi.com/v1/images/search?mime_types=gif`, {
                     headers: { 'x-api-key' : config.catApiToken }
                 }).then(response => response.json());
@@ -22,7 +22,8 @@ module.exports = {
     
                 message.channel.send(catEmbed)
                 break;
-            case 'dog':
+            }
+            case 'dog': {
                 const dogRequest = await fetch(`https://dog.ceo/api/breeds/image/random`).then(response => response.json());
                 const dogEmbed = new MessageEmbed()
                 .setTitle('Dog payload!')
@@ -31,7 +32,8 @@ module.exports = {
 
                 message.channel.send(dogEmbed)
                 break;
-            case 'axolotl':
+            }
+            case 'axolotl': {
                 const axolotlRequest = await fetch ('https://axoltlapi.herokuapp.com/').then(response => response.json());
                 const axolotlEmbed = new MessageEmbed()
                 .setTitle('Axolotl payload!')
@@ -40,6 +42,13 @@ module.exports = {
 
                 message.channel.send(axolotlEmbed)
                 break;
+            }
+            default: {
+                const msg = message.channel.send("Invalid animal!")
+                setTimeout(() => {
+                    msg.delete().catch();
+                }, 5000);
+            }
         }
     }
 }
