@@ -58,6 +58,11 @@ module.exports = {
                 message.channel.send(embed)
                 break;
             }
+            case supportedAnimals[5]: {
+                const embed = await fetchMedia(supportedAnimals[5]);
+                message.channel.send(embed)
+                break;
+            }
             case 'list': {
                 const listOfSupported = new MessageEmbed()
                 .setTitle("Supported animals!")
