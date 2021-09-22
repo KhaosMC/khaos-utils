@@ -10,12 +10,13 @@ module.exports = {
     requireManageGuild: false,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
-        let supportedAnimals = [
+        const supportedAnimals = [
+            'axolotl',
             'cat',
             'dog',
-            'axolotl',
             'fox',
-            'monkey'
+            'monkey',
+            'owl'
         ]
         async function fetchMedia(type) {
             const request = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=85d5d441375458df3dbe2bc67bdff8d9&tags=${type}&format=json&nojsoncallback=1`)
