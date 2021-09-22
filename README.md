@@ -10,6 +10,7 @@ Khaos Utilities comes with a variety of features which were custom made for Khao
 - Tags (works as embeds you can request through a command)
 - Status (Know if your minecraft servers are online/offline)
 - [Bridge the gap discord](https://github.com/KhaosMC/bridge-the-gap-discord) client integrated
+- Fetch pictures of animals from Flickr
 
 ## Todo
 - Application management with database (create tickets, handle them etc)
@@ -21,7 +22,7 @@ To download the bot (and its dependencies):
 ```
 git clone https://github.com/KhaosMC/khaos-utils
 cd khaos-utils
-npm i discord.js@12 ws fs moment crypto
+npm i discord.js@12 ws fs moment crypto node-fetch@2
 ```
 
 # Usage
