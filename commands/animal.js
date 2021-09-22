@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
     description: 'Fetch image of an animal',
-    usage: '(cat/dog/axolotl/fox/monkey)',
+    usage: '(animal/list)',
     commandGroup: 'misc',
     requiredRole: null,
     guildOnly: false,
@@ -17,7 +17,13 @@ module.exports = {
             'fox',
             'monkey',
             'owl',
-            'panda'
+            'panda',
+            'tiger',
+            'duck',
+            'bear',
+            'lion',
+            'chicken',
+            'goldfish',
         ]
 
         if (supportedAnimals.includes(args[0])) {
@@ -41,7 +47,7 @@ module.exports = {
             
             message.channel.send(embed)
         } else {
-            const msg = await message.channel.send("Invalid animal! See `" + config.prefix + "animal list`.")
+            const msg = await message.channel.send("Unsupported animal! See `" + config.prefix + "animal list`.")
             setTimeout(() => {
                 msg.delete().catch();
             }, 5000);
