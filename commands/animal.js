@@ -10,22 +10,9 @@ module.exports = {
     requireManageGuild: false,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
-        const supportedAnimals = [
-            'axolotl',
-            'cat',
-            'dog',
-            'fox',
-            'monkey',
-            'owl',
-            'panda',
-            'tiger',
-            'duck',
-            'bear',
-            'lion',
-            'chicken',
-            'goldfish',
-        ]
-
+        const list = await fetch('https://raw.githubusercontent.com/KhaosMC/fetchables/main/animal-list.json').then(response => response.json());
+        const supportedAnimals = list.animals
+        
         if (supportedAnimals.includes(args[0])) {
             const request = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=85d5d441375458df3dbe2bc67bdff8d9&safe_search=&tags=${args[0]}&format=json&nojsoncallback=1`)
             .then(response => response.json());
