@@ -16,10 +16,10 @@ module.exports = {
             fs.closeSync(fs.openSync('./logs/authTokens', 'w'));
         }
 
-        const authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
+        let authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
         if (authTokens[0] === '') { authTokens.slice(1) }
         // Generate new auth token
-        const newAuthToken = require('crypto').randomBytes(32).toString('hex');
+        let newAuthToken = require('crypto').randomBytes(32).toString('hex');
         // If the token already exists create a new one
         if (authTokens.includes(newAuthToken)) {
             newAuthToken = require('crypto').randomBytes(32).toString('hex');
