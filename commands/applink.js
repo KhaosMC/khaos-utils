@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
-const { fullMemberRole } = require('./config/config.json');
+const { fullMemberRole } = require('../config/config.json');
 
 
 module.exports = {
@@ -16,10 +16,10 @@ module.exports = {
             fs.closeSync(fs.openSync('./logs/authTokens', 'w'));
         }
 
-        let authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
+        const authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
         if (authTokens[0] === '') { authTokens.slice(1) }
         // Generate new auth token
-        let newAuthToken = require('crypto').randomBytes(32).toString('hex');
+        const newAuthToken = require('crypto').randomBytes(32).toString('hex');
         // If the token already exists create a new one
         if (authTokens.includes(newAuthToken)) {
             newAuthToken = require('crypto').randomBytes(32).toString('hex');
