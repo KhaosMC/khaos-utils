@@ -14,7 +14,7 @@ module.exports = {
         message.delete().catch();
         if (args[0] === 'all') return fs.writeFileSync('./logs/authTokens', '', message.guild.channels.cache.get(config.staffChannel).send(`${message.author.tag} removed all tokens`));
 
-        var authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
+        let authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
         //else remove the specified token in the array
         const index = authTokens.indexOf(args[0]);
         if (index > -1) {
