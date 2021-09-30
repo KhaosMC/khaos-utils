@@ -6,7 +6,7 @@ module.exports = {
     commandGroup: 'applications',
     requiredRole: null,
     guildOnly: false,
-    requireManageGuild: true,
+    requiredPermission: 'MANAGE_GUILD',
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         //check if they've sent a token with the command, if not return and send a message that they need to input a token

@@ -7,7 +7,7 @@ module.exports = {
     commandGroup: 'help',
     requiredRole: null,
     guildOnly: false,
-    requireManageGuild: false,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         let allCommands = [];
@@ -20,8 +20,7 @@ module.exports = {
                     const command = commands.get(commandName);
 
                     if ((command.requiredRole === null || message.member.roles.cache.get(command.requiredRole)) && args[0] === command.commandGroup) {
-                        console.log(commandName)
-                        if (command.requireManageGuild && !(message.member.hasPermission('MANAGE_GUILD'))) {
+                        if (command.requiredPermission !== null && !(message.member.hasPermission(command.requiredPermission))) {
 
                         } else if (command.guildOwnerOnly && !(message.author === message.guild.owner)) {
                             

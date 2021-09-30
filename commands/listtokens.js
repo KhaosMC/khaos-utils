@@ -7,7 +7,7 @@ module.exports = {
     commandGroup: 'applications',
     requiredRole: null,
     guildOnly: false,
-    requireManageGuild: true,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         let authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8');

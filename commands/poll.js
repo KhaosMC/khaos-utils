@@ -9,10 +9,10 @@ const optionEmojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6�
 module.exports = {
     description: 'Start a poll',
     usage: '[options(2-9)] [title], (description), (url)',
-    commandGroup: 'poll',
+    commandGroup: 'utils',
     requiredRole: memberRole,
     guildOnly: false,
-    requireManageGuild: false,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         message.delete().catch();

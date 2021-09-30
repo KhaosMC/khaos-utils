@@ -3,10 +3,10 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
     description: 'Promote user to full or trial member',
     usage: '[user mention]',
-    commandGroup: 'promote',
+    commandGroup: 'utils',
     requiredRole: null,
     guildOnly: false,
-    requireManageGuild: true,
+    requiredPermission: 'MANAGE_GUILD',
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         // Delete users message, check if a user was mentioned

@@ -9,7 +9,7 @@ module.exports = {
     commandGroup: 'applications',
     requiredRole: fullMemberRole,
     guildOnly: false,
-    requireManageGuild: false,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         if(!fs.existsSync('./logs/authTokens')) {

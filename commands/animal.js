@@ -7,14 +7,16 @@ module.exports = {
     commandGroup: 'misc',
     requiredRole: null,
     guildOnly: false,
-    requireManageGuild: false,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
+        let log = [];
+
         const list = await fetch('https://raw.githubusercontent.com/KhaosMC/fetchables/main/animal-list.json').then(response => response.json());
         const supportedAnimals = list.animals
         
         if (supportedAnimals.includes(args[0])) {
-            const request = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=85d5d441375458df3dbe2bc67bdff8d9&safe_search=&tags=${args[0]}&format=json&nojsoncallback=1`)
+            const request = await fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${config.flickrToken}&safe_search=&tags=${args[0]}&format=json&nojsoncallback=1`)
             .then(response => response.json());
             const rng = Math.floor(Math.random() * 100);
             const image = request.photos.photo[rng]
@@ -27,6 +29,7 @@ module.exports = {
             .setFooter("Image provied by Flickr, photos may not always relate to the animal.")
 
             message.channel.send(embed);
+            log.push(`${message.author.tag} requested animal ${args[0]}`)
         } else if (args[0] === 'list') {
             const embed = new MessageEmbed()
             .setTitle("Supported animals!")

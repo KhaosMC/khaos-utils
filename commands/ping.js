@@ -3,10 +3,10 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
     description: 'Check your ping to the bot',
     usage: '',
-    commandGroup: 'ping',
+    commandGroup: 'misc',
     requiredRole: null,
     guildOnly: false,
-    requireManageGuild: false,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         const embed = new MessageEmbed()

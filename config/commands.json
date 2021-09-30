@@ -1,13 +1,9 @@
 {
     "applications": true,
     "help": true,
-    "poll": true,
-    "promote": true,
-    "inactive": true,
-    "tag": true,
-    "status": true,
-    "reload": true,
-    "commands": true,
-    "chatbridge": true,
+    "utils": true,
     "misc": true,
+    "moderation": true,
+    "commands": true,
+    "chatbridge": true
 }

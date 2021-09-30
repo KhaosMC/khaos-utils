@@ -16,14 +16,14 @@ module.exports = async function handleCommand(client, config, socket, fs, log, c
             if (!commands.has(command)) return;
             const commandInfo = commands.get(command);
         
-            if (onCooldown.has(message.author.id)) return
-            if (!commandsConfig[commandInfo.commandGroup]) return message.delete({ timeout: 3000 }).catch();
+            if (onCooldown.has(message.author.id)) return;
+            if (commandInfo.commandGroup !== null && !commandsConfig[commandInfo.commandGroup]) return message.delete({ timeout: 3000 }).catch();
         
             if (commandInfo.requiredRole !== null && !(message.member.roles.cache.get(commandInfo.requiredRole))) return message.delete({ timeout: 3000 }).catch();
             
-            if (commandInfo.guildOnly && !(message.guild === null)) return message.delete({ timeout: 3000 }).catch();
+            if (commandInfo.guildOnly && !(message.guild)) return;
         
-            if (commandInfo.requireManageGuild && !(message.member.hasPermission('MANAGE_GUILD'))) return message.delete({ timeout: 3000 }).catch();
+            if (commandInfo.requiredPermission !== null && !(message.member.hasPermission(commandInfo.requiredPermission))) return message.delete({ timeout: 3000 }).catch();
         
             if (commandInfo.guildOwnerOnly && !(message.author === message.guild.owner)) return message.delete({ timeout: 3000 }).catch();
         
@@ -32,7 +32,7 @@ module.exports = async function handleCommand(client, config, socket, fs, log, c
             setTimeout(() => {
                 onCooldown.delete(message.author.id);
             }, 2500)
-            if (toLog === undefined) return;
+            if (!toLog) return;
             toLog.forEach(string => {
                 log(string, `command ${command}`);
             })

@@ -4,10 +4,10 @@ const tags = JSON.parse(require('fs').readFileSync('./config/tags.json'));
 module.exports = {
     description: 'get a tag',
     usage: '[tag number]',
-    commandGroup: 'tag',
+    commandGroup: 'misc',
     requiredRole: null,
     guildOnly: false,
-    requireManageGuild: false,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         if (!args[0] || tags.tags[args[0]-1] === undefined) {
