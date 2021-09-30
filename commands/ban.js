@@ -28,7 +28,7 @@ module.exports = {
         .setTimestamp();
 
         await member.send(userEmbed).catch();
-        // Try to ban, else state that it failed.
+        // Try to kick, else state that it failed.
         try {
             member.ban({reason: reason});
         } catch {

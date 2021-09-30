@@ -34,31 +34,31 @@ module.exports = {
         // 1.15/16+
         const sixteen = new MessageEmbed()
         .setTitle("1.15/16 Tech Servers")
-        .addFields(list.sixteen)
+        .setDescription(list.sixteen.join('\t'))
         .setColor(0x800000)
         .setTimestamp()
         // 1.12
         const twelve = new MessageEmbed()
         .setTitle("1.12 Tech Servers")
-        .addFields(list.twelve)
+        .setDescription(list.twelve.join('\t'))
         .setColor(0x800000)
         .setTimestamp()
         // Older versions
         const older = new MessageEmbed()
         .setTitle("Older Tech Servers")
-        .addFields(list.older)
+        .setDescription(list.older.join('\t'))
         .setColor(0x800000)
         .setTimestamp()
         // Archives
         const archive = new MessageEmbed()
         .setTitle("Archive Servers")
-        .addFields(list.archive)
+        .setDescription(list.archive.join('\t'))
         .setColor(0x800000)
         .setTimestamp()
         // Bedrock
         const bedrock = new MessageEmbed()
         .setTitle("Bedrock Tech Servers")
-        .addFields(list.bedrock)
+        .setDescription(list.bedrock.join('\t'))
         .setColor(0x800000)
         .setTimestamp()
 
