@@ -10,7 +10,7 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         const amount = parseInt(args[0]) + 1;
-        if (!amount || amount == 0) return message.channel.send("Invalid amount!").then(msg => msg.delete({timeout: 5000}));
+        if (!amount || amount == 0 || amount > 10000) return message.channel.send("Invalid amount!").then(msg => msg.delete({timeout: 5000}));
         // Setup the amount of times you can delete 100
         const ranges = Math.floor(amount / 100);
         // Delete for every 100 messages

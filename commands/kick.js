@@ -35,6 +35,6 @@ module.exports = {
             return message.channel.send("Failed to kick user. Maybe bad permissions?").then(msg => msg.delete({timeout: 5000}))
         }
         message.guild.channels.cache.get(config.staffChannel).send(staffEmbed);
-        message.channel.send("Success!");
+        message.channel.send(`Successfully kicked ${member.user.tag}`);
     }
 }
