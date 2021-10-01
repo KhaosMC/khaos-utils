@@ -10,7 +10,7 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         let log = []
-        if (!args[0]) return message.channel.send('You need to input a token!');
+        if (!args[0]) return message.channel.send('You need to input a token!').then(msg => msg.delete({timeout: 5000}));
         message.delete().catch();
         fs.appendFileSync('./logs/authTokens', `${args[0]}\n`, err => {
             if (err) log.push(err);

@@ -21,9 +21,9 @@ module.exports = {
         const [options] = args;
         const [title, description, url] = pollRelated;
         // Verify that options & title is legitimate.
-        if (!(options > 1 && options < 10)) return message.channel.send('Your poll option is too big!');
-        if (!options) return message.channel.send("You're missing a poll option!");
-        if (!title) return message.channel.send("You're missing a poll question!");
+        if (!(options > 1 && options < 10)) return message.channel.send('Your poll option is too big!').then(msg => msg.delete({timeout: 5000}));
+        if (!options) return message.channel.send("You're missing a poll option!").then(msg => msg.delete({timeout: 5000}));
+        if (!title) return message.channel.send("You're missing a poll question!").then(msg => msg.delete({timeout: 5000}));
         // Create embed
         const embed = new MessageEmbed()
             .setTitle(title)

@@ -14,7 +14,7 @@ module.exports = {
         message.delete().catch();
         const messageInfo = JSON.parse(fs.readFileSync('./config/featured.json'));
         // Check if we have a channel id and message id
-        if (!messageInfo.channelId) return message.channel.send("You need a channel id!");
+        if (!messageInfo.channelId) return message.channel.send("You need a channel id!").then(msg => msg.delete({timeout: 5000}));
         // If we do not have a message id, send a temporary message that we can later on edit
         if (!messageInfo.messageId) {
             // Create an array for each server type

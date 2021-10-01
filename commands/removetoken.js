@@ -10,7 +10,7 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         //check if they've sent a token with the command, if not return and send a message that they need to input a token
-        if (!args[0]) return message.channel.send('You need to input a token!');
+        if (!args[0]) return message.channel.send('You need to input a token!').then(msg => msg.delete({timeout: 5000}));
         message.delete().catch();
         if (args[0] === 'all') return fs.writeFileSync('./logs/authTokens', '', message.guild.channels.cache.get(config.staffChannel).send(`${message.author.tag} removed all tokens`));
 

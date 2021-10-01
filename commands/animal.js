@@ -37,10 +37,7 @@ module.exports = {
             
             message.channel.send(embed)
         } else {
-            const msg = await message.channel.send("Unsupported animal! See `" + config.prefix + "animal list`.")
-            setTimeout(() => {
-                msg.delete().catch();
-            }, 5000);
+            message.channel.send("Unsupported animal! See `" + config.prefix + "animal list`.").then(msg => msg.delete({timeout: 5000}));
         }
     }
 }
