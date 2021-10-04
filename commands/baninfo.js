@@ -13,8 +13,7 @@ module.exports = {
         const member = await client.users.fetch(args[0]);
         if (!member) return message.channel.send("You need to specify a user!").then(msg => msg.delete({timeout: 5000}));
         // Fetch all bans and get the mentioned members
-        const guildBans = await message.guild.fetchBans();
-        const bannedMember = guildBans.get(member.id);
+        const bannedMember = await message.guild.bans.fetch(member.id);
         if (!bannedMember) return message.channel.send("User is not banned.").then(msg => msg.delete({timeout: 5000}));
         // Create embed with info and send it
         const embed = new MessageEmbed()
