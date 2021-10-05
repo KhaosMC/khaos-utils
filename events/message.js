@@ -4,7 +4,7 @@ const commands = JSON.parse(fs.readFileSync('./config/commands.json'));
 
 module.exports = {
     description: 'Ready event',
-    run: async (client, config, socket, message) => {
+    run: async (client, config, socket, db, message) => {
         let errors = []
         // websocket related
         if (message.channel.id === chatbridge.channel_id && !(message.author.bot)) {

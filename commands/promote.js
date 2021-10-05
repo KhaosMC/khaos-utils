@@ -8,7 +8,7 @@ module.exports = {
     guildOnly: false,
     requiredPermission: 'MANAGE_GUILD',
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
+    run: async (client, message, args, commands, config, socket, db) => {
         // Delete users message, check if a user was mentioned
         message.delete().catch();
         //variable to store if they mentioned a user
@@ -28,13 +28,26 @@ module.exports = {
 
         //embed message to display if member was promoted to full member
         const fullMember = new MessageEmbed()
-            .setTitle(`${toPromote.username} was promoted to Full Member!`)
+            .setTitle(`${toPromote.user.username} was promoted to Full Member!`)
             .setColor(message.guild.roles.cache.get(config.fullMemberRole).color)
             .setDescription(`Promoted by ${message.author.username}`)
             .setFooter(toPromote.user.tag, toPromote.user.avatarURL());
 
         // Promote user to trial and add member role if they dont have a member role
         if (!toPromote.roles.cache.get(config.memberRole)) {
+            // Grab the channel ID from database and get the channel object
+            const appChannelID = await db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND open LIMIT 1;', toPromote.user.id);
+            await db.get('UPDATE application_channels SET open = 0 WHERE user_id = ? AND open;', toPromote.user.id);
+            const appChannel = message.guild.channels.cache.get(appChannelID.channel_id);
+            // Overwrite the permissions for the channel and change category to the archived apps.
+            appChannel.overwritePermissions([
+                {
+                id: message.guild.roles.everyone,
+                deny: ['SEND_MESSAGES']
+                }
+            ]);
+            appChannel.setParent(config.archivedApps);
+
             try {
                 toPromote.roles.add(config.trialRole);
                 toPromote.roles.add(config.memberRole);
@@ -51,6 +64,11 @@ module.exports = {
 
         // Promote user to full member if they have a member role
         if (toPromote.roles.cache.get(config.memberRole)) {
+            // Fetch channel ID, delete it from db and discord
+            const appChannelID = await db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND NOT open LIMIT 1', toPromote.user.id);
+            const appChannel = message.guild.channels.cache.get(appChannelID.channel_id);
+            await db.run('DELETE FROM application_channels WHERE channel_id = ?', appChannelID);
+            appChannel.delete();
             try {
                 toPromote.roles.remove(config.trialRole);
                 toPromote.roles.add(config.fullMemberRole);
