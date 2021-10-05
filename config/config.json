@@ -8,7 +8,9 @@
   "trialRole": "id for trial role",
   "fullMemberRole": "id for full membership role",
   "inactiveRole": "id for inactive member role",
- 
+  
+  "applicationMessage": ["channel id"],
+  "archivedApps": "id for category where archived apps go"
   "applicationChannel": "channel where applications are sent through",
   "staffChannel": "channel for staff",
   "pollChannel": "channel id for where polls go",
