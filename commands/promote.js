@@ -67,7 +67,7 @@ module.exports = {
             // Fetch channel ID, delete it from db and discord
             const appChannelID = await db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND NOT open LIMIT 1', toPromote.user.id);
             const appChannel = message.guild.channels.cache.get(appChannelID.channel_id);
-            await db.run('DELETE FROM application_channels WHERE channel_id = ?', appChannelID);
+            await db.run('DELETE FROM application_channels WHERE channel_id = ?;', appChannelID);
             appChannel.delete();
             try {
                 toPromote.roles.remove(config.trialRole);
