@@ -34,6 +34,9 @@ module.exports = {
                 footer = `${config.prefix}help [command group] for commands inside each command group`
                 allCommands = Object.keys(commandGroups)
             }
+        // Message if user doesn't have any available commands in a command group.
+        if (allCommands.length === 0) allCommands.push("There are no commands available for you in this group.");
+
         const embed = new MessageEmbed()
         .setTitle(title)
         .setDescription(allCommands)
