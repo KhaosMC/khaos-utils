@@ -18,10 +18,12 @@ Khaos Utilities comes with a variety of features which were custom made for Khao
 - Project management
 
 # Prerequisits
-To download the bot (and its dependencies):
+To download the bot (and its dependencies). You may need to install `build-essential` on Linux, or the equivalent for any other OS:
 ```
 git clone https://github.com/KhaosMC/khaos-utils
 cd khaos-utils
+npm i sqlite3 --save
+npm i sqlite --save
 npm i discord.js@12 ws fs moment crypto node-fetch@2
 ```
 
