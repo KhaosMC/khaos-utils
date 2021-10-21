@@ -1,6 +1,6 @@
 const onCooldown = new Set();
 
-module.exports = async function handleCommand(client, config, socket, fs, log, commandsConfig) {
+module.exports = async function handleCommand(client, config, socket, fs, log, commandsConfig, db) {
     const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
     console.log(`Loading ${commandFiles.length} command(s)`);
     const commands = new Map();
@@ -27,15 +27,17 @@ module.exports = async function handleCommand(client, config, socket, fs, log, c
         
             if (commandInfo.guildOwnerOnly && !(message.author === message.guild.owner)) return message.delete({ timeout: 3000 }).catch();
         
-            const toLog = await commandInfo.run(client, message, args, commands, config, socket);
+            const toLog = await commandInfo.run(client, message, args, commands, config, socket, db) || [];
             onCooldown.add(message.author.id)
             setTimeout(() => {
                 onCooldown.delete(message.author.id);
             }, 2500)
+            /*
             if (!toLog) return;
             toLog.forEach(string => {
                 log(string, `command ${command}`);
             })
+            */
         }
     })
 }

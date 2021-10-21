@@ -42,10 +42,12 @@ module.exports = {
             await msg.react('✅');
             // Check for all channels that are more than 2 months old
             setInterval(async () => {
-                const channelID = await db.get("SELECT channel_id FROM application_channels WHERE (created_time < strftime('%s', 'now') - 60*60*24*30*2);");
-                const channel = client.channels.cache.get(channelID);
-                channel.delete();
-                await db.run("DELETE FROM application_channels WHERE channel_id = ?", channelID);
+                const channelID = await db.get("SELECT channel_id FROM application_channels WHERE (created_time < strftime('%s', 'now') - 60*60*24*30*2);").catch();
+                const channel = client.channels.cache.get(channelID).catch();
+                if (channel) {
+                    channel.delete();
+                    await db.run("DELETE FROM application_channels WHERE channel_id = ?", channelID);
+                }
             }, 1000*60*60*24)
         }
     }

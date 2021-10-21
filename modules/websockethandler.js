@@ -4,7 +4,7 @@ module.exports = function handleWebsocket(client, config, chatbridge, socket, fs
     const eventFiles = fs.readdirSync('./websocket').filter(file => file.endsWith('.js'));
     console.log(`Loading ${eventFiles.length} websocket event(s)`);
 
-    let events = new Map();
+    var events = new Map();
     for (i = 0; i < eventFiles.length; i++) {
         events.set(eventFiles[i].replace('.js', ''), require(`../websocket/${eventFiles[i]}`));
     }
@@ -33,7 +33,7 @@ module.exports = function handleWebsocket(client, config, chatbridge, socket, fs
         const event = events.get(data.type);
         
         const toLog = await event.run(data, chatbridge, client, config);
-        if (toLog === undefined) return;
+        if (toLog == undefined) return;
         toLog.forEach(string => {
             log(string, `websocket event ${command}`);
         })

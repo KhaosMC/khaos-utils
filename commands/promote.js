@@ -42,8 +42,12 @@ module.exports = {
             // Overwrite the permissions for the channel and change category to the archived apps.
             appChannel.overwritePermissions([
                 {
+                    id: config.memberRole,
+                    allow: ['VIEW_CHANNEL']
+                },
+                {
                 id: message.guild.roles.everyone,
-                deny: ['SEND_MESSAGES']
+                deny: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
                 }
             ]);
             appChannel.setParent(config.archivedApps);
@@ -65,10 +69,10 @@ module.exports = {
         // Promote user to full member if they have a member role
         if (toPromote.roles.cache.get(config.memberRole)) {
             // Fetch channel ID, delete it from db and discord
-            const appChannelID = await db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND NOT open LIMIT 1', toPromote.user.id);
-            const appChannel = message.guild.channels.cache.get(appChannelID.channel_id);
-            await db.run('DELETE FROM application_channels WHERE channel_id = ?;', appChannelID);
-            appChannel.delete();
+            const appChannelID = await db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND NOT open LIMIT 1;', toPromote.user.id);
+            const appChannel = message.guild.channels.cache.get(appChannelID.channel_id).catch(message.channel.send("Failed to fetch channel"));
+            await db.run('DELETE FROM application_channels WHERE channel_id = ?', appChannelID);
+            appChannel.delete().catch(message.channel.send("Failed to remove channel"));
             try {
                 toPromote.roles.remove(config.trialRole);
                 toPromote.roles.add(config.fullMemberRole);

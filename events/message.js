@@ -80,6 +80,10 @@ module.exports = {
                 fs.writeFileSync('./logs/authTokens', logTokens, err => {
                     if (err) return errors.push(err);
                 })
+                const applicant = message.embeds[0].fields[1].value.toString();
+                const user = message.guild.members.cache.find(u => u.user.tag === applicant);
+                if (!user) return message.guild.channels.cache.get(config.memberChannel).send(`Failed to get user for latest app.`);
+                else await db.run('UPDATE application_channels SET message_id = ? WHERE user_id = ? AND open;', message.id, user.id)
             }
         }    
     }
