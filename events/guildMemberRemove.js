@@ -15,9 +15,14 @@ module.exports = {
             limit: 1,
             type: 'MEMBER_KICK',
         });
-        const targetId = auditLog.entries.first().target.id.catch();
-        if (targetId === member.user.id.catch() && (Date.now() - auditLog.createdTimestamp) < 6000) return console.log(member.user.tag);
-        // If so, send the goodbye message
+        let targetId = null
+        let auditLogTimestamp = 0
+        if (auditLogs.entries.size !== 0) { 
+            targetId = auditLog.entries.first().target.id.catch();
+            auditLogTimestamp = auditLog.entries.first().createdTimestamp.catch();
+        }
+        if (targetId === member.user.id.catch() && (Date.now() - auditLogTimestamp) < 6000) return console.log(member.user.tag);
+        // If not, send the goodbye message
         welcomeChannel.send(`o/n't ${member.user.tag}`);
     }
 }
