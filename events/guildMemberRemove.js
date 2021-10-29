@@ -17,7 +17,7 @@ module.exports = {
         });
         let targetId = null
         let auditLogTimestamp = 0
-        if (auditLogs.entries.size !== 0) { 
+        if (auditLog.entries.size !== 0) { 
             targetId = auditLog.entries.first().target.id.catch();
             auditLogTimestamp = auditLog.entries.first().createdTimestamp.catch();
         }
