@@ -31,7 +31,7 @@ module.exports = {
             .setColor(message.guild.me.displayColor)
             .setFooter(message.author.tag, message.author.avatarURL())
             .setTimestamp();
-            statusMsg.edit('', embed);
+            statusMsg.edit({embeds: [embed]});
         } else {
             /*
             serverName = args[0].charAt(0).toUppercase() + args[0].slice(1).toLowerCase();
