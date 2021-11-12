@@ -2,6 +2,7 @@ const { Client, Intents } = require('discord.js');
 const WebSocket = require('ws');
 const sqlite3 = require('sqlite3');
 const sqlite = require('sqlite');
+const dotenv = require('dotenv');
 
 module.exports = {
     database: async function(commandsConfig) {
@@ -33,5 +34,9 @@ module.exports = {
         if (!commandsConfig.chatbridge) return;
         const socket = new WebSocket(process.env.chatbridgeUrl);
         return socket;
+    },
+    env: async function() {
+        dotenv.config();
+        return dotenv;
     }
 }
