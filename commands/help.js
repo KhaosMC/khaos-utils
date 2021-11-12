@@ -25,7 +25,7 @@ module.exports = {
                         } else if (command.guildOwnerOnly && !(message.author === message.guild.owner)) {
                             
                         } else {
-                            allCommands.push(`${config.prefix}${commandName} ${command.usage} - ${command.description}`)
+                            allCommands.push(`${bot.config.prefix}${commandName} ${command.usage} - ${command.description}`)
                         }
                     }
                 })
