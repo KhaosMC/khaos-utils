@@ -3,19 +3,21 @@ const log = require('./modules/logger');
 const init = require('./modules/init.js')
 
 async function initialize() {
-	const config = JSON.parse(fs.readFileSync('./config/config.json'));
-	const chatbridge = JSON.parse(fs.readFileSync('./config/chatbridge.json'));
-	const commandsConfig = JSON.parse(fs.readFileSync('./config/commands.json'));
+	var bot = {
+		fs: fs,
+		client: await init.discord(),
+		config: await JSON.parse(fs.readFileSync('./config/config.json')),
+                commandsConfig: await JSON.parse(fs.readFileSync('./config/commands.json')),
+		chatbridge: await JSON.parse(fs.readFileSync('./config/chatbridge.json'))
+	};
+	bot.db = await init.database(bot.commandsConfig);
+	bot.socket = await init.websocket(bot.commandsConfig, bot.client, bot.chatbridge);
 
-	const db = await init.database(commandsConfig);
-	const client = await init.discord();
-	const socket = await init.websocket(commandsConfig, client, chatbridge);
-
-	client.login(config.token);
+	bot.client.login(bot.config.token);
 	
-	require('./modules/commandhandler.js')(client, config, socket, fs, log, commandsConfig, db);
-	require('./modules/eventhandler')(client, config, socket, fs, log, db);
-	if (commandsConfig.chatbridge) require('./modules/websockethandler')(client, config, chatbridge, socket, fs, log);
+	require('./modules/commandhandler.js')(bot);
+	require('./modules/eventhandler')(bot);
+	if (bot.commandsConfig.chatbridge) require('./modules/websockethandler')(bot);
 }
 
 initialize();

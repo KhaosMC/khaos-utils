@@ -11,17 +11,18 @@ module.exports = {
         const bansArray = Array.from(bans.keys());
         if (bansArray.includes(member.user.id)) return;
         // Check if the user was kicked
-        const auditLog = await member.guild.fetchAuditLogs({
+        /* const auditLog = await member.guild.fetchAuditLogs({
             limit: 1,
             type: 'MEMBER_KICK',
         });
         let targetId = null
         let auditLogTimestamp = 0
         if (auditLog.entries.size !== 0) { 
-            targetId = auditLog.entries.first().target.id.catch();
-            auditLogTimestamp = auditLog.entries.first().createdTimestamp.catch();
+            targetId = auditLog.entries[0].target.id.catch();
+            auditLogTimestamp = auditLog.entries[0].createdTimestamp.catch();
         }
         if (targetId === member.user.id.catch() && (Date.now() - auditLogTimestamp) < 6000) return console.log(member.user.tag);
+        */
         // If not, send the goodbye message
         welcomeChannel.send(`o/n't ${member.user.tag}`);
     }

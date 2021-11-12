@@ -49,8 +49,8 @@ module.exports = {
                 id: message.guild.roles.everyone,
                 deny: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
                 }
-            ]);
-            appChannel.setParent(config.archivedApps);
+            ]).catch(err => console.log(err));
+            appChannel.setParent(config.archivedApps).catch(err => console.log(err));
 
             try {
                 toPromote.roles.add(config.trialRole);

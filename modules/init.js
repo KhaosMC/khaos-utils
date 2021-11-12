@@ -1,4 +1,4 @@
-const Discord = require('discord.js');
+const { Client, Intents } = require('discord.js');
 const WebSocket = require('ws');
 const sqlite3 = require('sqlite3');
 const sqlite = require('sqlite');
@@ -22,9 +22,10 @@ module.exports = {
 	return db;
     },
     discord: async function() {
-	const client = new Discord.Client({
-    		intents: Discord.Intents.ALL,
-    		partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+        const intents = new Intents();
+	intents.add(Intents.FLAGS.GUILDS, Intents.FLAGS.DIRECT_MESSAGES);
+	const client = new Client({
+    		intents: intents
 	});
 	return client;
     },
