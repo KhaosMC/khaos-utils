@@ -22,7 +22,7 @@ module.exports = async function handleCommand(bot) {
             
             if (commandInfo.guildOnly && !(message.guild)) return;
         
-            if (commandInfo.requiredPermission !== null && !(message.member.hasPermission(commandInfo.requiredPermission))) return message.delete({ timeout: 3000 }).catch();
+            if (commandInfo.requiredPermission !== null && !(message.member.permissions.has(commandInfo.requiredPermission))) return message.delete({ timeout: 3000 }).catch();
         
             if (commandInfo.guildOwnerOnly && !(message.author === message.guild.owner)) return message.delete({ timeout: 3000 }).catch();
         
