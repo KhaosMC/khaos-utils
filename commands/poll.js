@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const { memberRole } = require('../config/config.json');
 // Declaration for emotes used in the polls
 const agreeEmote = '780549171089637376';
 const disagreeEmote = '780549170770870292';
@@ -14,16 +13,16 @@ module.exports = {
     guildOnly: false,
     requiredPermission: null,
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
+    run: async (bot, message, args) => {
         message.delete().catch();
         // Declare constants
         const pollRelated = args.splice(1).join(' ').split(', ');
         const [options] = args;
         const [title, description, url] = pollRelated;
         // Verify that options & title is legitimate.
-        if (!(options > 1 && options < 10)) return message.channel.send('Your poll option is too big!').then(msg => msg.delete({timeout: 5000}));
-        if (!options) return message.channel.send("You're missing a poll option!").then(msg => msg.delete({timeout: 5000}));
-        if (!title) return message.channel.send("You're missing a poll question!").then(msg => msg.delete({timeout: 5000}));
+        if (!(options > 1 && options < 10)) return message.channel.send('Your poll option is too big!').then(msg => setTimeout(() => msg.delete(), 5000));
+        if (!options) return message.channel.send("You're missing a poll option!").then(msg => setTimeout(() => msg.delete(), 5000));
+        if (!title) return message.channel.send("You're missing a poll question!").then(msg => setTimeout(() => msg.delete(), 5000));
         // Create embed
         const embed = new MessageEmbed()
             .setTitle(title)
@@ -39,7 +38,7 @@ module.exports = {
             embed.setURL(url);
         }
         // Send poll message and wait for poll reactions
-        let pollMsg = await message.guild.channels.cache.get(config.pollChannel).send(embed);
+        let pollMsg = await message.guild.channels.cache.get(bot.config.pollChannel).send({embeds: [embed]});
         if (options === '2') {
             await pollMsg.react(agreeEmote);
             await pollMsg.react(disagreeEmote);
