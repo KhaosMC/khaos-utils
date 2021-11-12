@@ -31,7 +31,7 @@ module.exports = {
     },
     websocket: async function(commandsConfig, config, chatbridge) {
         if (!commandsConfig.chatbridge) return;
-        const socket = new WebSocket(chatbridge.server_url);
+        const socket = new WebSocket(process.env.chatbridgeUrl);
         return socket;
     }
 }
