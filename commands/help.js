@@ -20,7 +20,7 @@ module.exports = {
                     const command = commands.get(commandName);
 
                     if ((command.requiredRole === null || message.member.roles.cache.get(command.requiredRole)) && args[0] === command.commandGroup) {
-                        if (command.requiredPermission !== null && !(message.member.hasPermission(command.requiredPermission))) {
+                        if (command.requiredPermission !== null && !(message.member.permissions.has(command.requiredPermission))) {
 
                         } else if (command.guildOwnerOnly && !(message.author === message.guild.owner)) {
                             

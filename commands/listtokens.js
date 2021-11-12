@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const fs = require('fs');
 
 module.exports = {
     description: 'Lists all tokens in database',
@@ -7,17 +6,16 @@ module.exports = {
     commandGroup: 'applications',
     requiredRole: null,
     guildOnly: false,
-    requiredPermission: null,
+    requiredPermission: 'MANAGE_GUILD',
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
-        let authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8');
-        // const logTokens = authTokens.join('')
+    run: async (bot, message, args) => {
+        let authTokens = bot.fs.readFileSync('./logs/authTokens', 'UTF-8');
         const embed = new MessageEmbed()
         .setTitle('All tokens in database')
         .setColor(message.guild.me.displayColor)
         .setDescription(authTokens)
         .setFooter(message.author.tag, message.author.avatarURL())
-        message.channel.send(embed)
+        message.channel.send({embeds: [embed]});
 
     }
 }

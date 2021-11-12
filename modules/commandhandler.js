@@ -18,7 +18,7 @@ module.exports = async function handleCommand(bot) {
             if (onCooldown.has(message.author.id)) return;
             if (commandInfo.commandGroup !== null && !bot.commandsConfig[commandInfo.commandGroup]) return message.delete({ timeout: 3000 }).catch();
         
-            if (commandInfo.requiredRole !== null && !(message.member.roles.cache.get(commandInfo.requiredRole))) return message.delete({ timeout: 3000 }).catch();
+            // if (commandInfo.requiredRole !== null && !(message.member.roles.cache.get(commandInfo.requiredRole))) return message.delete({ timeout: 3000 }).catch();
             
             if (commandInfo.guildOnly && !(message.guild)) return;
         
