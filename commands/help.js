@@ -9,14 +9,14 @@ module.exports = {
     guildOnly: false,
     requiredPermission: null,
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
+    run: async (bot, message, args) => {
         let allCommands = [];
         let title;
         let footer;
             if (args[0] !== undefined) {
                 title = `Commands in group ${args[0]}!`
                 footer = '[] = required, () = optional'
-                commands.forEach((value, commandName, commands) => {
+                bot.commands.forEach((value, commandName, commands) => {
                     const command = commands.get(commandName);
 
                     if ((command.requiredRole === null || message.member.roles.cache.get(command.requiredRole)) && args[0] === command.commandGroup) {
@@ -31,7 +31,7 @@ module.exports = {
                 })
             } else {
                 title = 'Command categories!'
-                footer = `${config.prefix}help [command group] for commands inside each command group`
+                footer = `${bot.config.prefix}help [command group] for commands inside each command group`
                 allCommands = Object.keys(commandGroups)
             }
         // Message if user doesn't have any available commands in a command group.
@@ -39,10 +39,10 @@ module.exports = {
 
         const embed = new MessageEmbed()
         .setTitle(title)
-        .setDescription(allCommands)
+        .setDescription(allCommands.join("\n"))
         .setFooter(footer)
         .setColor(message.guild.me.displayColor)
 
-        message.channel.send(embed);
+        message.channel.send({embeds: [embed]});
     }
 }

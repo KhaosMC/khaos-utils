@@ -8,13 +8,13 @@ module.exports = {
     guildOnly: false,
     requiredPermission: null,
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
+    run: async (bot, message, args) => {
         const embed = new MessageEmbed()
         .setTitle('Pong! 🏓')
         .setColor(0x32CD32)
         .setDescription(Date.now() - message.createdTimestamp + 'ms')
         .setFooter(message.author.tag, message.author.avatarURL());
 
-        message.channel.send(embed);
+        message.channel.send({embeds: [embed]});
     }
 }
