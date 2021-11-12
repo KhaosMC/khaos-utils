@@ -10,6 +10,7 @@ async function initialize() {
 		client: await init.discord(),
 		config: await JSON.parse(fs.readFileSync('./config/config.json')),
                 commandsConfig: await JSON.parse(fs.readFileSync('./config/commands.json')),
+                tags: await JSON.parse(fs.readFileSync('./config/tags.json')),
 		chatbridge: await JSON.parse(fs.readFileSync('./config/chatbridge.json'))
 	};
 	bot.db = await init.database(bot.commandsConfig);
