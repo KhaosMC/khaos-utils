@@ -51,7 +51,7 @@ module.exports = {
                         "message": messagePayload
                     }
                 };
-                socket.send(JSON.stringify(data));
+                bot.socket.send(JSON.stringify(data));
             } catch (err) {
                 console.log(err)
             }
