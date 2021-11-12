@@ -30,7 +30,7 @@ npm i discord.js@13 ws fs moment crypto node-fetch@2 dotenv
 ```
 
 # Usage
-Modify the configs in `config` directory and .env file, then
+Modify the configs in `config` directory and copy `.env.example` to `.env` and modify it accordingly, then
 ```
 node index.js
 ```
