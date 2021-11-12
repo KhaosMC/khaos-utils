@@ -24,13 +24,12 @@ module.exports = {
             .setDescription('React to open an application')
             .setTimestamp();
 
-            const msg = await client.channels.cache.get(config.applicationMessage[0]).send(embed);
-            config.applicationMessage[1] = msg.id;
+            const msg = await bot.client.channels.cache.get(bot.config.applicationMessage[0]).send({embeds: [embed]});
+            bot.config.applicationMessage[1] = msg.id;
             await msg.react('✅');
-            bot.fs.writeFileSync('./config/config.json', JSON.stringify(config), err => {
+            bot.fs.writeFileSync('./config/config.json', JSON.stringify(bot.config, null, 2), err => {
                 if (err) throw err;
             });
-            process.exit();
         }
         if (bot.commandsConfig.applications) {
             // Clear reactions and readd bots

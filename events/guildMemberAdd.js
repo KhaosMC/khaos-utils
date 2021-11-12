@@ -1,6 +1,6 @@
 module.exports = {
     description: 'guildMemberAdd event',
-    run: async (client, config, socket, db, member) => {
+    run: async (bot, member) => {
         const welcomeChannel = member.guild.systemChannel;
         if (!welcomeChannel) return;
         welcomeChannel.send('o/');
