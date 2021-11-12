@@ -1,39 +1,23 @@
-const Discord = require('discord.js');
-const WebSocket = require('ws');
 const fs = require('fs');
-const log = require('./modules/logger')
+const log = require('./modules/logger');
+const init = require('./modules/init.js')
 
-const websocketFiles = fs.readdirSync('./websocket').filter(file => file.endsWith('.js'));
+async function initialize() {
+	var bot = {
+		fs: fs,
+		client: await init.discord(),
+		config: await JSON.parse(fs.readFileSync('./config/config.json')),
+                commandsConfig: await JSON.parse(fs.readFileSync('./config/commands.json')),
+		chatbridge: await JSON.parse(fs.readFileSync('./config/chatbridge.json'))
+	};
+	bot.db = await init.database(bot.commandsConfig);
+	bot.socket = await init.websocket(bot.commandsConfig, bot.client, bot.chatbridge);
 
-const config = JSON.parse(fs.readFileSync('./config/config.json'));
-const chatbridge = JSON.parse(fs.readFileSync('./config/chatbridge.json'));
-const commandsConfig = JSON.parse(fs.readFileSync('./config/commands.json'));
-const client = new Discord.Client();
-
-var socket;
-if (commandsConfig.chatbridge) { socket = new WebSocket(chatbridge.server_url) };
-
-client.login(config.token);
-
-require('./modules/commandhandler.js')(client, config, socket, fs, log);
-require('./modules/eventhandler')(client, config, socket, fs, log);
-if (commandsConfig.chatbridge) { require('./modules/websockethandler')(client, config, chatbridge, fs, log) }
-
-if (commandsConfig.chatbridge) {
-    socket.on('connect', function() {
-        const authData = {
-            "type": "auth",
-            "token": chatbridge.auth_token,
-            "client": {
-                "type": chatbridge.client_type,
-                "name": chatbridge.client_name
-            }
-        }
-        socket.send(JSON.stringify(authData));
-    });
-    
-    socket.on('message', function(message) {
-        const handler = require('./modules/websockethandler.js');
-        handler(message, websocketEvents, chatbridge, client, config);
-    })
+	bot.client.login(bot.config.token);
+	
+	require('./modules/commandhandler.js')(bot);
+	require('./modules/eventhandler')(bot);
+	if (bot.commandsConfig.chatbridge) require('./modules/websockethandler')(bot);
 }
+
+initialize();

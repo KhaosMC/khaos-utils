@@ -7,22 +7,22 @@ module.exports = {
     commandGroup: 'help',
     requiredRole: null,
     guildOnly: false,
-    requireManageGuild: false,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
-        var allCommands = [];
-        var title;
-        var footer;
-            if (args[0] != null) {
+        let allCommands = [];
+        let title;
+        let footer;
+            if (args[0] !== undefined) {
                 title = `Commands in group ${args[0]}!`
                 footer = '[] = required, () = optional'
                 commands.forEach((value, commandName, commands) => {
                     const command = commands.get(commandName);
 
-                    if ((command.requireRole == null || message.member.roles.cache.get(requiredRole)) && args[0] == command.commandGroup) {
-                        if (command.requireManageGuild && !(message.member.hasPermission('MANAGE_GUILD'))) {
-                            
-                        } else if (command.guildOwnerOnly && !(message.author == message.guild.owner)) {
+                    if ((command.requiredRole === null || message.member.roles.cache.get(command.requiredRole)) && args[0] === command.commandGroup) {
+                        if (command.requiredPermission !== null && !(message.member.hasPermission(command.requiredPermission))) {
+
+                        } else if (command.guildOwnerOnly && !(message.author === message.guild.owner)) {
                             
                         } else {
                             allCommands.push(`${config.prefix}${commandName} ${command.usage} - ${command.description}`)
@@ -34,6 +34,9 @@ module.exports = {
                 footer = `${config.prefix}help [command group] for commands inside each command group`
                 allCommands = Object.keys(commandGroups)
             }
+        // Message if user doesn't have any available commands in a command group.
+        if (allCommands.length === 0) allCommands.push("There are no commands available for you in this group.");
+
         const embed = new MessageEmbed()
         .setTitle(title)
         .setDescription(allCommands)

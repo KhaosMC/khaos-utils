@@ -7,10 +7,10 @@ module.exports = {
     commandGroup: 'applications',
     requiredRole: null,
     guildOnly: false,
-    requireManageGuild: true,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
-        var authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8');
+        let authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8');
         // const logTokens = authTokens.join('')
         const embed = new MessageEmbed()
         .setTitle('All tokens in database')

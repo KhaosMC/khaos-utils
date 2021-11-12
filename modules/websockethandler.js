@@ -9,27 +9,35 @@ module.exports = function handleWebsocket(client, config, chatbridge, socket, fs
         events.set(eventFiles[i].replace('.js', ''), require(`../websocket/${eventFiles[i]}`));
     }
 
-    socket.on('connect', function() {
+    socket.on('open', function() {
         const authData = {
             "type": "auth",
             "token": chatbridge.auth_token,
             "client": {
                 "type": chatbridge.client_type,
-                "name": chatbridge.client_name
+                "name": chatbridge.client_name,
+                "color": chatbridge.color
             }
         }
         socket.send(JSON.stringify(authData));
     });
 
+    socket.on('close', function() {
+        socket = new WebSocket(chatbridge.server_url);
+    })
+
     socket.on('message', async data => {
+        data = JSON.parse(data);
         if (!data.type) return;
-        if(!events.includes(data.type)) return;
+        if(!events.has(data.type)) return;
         const event = events.get(data.type);
         
-        const toLog = await event.run(client, message, args, commands, config);
+        const toLog = await event.run(data, chatbridge, client, config);
         if (toLog == undefined) return;
         toLog.forEach(string => {
             log(string, `websocket event ${command}`);
         })
     })
+
+    socket.on('err', async err => log(err))
 }

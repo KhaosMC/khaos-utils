@@ -1,24 +1,25 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
+const { fullMemberRole } = require('../config/config.json');
 
 
 module.exports = {
     description: 'Send application link with valid token in channel',
     usage: '',
     commandGroup: 'applications',
-    requiredRole: '760393585408999467',
+    requiredRole: fullMemberRole,
     guildOnly: false,
-    requireManageGuild: false,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         if(!fs.existsSync('./logs/authTokens')) {
             fs.closeSync(fs.openSync('./logs/authTokens', 'w'));
         }
 
-        var authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
-        if (authTokens[0] == '') { authTokens.slice(1) }
+        let authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
+        if (authTokens[0] === '') { authTokens.slice(1) }
         // Generate new auth token
-        var newAuthToken = require('crypto').randomBytes(32).toString('hex');
+        let newAuthToken = require('crypto').randomBytes(32).toString('hex');
         // If the token already exists create a new one
         if (authTokens.includes(newAuthToken)) {
             newAuthToken = require('crypto').randomBytes(32).toString('hex');

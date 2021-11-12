@@ -1,52 +1,55 @@
 const { MessageEmbed } = require('discord.js');
+const { memberRole } = require('../config/config.json');
+// Declaration for emotes used in the polls
+const agreeEmote = '780549171089637376';
+const disagreeEmote = '780549170770870292';
+const neutralEmote = '780548158068621355';
+const optionEmojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
 
 module.exports = {
     description: 'Start a poll',
     usage: '[options(2-9)] [title], (description), (url)',
-    commandGroup: 'poll',
-    requiredRole: '726562209617936414',
+    commandGroup: 'utils',
+    requiredRole: memberRole,
     guildOnly: false,
-    requireManageGuild: false,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
-        let reactionEmojis = ['780549171089637376', '780549170770870292', '780548158068621355'] // Agree, disagree, neutral
-        // Delete message and check for arguments, setup & check time and create embed for question.
         message.delete().catch();
-                
-        if (!(1 < args[0] && args[0] < 10)) return message.channel.send('Your poll option is too big!');
-
-        if (!args[0]) return message.channel.send("You're missing a poll option!");
-
-        let pollRelated = args.splice(1).join(' ').split(', ');
-
-        if (!pollRelated[0]) return message.channel.send("You're missing a poll question!");
+        // Declare constants
+        const pollRelated = args.splice(1).join(' ').split(', ');
+        const [options] = args;
+        const [title, description, url] = pollRelated;
+        // Verify that options & title is legitimate.
+        if (!(options > 1 && options < 10)) return message.channel.send('Your poll option is too big!').then(msg => msg.delete({timeout: 5000}));
+        if (!options) return message.channel.send("You're missing a poll option!").then(msg => msg.delete({timeout: 5000}));
+        if (!title) return message.channel.send("You're missing a poll question!").then(msg => msg.delete({timeout: 5000}));
+        // Create embed
         const embed = new MessageEmbed()
-            .setTitle(pollRelated[0])
+            .setTitle(title)
             .setColor(0x8DEEEE)
             .setFooter(message.author.username, message.author.avatarURL())
             .setTimestamp();
-
         // Add description if there is any
-        if (pollRelated[1]) {
-            embed.setDescription(pollRelated[1]);
+        if (description) {
+            embed.setDescription(description);
         }
         // Add url if there is any
-        if (pollRelated[2]) {
-            embed.setURL(pollRelated[2]);
+        if (url) {
+            embed.setURL(url);
         }
         // Send poll message and wait for poll reactions
         let pollMsg = await message.guild.channels.cache.get(config.pollChannel).send(embed);
-        if (args[0] == 2) {
-            await pollMsg.react(reactionEmojis[0]);
-            await pollMsg.react(reactionEmojis[1]);
-            await pollMsg.react(reactionEmojis[2]);
+        if (options === '2') {
+            await pollMsg.react(agreeEmote);
+            await pollMsg.react(disagreeEmote);
+            await pollMsg.react(neutralEmote);
         } else {
             // Add reactions if there's multiple options
-            let optionEmojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣']
-            for (let i = 0; i < args[0]; i++) {
+            for (let i = 0; i < options; i++) {
                 await pollMsg.react(optionEmojis[i]).catch();
             }
-            await pollMsg.react(reactionEmojis[2]);
+            await pollMsg.react(neutralEmote);
         }
     }
 }

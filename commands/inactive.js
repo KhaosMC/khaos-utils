@@ -1,12 +1,13 @@
 const { MessageEmbed } = require('discord.js');
+const { fullMemberRole } = require('../config/config.json');
 
 module.exports = {
     description: 'Declares inactive status',
     usage: '(reason)',
-    commandGroup: 'inactive',
-    requiredRole: '760393585408999467',
+    commandGroup: 'utils',
+    requiredRole: fullMemberRole,
     guildOnly: false,
-    requireManageGuild: false,
+    requiredPermission: null,
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         message.delete().catch();

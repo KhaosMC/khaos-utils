@@ -1,4 +1,3 @@
-const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
 
 module.exports = {
@@ -7,15 +6,15 @@ module.exports = {
     commandGroup: 'applications',
     requiredRole: null,
     guildOnly: false,
-    requireManageGuild: true,
+    requiredPermission: 'MANAGE_GUILD',
     guildOwnerOnly: false,
     run: async (client, message, args, commands, config) => {
         //check if they've sent a token with the command, if not return and send a message that they need to input a token
-        if (!args[0]) return message.channel.send('You need to input a token!');
+        if (!args[0]) return message.channel.send('You need to input a token!').then(msg => msg.delete({timeout: 5000}));
         message.delete().catch();
-        if (args[0] == 'all') return fs.writeFileSync('./logs/authTokens', '', message.guild.channels.cache.get(config.staffChannel).send(`${message.author.tag} removed all tokens`));
+        if (args[0] === 'all') return fs.writeFileSync('./logs/authTokens', '', message.guild.channels.cache.get(config.staffChannel).send(`${message.author.tag} removed all tokens`));
 
-        var authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
+        let authTokens = fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
         //else remove the specified token in the array
         const index = authTokens.indexOf(args[0]);
         if (index > -1) {
