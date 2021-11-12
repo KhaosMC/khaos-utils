@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const { memberRole } = require ('../config/config.json');
 // Declaration for emotes used in the polls
 const agreeEmote = '780549171089637376';
 const disagreeEmote = '780549170770870292';
