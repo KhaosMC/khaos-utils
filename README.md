@@ -1,3 +1,5 @@
+# Branch is under development and may be unstable!
+
 # khaos-utils
 bot for khaos
 
@@ -24,11 +26,19 @@ git clone https://github.com/KhaosMC/khaos-utils
 cd khaos-utils
 npm i sqlite3 --save
 npm i sqlite --save
+<<<<<<< HEAD
 npm i discord.js@12 ws fs moment crypto node-fetch@2
 ```
 
 # Usage
 Modify the configs in `config` directory, then
+=======
+npm i discord.js@13 ws fs moment crypto node-fetch@2 dotenv
+```
+
+# Usage
+Modify the configs in `config` directory and .env file, then
+>>>>>>> 929685b (Updating websocket)
 ```
 node index.js
 ```

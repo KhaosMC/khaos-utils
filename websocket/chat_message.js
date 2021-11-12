@@ -1,6 +1,6 @@
 module.exports = {
     description: 'Chat messages',
-    run: async (data, chatbridge, client, config) => {
+    run: async (data, bot) => {
         // Parse message to prevent discord markdown
         const discordMD = ['`', '*', '_', '~~', '||'];
         var message = data.payload.message;
@@ -8,6 +8,6 @@ module.exports = {
             message = message.replace(char, `\\${char}`)
         });
 
-        client.channels.cache.get(chatbridge.channel_id).send(`[${data.source.name}] <${data.payload.user.name}> ${message}`, {disableMentions: "everyone"});
+        bot.client.channels.cache.get(bot.chatbridge.channel_id).send(`[${data.source.name}] <${data.payload.user.name}> ${message}`, {disableMentions: "everyone"});
     }
 }
