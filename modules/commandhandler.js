@@ -7,8 +7,8 @@ module.exports = async function handleCommand(bot) {
     for (i = 0; i < bot.commandFiles.length; i++) {
         bot.commands.set(bot.commandFiles[i].replace('.js', ''), require(`../commands/${bot.commandFiles[i]}`));
     };
-
-    bot.client.on('message', async (message) => {
+    console.log(bot.client);
+    bot.client.on('messageCreate', async (message) => {
 	console.log("Made it here")
         if (message.content.startsWith(bot.config.prefix) && !(message.author.bot)) {
             const args = message.content.slice(bot.config.prefix.length).trim().split(/ +/);

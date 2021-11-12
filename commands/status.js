@@ -1,6 +1,5 @@
 const { MessageEmbed } = require('discord.js');
 const fetch = require('node-fetch');
-const servers = JSON.parse(require('fs').readFileSync('./config/servers.json'));
 
 module.exports = {
     description: 'Get status of servers',
@@ -10,7 +9,11 @@ module.exports = {
     guildOnly: false,
     requiredPermission: null,
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
+    run: async (bot, message, args) => {
+        servers = {
+            serverIps: process.env.serverIps.split(","),
+            serverNames: process.env.serverNames.split(",")
+        }
         if (servers.serverIps.length !== servers.serverNames.length) return message.channel.send('Amount of server names and ips are not the same!').then(msg => msg.delete({timeout: 5000}));
         if (args[0] === undefined) {
             let statusMsg = await message.channel.send('Retreiving server status..')
