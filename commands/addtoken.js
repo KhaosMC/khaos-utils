@@ -8,7 +8,7 @@ module.exports = {
     guildOnly: false,
     requiredPermission: "MANAGE_GUILD",
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
+    run: async (bot, message, args) => {
         let log = []
         if (!args[0]) return message.channel.send('You need to input a token!').then(msg => msg.delete({timeout: 5000}));
         message.delete().catch();
@@ -16,7 +16,7 @@ module.exports = {
             if (err) log.push(err);
         })
         // display a massage that the token has been added
-        message.guild.channels.cache.get(config.staffChannel).send(`${message.author.tag} added token ${args[0]}`);
+        message.guild.channels.cache.get(bot.config.staffChannel).send(`${message.author.tag} added token ${args[0]}`);
         log.push(`${message.author.tag} added token ${args[0]}`)
         return error;
     }

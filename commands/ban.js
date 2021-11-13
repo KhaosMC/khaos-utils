@@ -8,7 +8,7 @@ module.exports = {
     guildOnly: true,
     requiredPermission: 'BAN_MEMBERS',
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
+    run: async (bot, message, args) => {
         // Check permission and if person specified a user
         const toKick = message.mentions.members.first() || client.users.cache.get(args[0]);
         const reason = args.slice(1).join(" ");
@@ -32,14 +32,17 @@ module.exports = {
         .setDescription(`For ${reason}`)
         .setTimestamp();
 
-        await member.send(userEmbed).catch();
+
+
+        await member.send({embeds : [userEmbed]}).catch(err => console.log(err));
         // Try to kick, else state that it failed.
         try {
-            member.ban({reason: reason});
+            await member.ban({reason: reason});
         } catch {
             return message.channel.send("Failed to ban user. Maybe bad permissions?").then(msg => msg.delete({timeout:5000}));
         }
-        message.guild.channels.cache.get(config.staffChannel).send(staffEmbed);
+
+        message.guild.channels.cache.get(bot.config.staffChannel).send({embeds :[staffEmbed]});
         message.channel.send(`Successfully banned ${member.user.tag}`);
     }
 <<<<<<< HEAD

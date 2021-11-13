@@ -3,8 +3,8 @@ const { memberRole } = require('../config/config.json');
 
 async function isAppChannel(message, db) {
 	const isAppChannel = await db.get('SELECT 1 FROM application_channels WHERE channel_id = ? AND open LIMIT 1;', message.channel.id);
-	if (!isAppChannel) return false;
-	else return true;
+	if(!isAppChannel) return false;
+    else return true;
 }
 
 module.exports = {
@@ -15,30 +15,30 @@ module.exports = {
     guildOnly: true,
     requiredPermission: null,
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config, socket, db) => {
+    run: async (bot, message, args) => {
     const subcmd = args[0];
-	const userID = await db.get('SELECT user_id FROM application_channels WHERE channel_id = ? AND open LIMIT 1;', message.channel.id);
+	const userID = await bot.db.get('SELECT user_id FROM application_channels WHERE channel_id = ? AND open LIMIT 1;', message.channel.id);
 	const user = await message.guild.members.resolve(userID.user_id);
 	
     switch (subcmd) {
         case 'close': {
-            if (!message.member.hasPermission('MANAGE_GUILD')) break;
-            if (!isAppChannel(message, db)) break;
-            await db.get('UPDATE application_channels SET open = 0 WHERE user_id = ? AND open;', user.id);
-            message.channel.overwritePermissions([
+            if (!message.member.permissions.has('MANAGE_GUILD')) break;
+            if (!isAppChannel(message, bot.db)) break;
+            await bot.db.get('UPDATE application_channels SET open = 0 WHERE user_id = ? AND open;', user.id);
+            message.channel.permissionOverwrites([
                 {
                     id: message.guild.roles.everyone,
                     deny: ['SEND_MESSAGES'],
                 }
             ]).catch();
-            message.channel.setParent(config.archivedApps);
+            message.channel.setParent(bot.config.archivedApps);
 
             const embed = new MessageEmbed()
             .setTitle('Rejected application!')
             .setDescription('Your application has been rejected, you can reapply in 2 months.')
             .setTimestamp()
 
-            user.send(embed).catch();
+            user.send({embeds:[embed]}).catch();
             break;
         }
 	case 'user': {
@@ -56,7 +56,7 @@ module.exports = {
                 .setDescription(cmds.join('\n'))
                 .setFooter();
                 
-                message.channel.send(embed);
+                message.channel.send({embeds:[embed]});
             }
         }
     }

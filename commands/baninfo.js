@@ -8,9 +8,9 @@ module.exports = {
     guildOnly: true,
     requiredPermission: 'BAN_MEMBERS',
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
+    run: async (bot, message, args) => {
         // Fetch member and validate
-        const member = await client.users.fetch(args[0]);
+        const member = await bot.client.users.fetch(args[0]);
         if (!member) return message.channel.send("You need to specify a user!").then(msg => msg.delete({timeout: 5000}));
         // Fetch all bans and get the mentioned members
         const bannedMember = await message.guild.bans.fetch(member.id);
@@ -22,6 +22,6 @@ module.exports = {
         .setDescription(`${bannedMember.user.tag} was banned for ${bannedMember.reason}`)
         .setTimestamp();
 
-        message.channel.send(embed);
+        message.channel.send({embeds: [embed]});
     }
 }

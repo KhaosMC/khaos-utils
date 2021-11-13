@@ -8,9 +8,9 @@ module.exports = {
     guildOnly: true,
     requiredPermission: 'BAN_MEMBERS',
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
+    run: async (bot, message, args) => {
         // Check permission and if person specified a user
-        const toUnban = await client.users.fetch(args[0]);
+        const toUnban = await bot.client.users.fetch(args[0]);
         if(!toUnban) return message.channel.send("You need to specify a user!").then(msg => msg.delete({timeout: 5000}));
         // Setup embeds to be sent in staff channel and to the user
         const staffEmbed = new MessageEmbed()
@@ -21,11 +21,11 @@ module.exports = {
 
         // Try to kick, else state that it failed.
         try {
-            message.guild.members.unban(toUnban.id);
+            await message.guild.members.unban(toUnban.id);
         } catch {
             return message.channel.send("Failed to unban user. Maybe bad permissions?").then(msg => msg.delete({timeout: 5000}));
         }
-        message.guild.channels.cache.get(config.staffChannel).send(staffEmbed);
-        message.channel.send(`Successfully unbanned ${toUnban.user.tag}`);
+        message.guild.channels.cache.get(bot.config.staffChannel).send({embeds :[staffEmbed]});
+        message.channel.send(`Successfully unbanned ${toUnban.tag}`);
     }
 }
