@@ -10,7 +10,12 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         // Check permission and if person specified a user
-        const toUnban = await bot.client.users.fetch(args[0]);
+        let toUnban;
+        try{
+            toUnban = await bot.client.users.fetch(args[0]);}
+        catch {
+            return message.channel.send("Something went wrong").then(msg => setTimeout(() => msg.delete()), 5000);
+        }
         if(!toUnban) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()), 5000);
         // Setup embeds to be sent in staff channel and to the user
         const staffEmbed = new MessageEmbed()
