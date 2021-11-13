@@ -1,0 +1,14 @@
+{
+     "tags": [
+         "How do I apply?", 
+	 "Important role hierarchy",
+	 "Miscellaneous roles", 
+	 "Puzzles"
+     ],
+     "descriptions": [
+          "To apply to the server, you create a ticket in by reacting to the message in <#751474190095483040>. When your ticket has been opened, a member will generate an application link for you through me.", 
+	  "<@&740544739773775882> - Staff members\n<@&726562209617936414> - Collective role for inactive, trial and full members.\n<@&762918733425410108> - Inactive members\n<@&760393585408999467> - Full members\n<@&751694647730110564> - Trial Members\n<@&742025967522021483> - People with access to creative servers.\n<@&771058419524042762> - Members of the (shutdown) Beta Server", 
+	  "<@&806468216145838101> - Everyone with 1+ mil pickage usage on SMP.\n<@&815909473716928552> - The top 3 on pickage usage leaderboard.",
+	  "Puzzles are a fun individual challenge hosted by Ainsley. You start in <#890235638127919104> and work your way up. You begin by reading the messages and then attempt at sending the correct message. All attempts (even sucessful) will be deleted. Happy solving!"
+     ]
+}

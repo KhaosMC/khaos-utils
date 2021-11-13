@@ -11,10 +11,11 @@ async function initialize() {
 		config: await JSON.parse(fs.readFileSync('./config/config.json')),
                 commandsConfig: await JSON.parse(fs.readFileSync('./config/commands.json')),
                 tags: await JSON.parse(fs.readFileSync('./config/tags.json')),
-		chatbridge: await JSON.parse(fs.readFileSync('./config/chatbridge.json'))
+		chatbridge: await JSON.parse(fs.readFileSync('./config/chatbridge.json')),
+		bridge: require('./modules/requesthandler.js')
 	};
 	// Simple check to see if configs are valid, otherwise exit the process.
-	if (await validate.run(bot)) console.log("Validation failed!").then(process.exit());
+	// if (await validate.run(bot)) console.log("Validation failed!").then(process.exit());
 	
 	bot.db = await init.database(bot.commandsConfig);
 	bot.socket = await init.websocket(bot.commandsConfig, bot.client, bot.chatbridge);
