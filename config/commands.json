@@ -1,9 +1,9 @@
 {
-    "applications": true,
-    "help": true,
-    "utils": true,
-    "misc": true,
-    "moderation": true,
-    "commands": true,
-    "chatbridge": false
+  "applications": true,
+  "help": true,
+  "utils": true,
+  "misc": true,
+  "moderation": true,
+  "commands": true,
+  "chatbridge": false
 }
