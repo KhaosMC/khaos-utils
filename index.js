@@ -11,8 +11,7 @@ async function initialize() {
 		config: await JSON.parse(fs.readFileSync('./config/config.json')),
                 commandsConfig: await JSON.parse(fs.readFileSync('./config/commands.json')),
                 tags: await JSON.parse(fs.readFileSync('./config/tags.json')),
-		chatbridge: await JSON.parse(fs.readFileSync('./config/chatbridge.json')),
-		bridge: require('./modules/requesthandler.js')
+		chatbridge: await JSON.parse(fs.readFileSync('./config/chatbridge.json'))
 	};
 	// Simple check to see if configs are valid, otherwise exit the process.
 	if (await validate.run(bot)) process.exit();
