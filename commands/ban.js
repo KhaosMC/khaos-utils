@@ -39,7 +39,7 @@ module.exports = {
         try {
             await member.ban({reason: reason});
         } catch {
-            return message.channel.send("Failed to ban user. Maybe bad permissions?").then(msg => msg.delete({timeout:5000}));
+            return message.channel.send("Failed to ban user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()), 5000);
         }
 
         message.guild.channels.cache.get(bot.config.staffChannel).send({embeds :[staffEmbed]});

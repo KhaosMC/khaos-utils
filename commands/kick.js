@@ -13,8 +13,8 @@ module.exports = {
         const toKick = message.mentions.members.first() || client.users.cache.get(args[0]);
         const reason = args.slice(1).join(" ");
         const member = message.guild.members.resolve(toKick);
-        if(!member) return message.channel.send("You need to specify a user!").then(msg => msg.delete({timeout: 5000}));
-        if(member.permissions.has('KICK_MEMBERS')) return message.channel.send("You can't kick another staff member!").then(msg => msg.delete({timeout: 5000}));
+        if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()), 5000);
+        if(member.permissions.has('KICK_MEMBERS')) return message.channel.send("You can't kick another staff member!").then(msg => setTimeout(() => msg.delete()), 5000);
         // Setup embeds to be sent in staff channel and to the user
         const staffEmbed = new MessageEmbed()
         .setTitle(`Member kicked!`)
