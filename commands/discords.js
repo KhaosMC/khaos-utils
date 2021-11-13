@@ -10,11 +10,11 @@ module.exports = {
     guildOnly: true,
     requiredPermission: 'MANAGE_GUILD',
     guildOwnerOnly: false,
-    run: async (client, message, args, commands, config) => {
+    run: async (bot, message, args) => {
         message.delete().catch();
         const messageInfo = JSON.parse(fs.readFileSync('./config/featured.json'));
         // Check if we have a channel id and message id
-        if (!messageInfo.channelId) return message.channel.send("You need a channel id!").then(msg => setTimeout(() => msg.delete()), 5000);
+        if (!messageInfo.channelId) return message.channel.send("You need a channel id!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         // If we do not have a message id, send a temporary message that we can later on edit
         if (!messageInfo.messageId) {
             // Create an array for each server type

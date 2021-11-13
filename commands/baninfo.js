@@ -11,13 +11,13 @@ module.exports = {
     run: async (bot, message, args) => {
         // Fetch member and validate
         const member = await bot.client.users.fetch(args[0]);
-        if (!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()), 5000);
+        if (!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         // Fetch all bans and get the mentioned members
         let bannedMember
         try{
              bannedMember = await message.guild.bans.fetch(member.id);
         }catch{
-            return message.channel.send("User is not banned.").then(msg => setTimeout(() => msg.delete()), 5000);
+            return message.channel.send("User is not banned.").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         }
         //if (!bannedMember) return message.channel.send("User is not banned.").then(msg => msg.delete({timeout: 5000}));
         // Create embed with info and send it

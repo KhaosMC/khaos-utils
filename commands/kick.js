@@ -13,7 +13,7 @@ module.exports = {
         const toKick = message.mentions.members.first() || bot.client.users.cache.get(args[0]);
         const reason = args.slice(1).join(" ");
         const member = message.guild.members.resolve(toKick);
-        if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()), 5000);
+        if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         if(member.permissions.has('KICK_MEMBERS')) return message.channel.send("You can't kick another staff member!").then(msg => setTimeout(() => msg.delete()), 5000);
         // Setup embeds to be sent in staff channel and to the user
         const staffEmbed = new MessageEmbed()
@@ -33,7 +33,7 @@ module.exports = {
         try {
             await member.kick({reason: reason});
         } catch {
-            return message.channel.send("Failed to kick user. Maybe bad permissions?").then(msg => msg.delete({timeout: 5000}))
+            return message.channel.send("Failed to kick user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         }
         message.guild.channels.cache.get(bot.config.staffChannel).send({embeds :[staffEmbed]});
         message.channel.send(`Successfully kicked ${member.user.tag}`);
