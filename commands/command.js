@@ -19,13 +19,15 @@ module.exports = {
         switch (subcmd) {
             case 'list': {
                 let enabled = [];
+                let disabled = [];
                 const groups = Object.keys(bot.commandsConfig)
                 groups.forEach(group => {
                     if (bot.commandsConfig[group]) enabled.push(group);
+                    else disabled.push(group);
                 })
                 const embed = new MessageEmbed()
-                .setTitle('Active groups')
-                .setDescription(enabled.join(', '))
+                .addField('Enabled groups', enabled.join(', '))
+                .addField('Disabled groups', disabled.join(', '))
                 .setTimestamp()
 
                 message.channel.send({embeds: [embed]});
