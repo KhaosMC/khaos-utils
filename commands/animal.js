@@ -38,7 +38,7 @@ module.exports = {
             message.channel.send({embeds: embed})
         } else {
             message.channel.send("Unsupported animal! See `" + bot.config.prefix + "animal list`.").then(msg => {
-                setTimeout(() => msg.delete().catch(), 5000);
+                setTimeout(() => msg.delete().catch(), bot.config.deleteTimer);
             })
         }
     }

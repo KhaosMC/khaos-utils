@@ -13,12 +13,9 @@ module.exports = {
         const toKick = message.mentions.members.first() || bot.client.users.cache.get(args[0]);
         const reason = args.slice(1).join(" ");
         const member = message.guild.members.resolve(toKick);
-        if(!member) return message.channel.send("You need to specify a user!").then(msg => msg.delete({timeout: 5000}));
-<<<<<<< HEAD
-        if(member.hasPermission('BAN_MEMBERS')) return message.channel.send("You can't ban another staff member!").then(msg => msg.delete({timeout: 5000}));
-=======
         if(member.permissions.has('BAN_MEMBERS')) return message.channel.send("You can't ban another staff member!").then(msg => msg.delete({timeout: 5000}));
->>>>>>> fa6ef88 (More efforts:tm:)
+        if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
+        if(member.permissions.has('BAN_MEMBERS')) return message.channel.send("You can't ban another staff member!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         // Setup embeds to be sent in staff channel and to the user
         const staffEmbed = new MessageEmbed()
         .setTitle(`Member banned!`)
@@ -39,14 +36,10 @@ module.exports = {
         try {
             await member.ban({reason: reason});
         } catch {
-            return message.channel.send("Failed to ban user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()), 5000);
+            return message.channel.send("Failed to ban user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
         }
 
         message.guild.channels.cache.get(bot.config.staffChannel).send({embeds :[staffEmbed]});
         message.channel.send(`Successfully banned ${member.user.tag}`);
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> fa6ef88 (More efforts:tm:)

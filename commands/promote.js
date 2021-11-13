@@ -15,9 +15,7 @@ module.exports = {
         let toPromote = message.mentions.members.first();
         //check if they mentioned a user, if not return and display message
         if (!toPromote) {
-            message.channel.send('You need to mention a user to promote!').then(msg => {
-                setTimeout(() => msg.delete(), 5000);
-            });
+            message.channel.send('You need to mention a user to promote!').then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         }
         
 
@@ -60,9 +58,7 @@ module.exports = {
                 message.guild.channels.cache.get(bot.config.memberChannel).send({embeds: [trial]});
             } catch {
                 //if the bot doesnt have access to add roles display this error message
-                message.channel.send(`Oopsie! Failed to add roles. Please check my permissions.`).then(msg => {
-                    setTimeout(() => msg.delete(), 5000);
-                });
+                message.channel.send(`Oopsie! Failed to add roles. Please check my permissions.`).then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
             }
             return;
         }
@@ -81,9 +77,7 @@ module.exports = {
                 message.guild.channels.cache.get(bot.config.memberChannel).send({embeds: [fullMember]});
             } catch {
                 //if the bot doesnt have access to add roles display this error message
-                message.channel.send(`Oopsie! Failed to remove roles. Please check my permissions.`).then(msg => {
-                    setTimeout(() => msg.delete(), 5000);
-                })
+                message.channel.send(`Oopsie! Failed to remove roles. Please check my permissions.`).then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
             }
             return;
         }
