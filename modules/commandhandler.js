@@ -16,15 +16,45 @@ module.exports = async function handleCommand(bot) {
             const commandInfo = bot.commands.get(command);
         
             if (onCooldown.has(message.author.id)) return;
-            if (commandInfo.commandGroup !== null && !bot.commandsConfig[commandInfo.commandGroup]) return message.delete({ timeout: 3000 }).catch();
+            if (commandInfo.commandGroup !== null && !bot.commandsConfig[commandInfo.commandGroup]) {
+               message.channel.send("Command is disabled.").then(msg => setTimeout(() => {
+                   msg.delete().catch();
+                   message.delete().catch();
+               }, bot.config.deleteTimer));
+               return;
+            };
         
-            // if (commandInfo.requiredRole !== null && !(message.member.roles.cache.get(commandInfo.requiredRole))) return message.delete({ timeout: 3000 }).catch();
+            if (commandInfo.requiredRole !== null && !(message.member.roles.cache.get(commandInfo.requiredRole))) {
+               message.channel.send("You do not have the required role.").then(msg => setTimeout(() => {
+                   msg.delete().catch();
+                   message.delete().catch();
+               }, bot.config.deleteTimer));
+               return;
+            };
             
-            if (commandInfo.guildOnly && !(message.guild)) return;
+            if (commandInfo.guildOnly && !(message.guild)) {
+               message.channel.send("This command is guild only.").then(msg => setTimeout(() => {
+                   msg.delete().catch();
+                   message.delete().catch();
+               }, bot.config.deleteTimer));
+               return;
+            };
         
-            if (commandInfo.requiredPermission !== null && !(message.member.permissions.has(commandInfo.requiredPermission))) return message.delete({ timeout: 3000 }).catch();
+            if (commandInfo.requiredPermission !== null && !(message.member.permissions.has(commandInfo.requiredPermission))) {
+               message.channel.send("You do not have the required permission.").then(msg => setTimeout(() => {
+                   msg.delete().catch();
+                   message.delete().catch();
+               }, bot.config.deleteTimer));
+               return;
+            };
         
-            if (commandInfo.guildOwnerOnly && !(message.author === message.guild.owner)) return message.delete({ timeout: 3000 }).catch();
+            if (commandInfo.guildOwnerOnly && !(message.author === message.guild.owner)) {
+               message.channel.send("This command is guild owner only.").then(msg => setTimeout(() => {
+                   msg.delete().catch();
+                   message.delete().catch();
+               }, bot.config.deleteTimer));
+               return;
+            };
         
             await commandInfo.run(bot, message, args)
             onCooldown.add(message.author.id)

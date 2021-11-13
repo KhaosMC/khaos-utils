@@ -12,5 +12,6 @@
   "applicationChannel": "908669374699827221",
   "staffChannel": "908668267042861116",
   "pollChannel": "908669374699827221",
-  "memberChannel": "908669233553084416"
+  "memberChannel": "908669233553084416",
+  "deleteTimer": 5000
 }
