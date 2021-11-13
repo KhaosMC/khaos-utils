@@ -25,6 +25,6 @@ module.exports = {
         if (targetId === member.user.id && (Date.now() - auditLogTimestamp) < 6000) return console.log(member.user.tag);
 
         // If not, send the goodbye message
-        welcomeChannel.send(`o/n't ${member.user.tag}`);
+        await welcomeChannel.send(`o/n't ${member.user.tag}`);
     }
 }
