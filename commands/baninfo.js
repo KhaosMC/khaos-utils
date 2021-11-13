@@ -24,7 +24,8 @@ module.exports = {
         const embed = new MessageEmbed()
         .setTitle(member.id)
         .setColor(0xff0000)
-        .setDescription(`${bannedMember.user.tag} was banned for ${bannedMember.reason}`)
+        .addField('User', bannedMember.user.tag)
+        .addField('Reason', bannedMember.reason)
         .setTimestamp();
 
         message.channel.send({embeds: [embed]});
