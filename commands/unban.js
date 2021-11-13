@@ -21,7 +21,8 @@ module.exports = {
         const staffEmbed = new MessageEmbed()
         .setTitle(`${toUnban.tag} unbanned!`)
         .setColor(0x00ff00)
-        .setDescription(`${toUnban.tag} was unbanned by ${message.author.tag}`)
+        .addField('User', toUnban.tag)
+        .addField('Author', message.author.tag)
         .setTimestamp();
 
         // Try to kick, else state that it failed.
