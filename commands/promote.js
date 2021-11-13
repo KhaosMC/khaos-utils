@@ -38,13 +38,13 @@ module.exports = {
         // Promote user to trial and add member role if they dont have a member role
         if (!toPromote.roles.cache.get(bot.config.memberRole)) {
             // Grab the channel ID from database and get the channel object
-            const appChannelID = await db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND open LIMIT 1;', toPromote.user.id);
-            await db.get('UPDATE application_channels SET open = 0 WHERE user_id = ? AND open;', toPromote.user.id);
+            const appChannelID = await bot.db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND open LIMIT 1;', toPromote.user.id);
+            await bot.db.get('UPDATE application_channels SET open = 0 WHERE user_id = ? AND open;', toPromote.user.id);
             const appChannel = message.guild.channels.cache.get(appChannelID.channel_id);
             // Overwrite the permissions for the channel and change category to the archived apps.
-            appChannel.overwritePermissions([
+            appChannel.permission_overwrites([
                 {
-                    id: config.memberRole,
+                    id: bot.config.memberRole,
                     allow: ['VIEW_CHANNEL']
                 },
                 {
@@ -73,7 +73,7 @@ module.exports = {
             // Fetch channel ID, delete it from db and discord
             const appChannelID = await db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND NOT open LIMIT 1;', toPromote.user.id);
             const appChannel = message.guild.channels.cache.get(appChannelID.channel_id).catch(message.channel.send("Failed to fetch channel"));
-            await db.run('DELETE FROM application_channels WHERE channel_id = ?', appChannelID);
+            await bot.db.run('DELETE FROM application_channels WHERE channel_id = ?', appChannelID);
             appChannel.delete().catch(message.channel.send("Failed to remove channel"));
             try {
                 toPromote.roles.remove(bot.config.trialRole);
