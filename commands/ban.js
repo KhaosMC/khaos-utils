@@ -21,6 +21,7 @@ module.exports = {
         .setTitle(`Member banned!`)
         .setColor(0xff0000)
         .addField('User', member.user.tag)
+        .addField('Author', message.author.tag)
         .addField('Reason', reason)
         .setTimestamp();
 
