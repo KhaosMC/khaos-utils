@@ -15,7 +15,7 @@ async function initialize() {
 		bridge: require('./modules/requesthandler.js')
 	};
 	// Simple check to see if configs are valid, otherwise exit the process.
-	// if (await validate.run(bot)) console.log("Validation failed!").then(process.exit());
+	if (await validate.run(bot)) process.exit();
 	
 	bot.db = await init.database(bot.commandsConfig);
 	bot.socket = await init.websocket(bot.commandsConfig, bot.client, bot.chatbridge);
