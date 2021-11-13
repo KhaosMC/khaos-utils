@@ -19,7 +19,8 @@ module.exports = {
         const staffEmbed = new MessageEmbed()
         .setTitle(`Member kicked!`)
         .setColor(0xff0000)
-        .setDescription(`${member.user.tag} was kicked by ${message.author.tag} for ${reason}`)
+        .addField('User', member.user.tag)
+        .addField('Reason', reason)
         .setTimestamp();
 
         const userEmbed = new MessageEmbed()
