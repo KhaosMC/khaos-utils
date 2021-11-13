@@ -21,7 +21,7 @@ module.exports = {
                     if ((command.requiredRole === null || message.member.roles.cache.get(command.requiredRole)) && args[0] === command.commandGroup) {
                         if (command.requiredPermission !== null && !(message.member.permissions.has(command.requiredPermission))) {
 
-                        } else if (command.guildOwnerOnly && !(message.author === message.guild.owner) || !(bot.commandsConfig[command.commandGroup])) {
+                        } else if ((command.guildOwnerOnly && !(message.author === message.guild.owner)) ||  !bot.commandsConfig[command.commandGroup]) {
                             
                         } else {
                             allCommands.push(`${bot.config.prefix}${commandName} ${command.usage} - ${command.description}`)
@@ -31,7 +31,7 @@ module.exports = {
             } else {
                 title = 'Command categories!'
                 footer = `${bot.config.prefix}help [command group] for commands inside each command group`
-                allCommands = Object.keys(commandGroups)
+                allCommands = Object.keys(bot.commandsConfig)
             }
         // Message if user doesn't have any available commands in a command group.
         if (allCommands.length === 0) allCommands.push("There are no commands available for you in this group.");
