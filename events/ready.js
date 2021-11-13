@@ -9,11 +9,13 @@ module.exports = {
         
         // Send client_connection when bot starts up
         if (bot.commandsConfig.chatbridge) {
-        const data = {
-            "type": "client_connection",
-            "targets": [],
+        setTimeout(() => {
+            const data = {
+                "type": "client_connection",
+            	"targets": [],
             }
-        bot.socket.send(JSON.stringify(data));
+            bot.socket.send(JSON.stringify(data));
+        }, 5000);
         }
         // Check if there's a message to react to, else, send a new embed, store the msg id and exit the bot
         if (!bot.config.applicationMessage[1] && bot.commandsConfig.applications) {

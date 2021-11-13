@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const commandGroups = JSON.parse(require('fs').readFileSync('./config/commands.json'))
 
 module.exports = {
     description: 'Help command',
@@ -22,7 +21,7 @@ module.exports = {
                     if ((command.requiredRole === null || message.member.roles.cache.get(command.requiredRole)) && args[0] === command.commandGroup) {
                         if (command.requiredPermission !== null && !(message.member.permissions.has(command.requiredPermission))) {
 
-                        } else if (command.guildOwnerOnly && !(message.author === message.guild.owner)) {
+                        } else if (command.guildOwnerOnly && !(message.author === message.guild.owner) || !(bot.commandsConfig[command.commandGroup])) {
                             
                         } else {
                             allCommands.push(`${bot.config.prefix}${commandName} ${command.usage} - ${command.description}`)
