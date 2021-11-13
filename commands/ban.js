@@ -10,7 +10,7 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         // Check permission and if person specified a user
-        const toKick = message.mentions.members.first() || client.users.cache.get(args[0]);
+        const toKick = message.mentions.members.first() || bot.client.users.cache.get(args[0]);
         const reason = args.slice(1).join(" ");
         const member = message.guild.members.resolve(toKick);
         if(!member) return message.channel.send("You need to specify a user!").then(msg => msg.delete({timeout: 5000}));
