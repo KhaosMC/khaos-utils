@@ -1,5 +1,5 @@
 {
-    "applications": false,
+    "applications": true,
     "help": true,
     "utils": true,
     "misc": true,
