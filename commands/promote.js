@@ -66,7 +66,7 @@ module.exports = {
         // Promote user to full member if they have a member role
         if (toPromote.roles.cache.get(bot.config.memberRole)) {
             // Fetch channel ID, delete it from db and discord
-            const appChannelID = await db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND NOT open LIMIT 1;', toPromote.user.id);
+            const appChannelID = await bot.db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND NOT open LIMIT 1;', toPromote.user.id);
             const appChannel = message.guild.channels.cache.get(appChannelID.channel_id).catch(message.channel.send("Failed to fetch channel"));
             appChannel.delete().catch(message.channel.send("Failed to remove channel"));
             await bot.db.run('DELETE FROM application_channels WHERE channel_id = ?', appChannelID);
