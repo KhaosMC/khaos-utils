@@ -15,7 +15,7 @@ module.exports = {
             // If they're not a member and don't have an app, proceed
             if (/*!hasApp &&*/ !(member.roles.cache.get(bot.config.memberRole))) {
                 // Create channel with the applicant's username, then let them + members read it.
-                const appChannel = await messageReaction.message.guild.channels.create('bruh', {
+                const appChannel = await messageReaction.message.guild.channels.create(user.username, {
                     type: 'GUILD_TEXT',
                     permissionOverwrites: [
                         {
