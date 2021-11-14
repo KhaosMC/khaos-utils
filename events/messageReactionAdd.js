@@ -7,7 +7,6 @@ const commandsConfig = JSON.parse(fs.readFileSync('./config/commands.json'));
 module.exports = {
     description: 'messageReactionAdd event',
     run: async (bot, messageReaction, user) => {
-        console.log("hiiiiii");
         // Check if it's the app message, if apps are enabled and the user isn't a bot
         if (messageReaction.message.id === bot.config.applicationMessage[1] /*&& bot.commandsConfig.applications*/ && !user.bot) {
             // Resolve the user and check if they have an app
@@ -15,7 +14,6 @@ module.exports = {
             const hasApp = await bot.db.get('SELECT 1 FROM application_channels WHERE user_id = ? AND open LIMIT 1;', user.id);
             // If they're not a member and don't have an app, proceed
             if (/*!hasApp &&*/ !(member.roles.cache.get(bot.config.memberRole))) {
-                console.log("hi");
                 // Create channel with the applicant's username, then let them + members read it.
                 const appChannel = await messageReaction.message.guild.channels.create('bruh', {
                     type: 'GUILD_TEXT',
