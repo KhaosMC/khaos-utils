@@ -39,14 +39,14 @@ module.exports = {
             const appChannelID = await bot.db.get('SELECT channel_id FROM application_channels WHERE user_id = ? AND open LIMIT 1;', toPromote.user.id);
             const appChannel = message.guild.channels.cache.get(appChannelID.channel_id);
             // Overwrite the permissions for the channel and change category to the archived apps.
-            appChannel.permission_overwrites([
+            appChannel.permissionOverwrites.set([
                 {
                     id: bot.config.memberRole,
                     allow: ['VIEW_CHANNEL']
                 },
                 {
                 id: message.guild.roles.everyone,
-                deny: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
+                deny: ['SEND_MESSAGES', 'VIEW_CHANNEL']
                 }
             ]).catch(err => console.log(err));
             appChannel.setParent(bot.config.archivedApps).catch(err => console.log(err));
