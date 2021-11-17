@@ -10,7 +10,7 @@ module.exports = {
                         bot.onlinePlayers[data.source.name].push(data.payload.user);
                     } else if (!data.payload.event.connect) {
                         bot.client.channels.cache.get(bot.chatbridge.channel_id).send(`[${data.source.name}] ${data.payload.user.name} left the game`)
-                        bot.onlinePlayers[data.source.name] = bot.onlinePlayers[data.source.name].filter(user => user.name !== 'Trainsley69');
+                        bot.onlinePlayers[data.source.name] = bot.onlinePlayers[data.source.name].filter(user => user.name !== data.payload.user.name);
                     }
                 }
                 break;
