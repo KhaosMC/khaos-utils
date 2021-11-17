@@ -8,7 +8,6 @@ module.exports = function handleWebsocket(bot) {
     for (i = 0; i < bot.websocketFiles.length; i++) {
         events.set(bot.websocketFiles[i].replace('.js', ''), require(`../websocket/${bot.websocketFiles[i]}`));
     }
-    const client_name_const = bot.chatbridge.client_name;
     bot.socket.on('open', function() {
         console.log("Whoop whoop, we opened!")
         const authData = {
