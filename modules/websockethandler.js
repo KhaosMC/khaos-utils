@@ -9,7 +9,6 @@ module.exports = function handleWebsocket(bot) {
         events.set(bot.websocketFiles[i].replace('.js', ''), require(`../websocket/${bot.websocketFiles[i]}`));
     }
     bot.socket.on('open', function() {
-        console.log("Whoop whoop, we opened!")
         const authData = {
             "type": "auth",
             "token": process.env.chatbridgeToken,
@@ -19,9 +18,8 @@ module.exports = function handleWebsocket(bot) {
                 "color": bot.chatbridge.color
             }
         }
-        console.log(bot.chatbridge.client_type)
         bot.socket.send(JSON.stringify(authData));
-        /*
+        
 	setTimeout(() => {
     	const requestOnlinePlayers = {
             "type": "request",
@@ -32,14 +30,11 @@ module.exports = function handleWebsocket(bot) {
             	}
         }
         bot.socket.send(JSON.stringify(requestOnlinePlayers));
-	}, 10000);
-	bot.onlinePlayers = {}; */
+	}, 3000);
+	bot.onlinePlayers = {};
     });
 
     bot.socket.on('close', function(data, reason) {
-        console.log(data)
-        console.log(reason.toString());
-        console.log("Oh no, we closed ):");
         bot.socket = new WebSocket(process.env.chatbridgeUrl);
     })
 
@@ -48,7 +43,6 @@ module.exports = function handleWebsocket(bot) {
         if (!data.type) return;
         if(!events.has(data.type)) return;
         const event = events.get(data.type);
-        console.log(data.type)
         await event.run(data, bot);
     })
 
