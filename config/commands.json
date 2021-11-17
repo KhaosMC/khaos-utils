@@ -5,5 +5,5 @@
   "misc": true,
   "moderation": true,
   "commands": true,
-  "chatbridge": false
+  "chatbridge": true
 }
