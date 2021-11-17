@@ -8,18 +8,19 @@ module.exports = function handleWebsocket(bot) {
     for (i = 0; i < bot.websocketFiles.length; i++) {
         events.set(bot.websocketFiles[i].replace('.js', ''), require(`../websocket/${bot.websocketFiles[i]}`));
     }
+    const client_name_const = bot.chatbridge.client_name;
     bot.socket.on('open', function() {
         console.log("Whoop whoop, we opened!")
         const authData = {
             "type": "auth",
             "token": process.env.chatbridgeToken,
             "client": {
-                "type": bot.socket.client_type, //.client_type,
-                "name": bot.socket.client_name,
+                "type": "Discord", //.client_type,
+                "name": "Testbot",
                 "color": bot.chatbridge.color
             }
         }
-        //console.log(bot.chatbridge.client_type)
+        console.log(bot.chatbridge.client_type)
         bot.socket.send(JSON.stringify(authData));
         /*
 	setTimeout(() => {
