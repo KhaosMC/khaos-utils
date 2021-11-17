@@ -37,7 +37,13 @@ module.exports = {
                         messagePayload += `[${attachment.name}] `
                     })
                 }
-
+                // Show messages that are replies
+                if (message.reference) {
+                    let repliedMsg = await message.channel.messages.fetch(message.reference.messageId);
+                    let repliedContent = repliedMsg.content;
+                    repliedContent = repliedContent.slice(0, 40 - repliedMsg.author.username.length) + "..."
+                    messagePayload = `{Reply to ${repliedMsg.author.username}: ${repliedContent}} ${messagePayload}`
+                }
                 const data = {
                     "type": "chat_message",
                     "targets": [],
