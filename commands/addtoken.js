@@ -1,4 +1,5 @@
 const fs = require('fs');
+const {Permissions} = require("discord.js");
 
 module.exports = {
     description: 'Adds token to database',
@@ -6,7 +7,7 @@ module.exports = {
     commandGroup: 'applications',
     requiredRole: null,
     guildOnly: false,
-    requiredPermission: "MANAGE_GUILD",
+    requiredPermission: Permissions.FLAGS.MANAGE_GUILD,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         let log = []

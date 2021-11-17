@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions} = require('discord.js');
 const fs = require('fs');
 const fetch = require('node-fetch');
 
@@ -8,7 +8,7 @@ module.exports = {
     commandGroup: 'utils',
     requiredRole: null,
     guildOnly: true,
-    requiredPermission: 'MANAGE_GUILD',
+    requiredPermission: Permissions.FLAGS.MANAGE_GUILD,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         message.delete().catch();

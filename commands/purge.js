@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions} = require('discord.js');
 
 module.exports = {
     description: 'Purges an amount of messages.',
@@ -6,7 +6,7 @@ module.exports = {
     commandGroup: 'moderation',
     requiredRole: null,
     guildOnly: false,
-    requiredPermission: 'MANAGE_MESSAGES',
+    requiredPermission: Permissions.FLAGS.MANAGE_MESSAGES,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         const amount = parseInt(args[0]) + 1;
