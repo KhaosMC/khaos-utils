@@ -14,11 +14,12 @@ module.exports = function handleWebsocket(bot) {
             "type": "auth",
             "token": process.env.chatbridgeToken,
             "client": {
-                "type": bot.chatbridge.client_type,
-                "name": bot.chatbridge.client_name,
+                "type": bot.socket.client_type, //.client_type,
+                "name": bot.socket.client_name,
                 "color": bot.chatbridge.color
             }
         }
+        //console.log(bot.chatbridge.client_type)
         bot.socket.send(JSON.stringify(authData));
         /*
 	setTimeout(() => {
@@ -50,6 +51,7 @@ module.exports = function handleWebsocket(bot) {
         console.log(data.type)
         // await event.run(data, bot);
     })
+
     bot.socket.on('error', async err => {
         console.log(err)
     })
