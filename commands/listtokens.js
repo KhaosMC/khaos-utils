@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions} = require('discord.js');
 
 module.exports = {
     description: 'Lists all tokens in database',
@@ -6,7 +6,7 @@ module.exports = {
     commandGroup: 'applications',
     requiredRole: null,
     guildOnly: false,
-    requiredPermission: 'MANAGE_GUILD',
+    requiredPermission: Permissions.FLAGS.MANAGE_GUILD,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         let authTokens = bot.fs.readFileSync('./logs/authTokens', 'UTF-8');

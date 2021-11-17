@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions} = require('discord.js');
 
 module.exports = {
     description: 'Lists info about someones ban',
@@ -6,7 +6,7 @@ module.exports = {
     commandGroup: 'moderation',
     requiredRole: null,
     guildOnly: true,
-    requiredPermission: 'BAN_MEMBERS',
+    requiredPermission: Permissions.FLAGS.BAN_MEMBERS,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         // Fetch member and validate

@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions} = require('discord.js');
 
 module.exports = {
     description: 'Kicks a user from the guild',
@@ -6,7 +6,7 @@ module.exports = {
     commandGroup: 'moderation',
     requiredRole: null,
     guildOnly: true,
-    requiredPermission: 'KICK_MEMBERS',
+    requiredPermission: Permissions.FLAGS.KICK_MEMBERS,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         // Check permission and if person specified a user
@@ -15,7 +15,7 @@ module.exports = {
         if (!reason) reason = 'Unknown';
         const member = message.guild.members.resolve(toKick);
         if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
-        if(member.permissions.has('KICK_MEMBERS')) return message.channel.send("You can't kick another staff member!").then(msg => setTimeout(() => msg.delete()), 5000);
+        if(member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return message.channel.send("You can't kick another staff member!").then(msg => setTimeout(() => msg.delete()), 5000);
         // Setup embeds to be sent in staff channel and to the user
         const staffEmbed = new MessageEmbed()
         .setTitle(`Member kicked!`)

@@ -1,10 +1,11 @@
+const {Permissions} = require("discord.js");
 module.exports = {
     description: 'Removes token from database',
     usage: '[token|all]',
     commandGroup: 'applications',
     requiredRole: null,
     guildOnly: false,
-    requiredPermission: 'MANAGE_GUILD',
+    requiredPermission: Permissions.FLAGS.MANAGE_GUILD,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         //check if they've sent a token with the command, if not return and send a message that they need to input a token

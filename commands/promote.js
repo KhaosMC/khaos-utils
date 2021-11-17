@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions} = require('discord.js');
 
 module.exports = {
     description: 'Promote user to full or trial member',
@@ -6,7 +6,7 @@ module.exports = {
     commandGroup: 'utils',
     requiredRole: null,
     guildOnly: false,
-    requiredPermission: 'MANAGE_GUILD',
+    requiredPermission: Permissions.FLAGS.MANAGE_GUILD,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         // Delete users message, check if a user was mentioned
@@ -42,11 +42,11 @@ module.exports = {
             appChannel.permissionOverwrites.set([
                 {
                     id: bot.config.memberRole,
-                    allow: ['VIEW_CHANNEL']
+                    allow: [Permissions.FLAGS.VIEW_CHANNEL]
                 },
                 {
                 id: message.guild.roles.everyone,
-                deny: ['SEND_MESSAGES', 'VIEW_CHANNEL']
+                deny: [Permissions.FLAGS.SEND_MESSAGES, Permissions.FLAGS.VIEW_CHANNEL]
                 }
             ]).catch(err => console.log(err));
             appChannel.setParent(bot.config.archivedApps).catch(err => console.log(err));

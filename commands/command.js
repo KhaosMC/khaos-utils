@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions} = require('discord.js');
 
 module.exports = {
     description: 'Enable/disable commands',
@@ -6,7 +6,7 @@ module.exports = {
     commandGroup: 'commands',
     requiredRole: null,
     guildOnly: false,
-    requiredPermission: 'MANAGE_GUILD',
+    requiredPermission: Permissions.FLAGS.MANAGE_GUILD,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         const subcmd = args[0];
