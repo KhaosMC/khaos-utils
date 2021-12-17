@@ -9,7 +9,7 @@ module.exports = async function eventHandler(bot) {
     bot.events.forEach((values, eventName, events) => {
         const event = bot.events.get(eventName);
         bot.client.on(eventName, async (...args) => {
-            await event.run(bot, ...args);
+            await event.run(bot, ...args).catch(err => console.log(err));;
         })
     })
 }
