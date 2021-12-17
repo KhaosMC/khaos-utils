@@ -14,8 +14,8 @@ module.exports = {
         let reason = args.slice(1).join(" ");
         if (!reason) reason = 'Unknown';
         const member = message.guild.members.resolve(toKick);
-        if(member.permissions.has('BAN_MEMBERS')) return message.channel.send("You can't ban another staff member!").then(msg => msg.delete({timeout: 5000}));
         if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
+        if(member.permissions.has('BAN_MEMBERS')) return message.channel.send("You can't ban another staff member!").then(msg => msg.delete({timeout: bot.config.deleteTimer}));
         if(member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return message.channel.send("You can't ban another staff member!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         // Setup embeds to be sent in staff channel and to the user
         const staffEmbed = new MessageEmbed()
