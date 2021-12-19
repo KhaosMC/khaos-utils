@@ -11,12 +11,14 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         let word = args[0];
-        let definition = word ? await ub(args.join(' ')) : await ub.random();
+        let definition = word ? await ud(args.join(' ')) : await ud.random();
 
-        const embed = new MessageEmbed();
-        .setTitle(definition.word);
-        .setUrl(definition.urbanURL);
-        .setDescription(definition.description)
+        console.log(definition)
+
+        const embed = new MessageEmbed()
+        .setTitle(definition.word)
+        .setURL(definition.urbanURL)
+        .setDescription(definition.definition)
         .addField('Example', definition.example)
         .addField('Author', definition.author)
         .setFooter(`👍 ${definition.thumbsUp} 👎 ${definition.thumbsDown}`);
