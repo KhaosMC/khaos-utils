@@ -1,5 +1,3 @@
-# Branch is under development and may be unstable!
-
 # khaos-utils
 bot for khaos
 
@@ -13,6 +11,7 @@ Khaos Utilities comes with a variety of features which were custom made for Khao
 - Status (Know if your minecraft servers are online/offline)
 - [Bridge the gap discord](https://github.com/KhaosMC/bridge-the-gap-discord) client integrated
 - Fetch pictures of animals from Flickr
+- Ask for definition of words from Urban Dictionary
 
 ## Todo
 - Application management with database (create tickets, handle them etc)
@@ -26,7 +25,7 @@ git clone https://github.com/KhaosMC/khaos-utils
 cd khaos-utils
 npm i sqlite3 --save
 npm i sqlite --save
-npm i discord.js@13 ws fs moment crypto node-fetch@2 dotenv
+npm i discord.js@13 ws fs moment crypto node-fetch@2 dotenv relevant-urban
 ```
 
 # Usage
