@@ -13,7 +13,7 @@ module.exports = {
         channel.send({embeds :[staffEmbed]})
     },
 
-    createBanWithLog: async function(bot,guild,message,targetMember,reason){
+    createBanWithLog: async function(bot,message,targetMember,reason){
         try{
             await targetMember.ban({reason: reason})
         }catch {

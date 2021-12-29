@@ -17,32 +17,8 @@ module.exports = {
         if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         if(member.permissions.has('BAN_MEMBERS')) return message.channel.send("You can't ban another staff member!").then(msg => msg.delete({timeout: bot.config.deleteTimer}));
         if(member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return message.channel.send("You can't ban another staff member!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
-        // Setup embeds to be sent in staff channel and to the user
-        const staffEmbed = new MessageEmbed()
-        .setTitle(`Member banned!`)
-        .setColor(0xff0000)
-        .addField('User', member.user.tag)
-        .addField('Author', message.author.tag)
-        .addField('Reason', reason)
-        .setTimestamp();
 
-        const userEmbed = new MessageEmbed()
-        .setTitle(`You've been banned from ${message.guild.name}!`)
-        .setColor(0xff0000)
-        .setDescription(`For ${reason}`)
-        .setTimestamp();
-
-
-
-        await member.send({embeds : [userEmbed]}).catch(err => console.log(err));
-        // Try to kick, else state that it failed.
-        try {
-            await member.ban({reason: reason});
-        } catch {
-            return message.channel.send("Failed to ban user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
-        }
-
-        message.guild.channels.cache.get(bot.config.staffChannel).send({embeds :[staffEmbed]});
-        message.channel.send(`Successfully banned ${member.user.tag}`);
+        // calls a function which bans the user and do then call another function for logging
+        await bot.utils.createBanWithLog(bot, message, member, reason)
     }
 }
