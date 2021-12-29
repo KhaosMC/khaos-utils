@@ -16,29 +16,7 @@ module.exports = {
         const member = message.guild.members.resolve(toKick);
         if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         if(member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return message.channel.send("You can't kick another staff member!").then(msg => setTimeout(() => msg.delete()), 5000);
-        // Setup embeds to be sent in staff channel and to the user
-        const staffEmbed = new MessageEmbed()
-        .setTitle(`Member kicked!`)
-        .setColor(0xff0000)
-        .addField('User', member.user.tag)
-        .addField('Author', message.author.tag)
-        .addField('Reason', reason)
-        .setTimestamp();
 
-        const userEmbed = new MessageEmbed()
-        .setTitle(`You've been kicked from ${message.guild.name}!`)
-        .setColor(0xff0000)
-        .setDescription(`For ${reason}`)
-        .setTimestamp();
-
-        await member.send({embeds :[userEmbed]}).catch();
-        // Try to kick, else state that it failed.
-        try {
-            await member.kick({reason: reason});
-        } catch {
-            return message.channel.send("Failed to kick user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
-        }
-        message.guild.channels.cache.get(bot.config.staffChannel).send({embeds :[staffEmbed]});
-        message.channel.send(`Successfully kicked ${member.user.tag}`);
+        await bot.utils.kickUserWithLog(bot, message, member, reason)
     }
 }
