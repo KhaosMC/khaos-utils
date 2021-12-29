@@ -12,9 +12,9 @@ module.exports = {
     run: async (bot, message, args) => {
         // Check permission and if person specified a user
         const toTimeout = message.mentions.members.first() || bot.client.users.cache.get(args[0]);
-        const duration = ms(args[0]);
+        const duration = ms(args[1]);
         if (!duration) return message.channel.send("You need to specify a duration!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
-        let reason = args[1] ? args.slice(2).join(" ") : "Unknown";
+        const reason = args[2] ? args.slice(2).join(" ") : "Unknown";
         const member = message.guild.members.resolve(toMute);
         if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         if(member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) return message.channel.send("You can't timeout another staff member!").then(msg => setTimeout(() => msg.delete()), 5000);

@@ -70,8 +70,8 @@ module.exports = {
         await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, !isBotAction ? message.author.tag : bot.client.user.tag, reason,'kicked')
     },
 
-    timeoutWithLog: async function(bot, message, targetMember, reason, duration, isBotAction = false) {
-        await this.sendUserReasonEmbed(targetMember, 'muted', reason, message.guild.name);
+    timeoutUserWithLog: async function(bot,message,targetMember,reason,duration,isBotAction = false) {
+        await this.sendUserReasonEmbed(targetMember,'muted',reason,message.guild.name);
 
 	try {
     	     await targetMember.timeout(duration, reason);
@@ -79,6 +79,6 @@ module.exports = {
     	     return message.channel.send("Failed to timeout user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
 	}
 
-	await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, !isBotAction ? message.author.tag : bot.client.user.tag, reason, "muted");
+	await this.sendModLogEmbed(bot,message.guild.channels.cache.get(bot.config.staffChannel),targetMember.user.tag,!isBotAction ? message.author.tag : bot.client.user.tag,reason,"muted");
     }
 }
