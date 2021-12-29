@@ -69,6 +69,7 @@ module.exports = {
             if (message.mentions.members.size > bot.config.antispamPingCount) {
                	//message.member.kick({reason: "Mass mentions"}).catch(e => console.log(e));
                 await bot.utils.kickUserWithLog(bot,message,message.member,'Mass mentions',true)
+                await bot.utils.sendAlertLogEmbed(message.guild.channels.cache.get(bot.config.staffChannel), message)
             }
         }
        

@@ -22,6 +22,17 @@ module.exports = {
         await member.send({embeds : [userEmbed]}).catch(err => console.log(err));
     },
 
+    sendAlertLogEmbed: async function(channel,message, alertType = "Anti-Spam"){
+        const jsHasBadStringTemplates = "`" + message.content + "`"
+        const alertEmbed = new MessageEmbed()
+            .setTitle(`${alertType} alert!`)
+            .setColor(0xff0000)
+            .addField('User',message.author.tag,false)
+            .addField(`Message Content`,jsHasBadStringTemplates,false)
+            .setTimestamp()
+        await channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
+    },
+
     createBanWithLog: async function(bot,message,targetMember,reason){
         await this.sendUserReasonEmbed(targetMember,'banned',reason,message.guild.name)
 
@@ -55,7 +66,7 @@ module.exports = {
             return message.channel.send("Failed to kick user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
         }
 
-        if(!isBotAction) { message.reply(`Successfully kicked ${targetMember.user.tag}`) }
+        if(isBotAction) message.reply(`Successfully kicked ${targetMember.user.tag}`);
 
         await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, !isBotAction ? message.author.tag : bot.client.user.tag, reason,'kicked')
     }
