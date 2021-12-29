@@ -23,12 +23,11 @@ module.exports = {
     },
 
     sendAlertLogEmbed: async function(channel,message, alertType = "Anti-Spam"){
-        const jsHasBadStringTemplates = "`" + message.content + "`"
         const alertEmbed = new MessageEmbed()
             .setTitle(`${alertType} alert!`)
             .setColor(0xff0000)
             .addField('User',message.author.tag,false)
-            .addField(`Message Content`,jsHasBadStringTemplates,false)
+            .addField(`Message Content`,`\`${message.content}\``,false)
             .setTimestamp()
         await channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
     },
@@ -58,7 +57,7 @@ module.exports = {
     },
 
     kickUserWithLog: async function(bot,message,targetMember,reason, isBotAction = false){
-        await bot.utils.sendUserReasonEmbed(targetMember,'kicked',reason,message.guild.name)
+        await this.sendUserReasonEmbed(targetMember,'kicked',reason,message.guild.name)
 
         try{
             await targetMember.kick({reason: reason})
@@ -69,5 +68,17 @@ module.exports = {
         if(isBotAction) message.reply(`Successfully kicked ${targetMember.user.tag}`);
 
         await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, !isBotAction ? message.author.tag : bot.client.user.tag, reason,'kicked')
+    },
+
+    timeoutWithLog: async function(bot, message, targetMember, reason, duration, isBotAction = false) {
+        await this.sendUserReasonEmbed(targetMember, 'muted', reason, message.guild.name);
+
+	try {
+    	     await targetMember.timeout(duration, reason);
+	} catch {
+    	     return message.channel.send("Failed to timeout user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
+	}
+
+	await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, !isBotAction ? message.author.tag : bot.client.user.tag, reason, "muted");
     }
 }
