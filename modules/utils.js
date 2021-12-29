@@ -46,7 +46,7 @@ module.exports = {
         await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetUser.tag, message.author.tag,reason,'unbanned')
     },
 
-    kickUserWithLog: async function(bot,message,targetMember,reason){
+    kickUserWithLog: async function(bot,message,targetMember,reason, isBotAction = false){
         await bot.utils.sendUserReasonEmbed(targetMember,'kicked',reason,message.guild.name)
 
         try{
@@ -55,7 +55,8 @@ module.exports = {
             return message.channel.send("Failed to kick user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
         }
 
-        message.reply(`Successfully kicked ${targetMember.user.tag}`)
-        await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, message.author.tag,reason,'kicked')
+        if(!isBotAction) { message.reply(`Successfully kicked ${targetMember.user.tag}`) }
+
+        await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, !isBotAction ? message.author.tag : bot.client.user.tag, reason,'kicked')
     }
 }

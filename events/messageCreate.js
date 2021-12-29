@@ -67,7 +67,8 @@ module.exports = {
         if (bot.commandsConfig.anti_spam) {
             // Yeet any user that has more than 15 mentions in a message.
             if (message.mentions.members.size > bot.config.antispamPingCount) {
-               	message.member.kick({reason: "Mass mentions"}).catch(e => console.log(e));
+               	//message.member.kick({reason: "Mass mentions"}).catch(e => console.log(e));
+                await bot.utils.kickUserWithLog(bot,message,message.member,'Mass mentions',true)
             }
         }
        
