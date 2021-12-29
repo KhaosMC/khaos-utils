@@ -23,7 +23,7 @@ module.exports = {
     },
 
     createBanWithLog: async function(bot,message,targetMember,reason){
-        await bot.utils.sendUserReasonEmbed(targetMember,'banned',reason,message.guild.name)
+        await this.sendUserReasonEmbed(targetMember,'banned',reason,message.guild.name)
 
         try{
             await targetMember.ban({reason: reason})
@@ -32,7 +32,7 @@ module.exports = {
         }
 
         message.reply(`Successfully banned ${targetMember.user.tag}`)
-        await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, message.author.tag,reason,'banned')
+        await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, message.author.tag,reason,'banned')
     },
 
     removeBanWithLog: async function(bot,message,targetUser,reason){
@@ -43,7 +43,7 @@ module.exports = {
         }
 
         message.reply(`Successfully unbanned ${targetUser.tag}`)
-        await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetUser.tag, message.author.tag,reason,'unbanned')
+        await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetUser.tag, message.author.tag,reason,'unbanned')
     },
 
     kickUserWithLog: async function(bot,message,targetMember,reason){
@@ -56,6 +56,6 @@ module.exports = {
         }
 
         message.reply(`Successfully kicked ${targetMember.user.tag}`)
-        await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, message.author.tag,reason,'kicked')
+        await this.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, message.author.tag,reason,'kicked')
     }
 }
