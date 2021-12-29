@@ -10,8 +10,6 @@ module.exports = {
     requiredPermission: null,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
-        let log = [];
-
         const list = await fetch('https://raw.githubusercontent.com/KhaosMC/fetchables/main/animal-list.json').then(response => response.json());
         const supportedAnimals = list.animals
         

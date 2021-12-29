@@ -10,7 +10,6 @@ module.exports = {
     requiredPermission: Permissions.FLAGS.MANAGE_GUILD,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
-        let log = []
         if (!args[0]) return message.channel.send('You need to input a token!').then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
         message.delete().catch();
         fs.appendFileSync('./logs/authTokens', `${args[0]}\n`, err => {

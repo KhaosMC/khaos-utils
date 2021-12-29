@@ -9,7 +9,7 @@ module.exports = {
     requiredPermission: Permissions.FLAGS.MANAGE_GUILD,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
-        let authTokens = bot.fs.readFileSync('./logs/authTokens', 'UTF-8');
+        const authTokens = bot.fs.readFileSync('./logs/authTokens', 'UTF-8');
         const embed = new MessageEmbed()
         .setTitle('All tokens in database')
         .setColor(message.guild.me.displayColor)

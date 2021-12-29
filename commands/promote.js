@@ -12,7 +12,7 @@ module.exports = {
         // Delete users message, check if a user was mentioned
         message.delete().catch();
         //variable to store if they mentioned a user
-        let toPromote = message.mentions.members.first();
+        const toPromote = message.mentions.members.first();
         //check if they mentioned a user, if not return and display message
         if (!toPromote) {
             message.channel.send('You need to mention a user to promote!').then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);

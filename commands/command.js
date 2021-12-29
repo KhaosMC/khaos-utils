@@ -18,8 +18,8 @@ module.exports = {
 
         switch (subcmd) {
             case 'list': {
-                let enabled = [];
-                let disabled = [];
+                const enabled = [];
+                const disabled = [];
                 const groups = Object.keys(bot.commandsConfig)
                 groups.forEach(group => {
                     if (bot.commandsConfig[group]) enabled.push(group);

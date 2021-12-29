@@ -13,7 +13,7 @@ module.exports = {
         message.delete().catch();
         if (args[0] === 'all') return bot.fs.writeFileSync('./logs/authTokens', '', message.guild.channels.cache.get(bot.config.staffChannel).send(`${message.author.tag} removed all tokens`));
 
-        let authTokens = bot.fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
+        const authTokens = bot.fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
         //else remove the specified token in the array
         const index = authTokens.indexOf(args[0]);
         if (index > -1) {

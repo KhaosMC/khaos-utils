@@ -39,7 +39,7 @@ module.exports = {
             embed.setURL(url);
         }
         // Send poll message and wait for poll reactions
-        let pollMsg = await message.guild.channels.cache.get(bot.config.pollChannel).send({embeds: [embed]});
+        const pollMsg = await message.guild.channels.cache.get(bot.config.pollChannel).send({embeds: [embed]});
         if (options === '2') {
             await pollMsg.react(agreeEmote);
             await pollMsg.react(disagreeEmote);

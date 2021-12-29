@@ -18,9 +18,9 @@ module.exports = {
         // If we do not have a message id, send a temporary message that we can later on edit
         if (!messageInfo.messageId) {
             // Create an array for each server type
-            let messages = [];
+            const messages = [];
             for (i = 0; i < 5; i++) {
-                let msg = await message.guild.channels.cache.get(messageInfo.channelId).send("Temporary");
+                const msg = await message.guild.channels.cache.get(messageInfo.channelId).send("Temporary");
                 messages.push(msg.id)
             }
             // Set the object key messageId to the array we created then write it to file

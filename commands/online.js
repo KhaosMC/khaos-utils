@@ -10,10 +10,10 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         const servers = Object.keys(bot.onlinePlayers);
-        let onlinePlayers = []
+        const onlinePlayers = []
         let i = 0;
         servers.forEach(server  => {
-            let serversPlayers = [];
+            const serversPlayers = [];
             bot.onlinePlayers[server].forEach(user => {
                 serversPlayers.push(user.name)
             });

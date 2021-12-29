@@ -16,7 +16,7 @@ module.exports = {
         }
         if (servers.serverIps.length !== servers.serverNames.length) return message.channel.send('Amount of server names and ips are not the same!').then(msg => msg.delete({timeout: 5000}));
         if (args[0] === undefined) {
-            let statusMsg = await message.channel.send('Retreiving server status..')
+            const statusMsg = await message.channel.send('Retreiving server status..')
             let descriptions = ''
             // Fetch status for each individual server.
             for (let i = 0; i < servers.serverIps.length; i++) {
@@ -40,7 +40,7 @@ module.exports = {
             let description = '';
             for (i = 0; i < serverNames.length; i++) {
                 if (serverNames[i] === serverName) return description = serverName + 'is online ✅'
-            } 
+            }
             const embed = new MessageEmbed()
             .setTitle('Minecraft Server Status!')
             .setDescription(descriptions)

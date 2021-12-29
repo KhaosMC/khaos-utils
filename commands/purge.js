@@ -10,7 +10,7 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         const amount = parseInt(args[0]) + 1;
-        if (!amount || amount == 0 || amount > 10000) return message.channel.send("Invalid amount!").then(msg => {
+        if (!amount || amount === 0 || amount > 10000) return message.channel.send("Invalid amount!").then(msg => {
             setTimeout(() => msg.delete().catch(), bot.config.deleteTimer)
         });
         // Setup the amount of times you can delete 100
