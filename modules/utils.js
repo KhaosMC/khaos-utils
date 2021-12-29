@@ -37,7 +37,6 @@ module.exports = {
     },
 
     removeBanWithLog: async function(bot,message,targetUser,reason){
-        targetUser.message()
         try{
             await message.guild.members.unban(targetUser.id,reason)
         }catch {
