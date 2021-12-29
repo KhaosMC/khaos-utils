@@ -63,11 +63,12 @@ module.exports = {
             }
         }
         // Anti spam
-        if (bot.commandsConfig.anti-spam) {
+        console.log(bot.commandsConfig.anti_spam)
+        if (bot.commandsConfig.anti_spam) {
             // Yeet any user that has more than 15 mentions in a message.
-            if (message.mentions.user.size() > 15) {
+            if (message.mentions.user.size() > 2) {
                	message.member.kick({reason: "Mass mentions"}).catch(e => console.log(e));
-            };
+            }
         }
        
         // Verify incoming applicationd
