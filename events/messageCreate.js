@@ -62,7 +62,14 @@ module.exports = {
                 console.log(err)
             }
         }
-
+        // Anti spam
+        if (bot.commandsConfig.anti-spam) {
+            // Yeet any user that has more than 15 mentions in a message.
+            if (message.mentions.user.size() > 15) {
+               	message.member.kick({reason: "Mass mentions"}).catch(e => console.log(e));
+            };
+        }
+       
         // Verify incoming applicationd
         let reactionEmojis = ['780549171089637376', '780549170770870292', '780548158068621355']
         if (message.channel === bot.config.applicationChannel && bot.commands.applications) {
