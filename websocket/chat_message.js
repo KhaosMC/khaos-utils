@@ -3,7 +3,7 @@ module.exports = {
     run: async (data, bot) => {
         // Parse message to prevent discord markdown
         const discordMD = ['`', '*', '_', '~~', '||'];
-        var message = data.payload.message;
+        let { message } = data.payload;
         discordMD.forEach(char => {
             message = message.replace(char, `\\${char}`)
         });
