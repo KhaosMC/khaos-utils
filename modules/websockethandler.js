@@ -8,6 +8,7 @@ module.exports = function handleWebsocket(bot) {
     for (i = 0; i < bot.websocketFiles.length; i++) {
         events.set(bot.websocketFiles[i].replace('.js', ''), require(`../websocket/${bot.websocketFiles[i]}`));
     }
+    
     bot.socket.on('open', function() {
         const authData = {
             "type": "auth",
@@ -43,7 +44,7 @@ module.exports = function handleWebsocket(bot) {
         if (!data.type) return;
         if(!events.has(data.type)) return;
         const event = events.get(data.type);
-        await event.run(data, bot).catch(err => console.log(err));;
+        await event.run(data, bot).catch(err => bot.logger.log(err, event));;
     })
 
     bot.socket.on('error', async err => {
