@@ -4,7 +4,7 @@ module.exports = function handleWebsocket(bot) {
     bot.websocketFiles = bot.fs.readdirSync('./websocket').filter(file => file.endsWith('.js'));
     console.log(`Loading ${bot.websocketFiles.length} websocket event(s)`);
 
-    var events = new Map();
+    let events = new Map();
     for (i = 0; i < bot.websocketFiles.length; i++) {
         events.set(bot.websocketFiles[i].replace('.js', ''), require(`../websocket/${bot.websocketFiles[i]}`));
     }

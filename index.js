@@ -3,7 +3,7 @@ const init = require('./modules/init.js');
 const validate = require('./modules/validate.js');
 
 async function initialize() {
-	var bot = {
+	let bot = {
 		fs: fs,
 		dotenv: await init.env(),
 		client: await init.discord(),
