@@ -1,5 +1,4 @@
 const { MessageEmbed } = require('discord.js');
-const {createModLogEmbed, sendModLogEmbed} = require("./utils");
 
 module.exports = {
     sendModLogEmbed: async function(bot,channel,target,moderator,reason,action) {
