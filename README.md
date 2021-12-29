@@ -3,6 +3,7 @@ bot for khaos
 
 ## Features
 Khaos Utilities comes with a variety of features which were custom made for Khaos discord. A few are:
+- Moderation (timeouts, ban, kick, unban, baninfo)
 - Application handling (creating an application token and verifying it to prevent app spam)
 - Promote members (non members > trial, trial > full member)
 - Create polls (yes/no or multiple choice (up to 9 different choices)
@@ -15,7 +16,6 @@ Khaos Utilities comes with a variety of features which were custom made for Khao
 
 ## Todo
 - Application management with database (create tickets, handle them etc)
-- Moderation features
 - Project management
 
 # Prerequisits
