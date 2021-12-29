@@ -9,8 +9,7 @@ module.exports = {
     requiredPermission: Permissions.FLAGS.MANAGE_GUILD,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
-        const subcmd = args[0];
-        const target = args[1];
+        const [subcmd, target] = args;
         if (!subcmd) {
             message.channel.send("Available subcommands: disable, enable, list");
             return;

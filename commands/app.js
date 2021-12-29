@@ -15,7 +15,7 @@ module.exports = {
     requiredPermission: null, 
     guildOwnerOnly: false, 
     run: async (bot, message, args) => { 
-    const subcmd = args[0]; 
+    const [subcmd] = args;
 	const userID = await bot.db.get('SELECT user_id FROM application_channels WHERE channel_id = ? AND open LIMIT 1;', message.channel.id); 
     if(!await isAppChannel(message, bot.db)) return; 
     const user = await message.guild.members.resolve(userID.id);; 

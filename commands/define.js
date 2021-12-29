@@ -10,7 +10,7 @@ module.exports = {
     requiredPermission: null,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
-        const word = args[0];
+        const [word] = args;
         const definition = word ? await ud(args.join(' ')) : await ud.random();
         const embed = new MessageEmbed()
         .setTitle(definition.word)
