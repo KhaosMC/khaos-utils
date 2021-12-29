@@ -1,10 +1,10 @@
 {
-  "applications": false,
+  "applications": true,
   "help": true,
   "utils": true,
   "misc": true,
   "moderation": true,
   "anti-spam": true,
   "commands": true,
-  "chatbridge": false
+  "chatbridge": true
 }
