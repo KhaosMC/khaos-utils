@@ -4,3 +4,5 @@ db/*
 logs/
 .env
 .idea
+package.json
+
