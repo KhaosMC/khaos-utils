@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "discord.js": "^13.5.0",
+    "dotenv": "^10.0.0",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.6",
+    "relevant-urban": "^2.0.0",
+    "sqlite": "^4.0.23",
+    "sqlite3": "^5.0.2",
+    "ws": "^8.4.0"
+  }
+}
