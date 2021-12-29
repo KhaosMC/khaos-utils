@@ -44,7 +44,7 @@ module.exports = function handleWebsocket(bot) {
         if (!data.type) return;
         if(!events.has(data.type)) return;
         const event = events.get(data.type);
-        await event.run(data, bot).catch(err => bot.logger.log(err, event));;
+        await event.run(data, bot).catch(err => bot.logger.log(err, event,bot));;
     })
 
     bot.socket.on('error', async err => {

@@ -57,7 +57,7 @@ module.exports = async function handleCommand(bot) {
                return;
             };
         
-            await commandInfo.run(bot, message, args).catch(err => bot.logger.log(err, command));
+            await commandInfo.run(bot, message, args).catch(err => bot.logger.log(err, command,bot));
             onCooldown.add(message.author.id)
             setTimeout(() => {
                 onCooldown.delete(message.author.id);
