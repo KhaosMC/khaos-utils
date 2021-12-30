@@ -3,15 +3,15 @@ module.exports = {
     description: 'messageCreate event',
     run: async (bot, message) => {
         // Websocket function
-        websocket(bot, message);
+        await websocket(bot, message);
         // Anti spam
-       	antiSpam(bot, message);      
+       	await antiSpam(bot, message);
         // Verify incoming applications
-        applicationsCheck(bot, message);
+        await applicationsCheck(bot, message);
    }
 }
 
-function websocket(bot, message) {
+async function websocket(bot, message) {
     if (message.channel.id === bot.chatbridge.channel_id && !(message.author.bot)) {
     try {
         let messagePayload = message.content;
@@ -73,7 +73,7 @@ function websocket(bot, message) {
     }
 }
 
-function antiSpam(bot, message) {
+async function antiSpam(bot, message) {
     if (bot.commandsConfig.anti_spam) {
         // Yeet any user that has more than 15 mentions in a message.
         if (message.mentions.members.size > bot.config.antispamPingCount) {
@@ -83,7 +83,7 @@ function antiSpam(bot, message) {
     }
 }
 
-function applicationsCheck(bot, message) {
+async function applicationsCheck(bot, message) {
     const reactionEmojis = ['780549171089637376', '780549170770870292', '780548158068621355']
     if (message.channel === bot.config.applicationChannel && bot.commands.applications) {
         if (message.embeds[0] === undefined) return message.delete().catch();
@@ -105,7 +105,7 @@ function applicationsCheck(bot, message) {
             const applicant = message.embeds[0].fields[1].value.toString();
             const user = message.guild.members.cache.find(u => u.user.tag === applicant);
             if (!user) return message.guild.channels.cache.get(bot.config.memberChannel).send(`Failed to get user for latest app.`);
-            else await db.run('UPDATE application_channels SET message_id = ? WHERE user_id = ? AND open;', message.id, user.id)
+            else await bot.db.run('UPDATE application_channels SET message_id = ? WHERE user_id = ? AND open;', message.id, user.id)
         }
     }    
  }
