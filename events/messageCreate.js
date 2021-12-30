@@ -1,3 +1,4 @@
+const {Permissions} = require("discord.js");
 module.exports = {
     description: 'messageCreate event',
     run: async (bot, message) => {
@@ -86,7 +87,7 @@ function applicationsCheck(bot, message) {
     const reactionEmojis = ['780549171089637376', '780549170770870292', '780548158068621355']
     if (message.channel === bot.config.applicationChannel && bot.commands.applications) {
         if (message.embeds[0] === undefined) return message.delete().catch();
-        if (message.embeds.length === 0 && !(message.member.hasPermission('MANAGE_GUILD'))) return message.delete().catch();
+        if (message.embeds.length === 0 && !(message.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD))) return message.delete().catch();
         const attemptedAuthToken = message.embeds[0].fields[0].value.toString()
         const authTokens = bot.fs.readFileSync('./logs/authTokens', 'UTF-8').split(/\r?\n/);
         if (authTokens.includes(attemptedAuthToken) && (message.webhookID !== null)) {
