@@ -1,7 +1,8 @@
 const { MessageEmbed } = require('discord.js');
+const ms = require("ms");
 
 module.exports = {
-    sendModLogEmbed: async function(bot,channel,target,moderator,reason,action) {
+    sendModLogEmbed: async function(bot,channel,target,moderator,reason,action, duration = 0) {
         const staffEmbed = new MessageEmbed()
             .setTitle(`Member ${action}`)
             .setColor(action === 'unbanned' ? 0x00ff00 : 0xff0000)
@@ -9,15 +10,20 @@ module.exports = {
             .addField('Moderator', moderator)
             .addField('Reason',reason)
             .setTimestamp()
+
+        if(duration !== 0) staffEmbed.addField('Duration',ms(duration),false)
+
         channel.send({embeds :[staffEmbed]})
     },
 
-    sendUserReasonEmbed: async function(member,modAction,reason,guildName){
+    sendUserReasonEmbed: async function(member,modAction,reason,guildName, duration = 0){
         const userEmbed = new MessageEmbed()
             .setTitle(`You've been ${modAction} from ${guildName}!`)
             .setColor(0xff0000)
             .setDescription(`For ${reason}`)
             .setTimestamp();
+
+        if(duration !== 0) userEmbed.addField('Duration', ms(duration),false)
 
         await member.send({embeds : [userEmbed]}).catch(err => console.log(err));
     },
@@ -71,14 +77,16 @@ module.exports = {
     },
 
     timeoutUserWithLog: async function(bot,message,targetMember,reason,duration,isBotAction = false) {
-        await this.sendUserReasonEmbed(targetMember,'muted',reason,message.guild.name);
+        await this.sendUserReasonEmbed(targetMember,'muted',reason,message.guild.name, duration);
 
-	try {
-    	     await targetMember.timeout(duration, reason);
-	} catch {
-    	     return message.channel.send("Failed to timeout user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
-	}
+        try {
+            await targetMember.timeout(duration, reason);
+        } catch {
+            return message.channel.send("Failed to timeout user. Maybe bad permissions?").then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
+        }
 
-	await this.sendModLogEmbed(bot,message.guild.channels.cache.get(bot.config.staffChannel),targetMember.user.tag,!isBotAction ? message.author.tag : bot.client.user.tag,reason,"muted");
+        if(!isBotAction) message.reply(`Successfully timed out ${targetMember.user.tag}`)
+
+        await this.sendModLogEmbed(bot,message.guild.channels.cache.get(bot.config.staffChannel),targetMember.user.tag,!isBotAction ? message.author.tag : bot.client.user.tag,reason,"muted",duration);
     }
 }
