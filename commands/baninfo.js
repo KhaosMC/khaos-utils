@@ -20,8 +20,7 @@ module.exports = {
             return message.channel.send("User is not banned.").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         }
         if (!bannedMember) return message.channel.send("User is not banned.").then(msg => msg.delete({timeout: 5000}));
-        let { reason } = bannedMember;
-        if (!reason) reason = 'Unknown';
+        if (!bannedMember.reason) bannedMember.reason = 'Unknown';
         // Create embed with info and send it
         const embed = new MessageEmbed()
         .setTitle(member.id)

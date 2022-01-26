@@ -2,7 +2,7 @@ module.exports = async function eventHandler(bot) {
     const eventFiles = bot.fs.readdirSync('./events').filter(file => file.endsWith('.js'));
     console.log(`Loading ${eventFiles.length} event(s)`);
     bot.events = new Map();
-    for (i = 0; i < eventFiles.length; i++) {
+    for (let i = 0; i < eventFiles.length; i++) {
         bot.events.set(eventFiles[i].replace('.js', ''), require(`../events/${eventFiles[i]}`));
     }
 

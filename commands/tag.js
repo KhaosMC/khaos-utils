@@ -11,7 +11,7 @@ module.exports = {
     run: async (bot, message, args) => {
         if (!args[0] || bot.tags.tags[args[0]-1] === undefined) {
             let descriptionsText = ''
-            for(i = 0; i < bot.tags.descriptions.length; i++) {
+            for(let i = 0; i < bot.tags.descriptions.length; i++) {
                 descriptionsText += `${i+1}) ${bot.tags.tags[i]}\n`
             }
             const embed1 = new MessageEmbed()

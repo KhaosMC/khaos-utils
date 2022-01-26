@@ -19,7 +19,7 @@ module.exports = {
         if (!messageInfo.messageId) {
             // Create an array for each server type
             const messages = [];
-            for (i = 0; i < 5; i++) {
+            for (let i = 0; i < 5; i++) {
                 const msg = await message.guild.channels.cache.get(messageInfo.channelId).send("Temporary");
                 messages.push(msg.id)
             }
@@ -64,7 +64,7 @@ module.exports = {
 
         // Edit each message for each embed
         const embeds = [sixteen, twelve, older, archive, bedrock]
-        for (i = 0; i < 5; i++) {
+        for (let i = 0; i < 5; i++) {
             const msgToEdit = await message.guild.channels.cache.get(messageInfo.channelId).messages.fetch(messageInfo.messageId[i]);
             msgToEdit.edit('', embeds[i]);
         }

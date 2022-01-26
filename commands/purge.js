@@ -16,7 +16,7 @@ module.exports = {
         // Setup the amount of times you can delete 100
         const ranges = Math.floor(amount / 100);
         // Delete for every 100 messages
-        for (i = 0; i < ranges; i++) {
+        for (let i = 0; i < ranges; i++) {
             message.channel.bulkDelete(i * 100)
             .catch(err => message.channel.send(`${err} occured`)).then(msg => {
                 setTimeout(() => msg.delete(), bot.config.deleteTimer);

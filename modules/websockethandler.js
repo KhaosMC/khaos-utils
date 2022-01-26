@@ -5,7 +5,7 @@ module.exports = function handleWebsocket(bot) {
     console.log(`Loading ${bot.websocketFiles.length} websocket event(s)`);
 
     let events = new Map();
-    for (i = 0; i < bot.websocketFiles.length; i++) {
+    for (let i = 0; i < bot.websocketFiles.length; i++) {
         events.set(bot.websocketFiles[i].replace('.js', ''), require(`../websocket/${bot.websocketFiles[i]}`));
     }
     

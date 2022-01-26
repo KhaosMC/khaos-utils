@@ -4,7 +4,7 @@ module.exports = async function handleCommand(bot) {
     bot.commandFiles = bot.fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
     console.log(`Loading ${bot.commandFiles.length} command(s)`);
     bot.commands = new Map();
-    for (i = 0; i < bot.commandFiles.length; i++) {
+    for (let i = 0; i < bot.commandFiles.length; i++) {
         bot.commands.set(bot.commandFiles[i].replace('.js', ''), require(`../commands/${bot.commandFiles[i]}`));
     };
     bot.client.on('messageCreate', async (message) => {
