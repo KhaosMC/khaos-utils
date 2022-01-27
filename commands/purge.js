@@ -9,7 +9,7 @@ module.exports = {
     requiredPermission: Permissions.FLAGS.MANAGE_MESSAGES,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
-        const amount = parseInt(args[0]) + 1;
+        const amount = parseInt(args[0], 10) + 1;
         if (!amount || amount > 10000) return message.channel.send("Invalid amount!").then(msg => {
             setTimeout(() => msg.delete().catch(), bot.config.deleteTimer)
         });
