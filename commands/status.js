@@ -15,7 +15,7 @@ module.exports = {
             serverNames: process.env.serverNames.split(",")
         }
         if (servers.serverIps.length !== servers.serverNames.length) return message.channel.send('Amount of server names and ips are not the same!').then(msg => msg.delete({timeout: 5000}));
-        if (args[0] === undefined) {
+        if (!args[0]) {
             const statusMsg = await message.channel.send('Retreiving server status..')
             let descriptions = ''
             // Fetch status for each individual server.

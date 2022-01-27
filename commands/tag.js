@@ -9,7 +9,7 @@ module.exports = {
     requiredPermission: null,
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
-        if (!args[0] || bot.tags.tags[args[0]-1] === undefined) {
+        if (!args[0] || !bot.tags.tags[args[0]-1]) {
             let descriptionsText = ''
             for(let i = 0; i < bot.tags.descriptions.length; i++) {
                 descriptionsText += `${i+1}) ${bot.tags.tags[i]}\n`
