@@ -41,8 +41,8 @@ module.exports = {
             user.send({embeds:[embed]}).catch(); 
             break; 
         } 
-	case 'user': { 
-    	 
+	case 'user': {
+    	    break;
         } 
             default: { 
                 const cmds = [ 

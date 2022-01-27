@@ -49,7 +49,7 @@ module.exports = async function handleCommand(bot) {
             };
         
 
-            if (commandInfo.guildOwnerOnly && !(message.author === message.guild.owner)) {
+            if (commandInfo.guildOwnerOnly && message.author !== message.guild.owner) {
                message.channel.send("This command is guild owner only.").then(msg => setTimeout(() => {
                    msg.delete().catch();
                    message.delete().catch();

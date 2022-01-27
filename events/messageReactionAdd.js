@@ -1,7 +1,5 @@
 const { MessageEmbed, Permissions} = require('discord.js');
 const fs = require('fs');
-const config = JSON.parse(fs.readFileSync('./config/config.json'));
-const commandsConfig = JSON.parse(fs.readFileSync('./config/commands.json'));
 
 module.exports = {
     description: 'messageReactionAdd event',
@@ -10,7 +8,7 @@ module.exports = {
         if (messageReaction.message.id === bot.config.applicationMessage[1] /*&& bot.commandsConfig.applications*/ && !user.bot) {
             // Resolve the user and check if they have an app
             const member = messageReaction.message.guild.members.resolve(user);
-            const hasApp = await bot.db.get('SELECT 1 FROM application_channels WHERE user_id = ? AND open LIMIT 1;', user.id);
+            // const hasApp = await bot.db.get('SELECT 1 FROM application_channels WHERE user_id = ? AND open LIMIT 1;', user.id);
             // If they're not a member and don't have an app, proceed
             if (/*!hasApp &&*/ !(member.roles.cache.get(bot.config.memberRole))) {
                 // Create channel with the applicant's username, then let them + members read it.
