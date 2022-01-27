@@ -11,8 +11,8 @@ module.exports = {
 
     	socket.send(JSON.stringify(data));
     	return await new Promise(response => {
-        	socket.on('message', async data => {
-            		resolve(data);
+        	socket.on('message', async returnedData => {
+            		resolve(returnedData);
         	})
     	})
 	}

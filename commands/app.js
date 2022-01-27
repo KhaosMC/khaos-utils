@@ -2,8 +2,8 @@ const { MessageEmbed } = require('discord.js');
 const { memberRole } = require('../config/config.json'); 
  
 async function isAppChannel(message, db) { 
-	const isAppChannel = await db.get('SELECT 1 FROM application_channels WHERE channel_id = ? AND open LIMIT 1;', message.channel.id); 
-	return !isAppChannel ? false : true; 
+	const appChannel = await db.get('SELECT 1 FROM application_channels WHERE channel_id = ? AND open LIMIT 1;', message.channel.id); 
+	return !appChannel ? false : true;
 } 
  
 module.exports = { 
