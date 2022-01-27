@@ -2,7 +2,7 @@ module.exports = {
     description: 'User events',
     run: async (data, bot) => {
         switch (data.payload.type) {
-            case 'connection':
+            case 'connection': {
                 // Send message when user (dis)connects on minecraft
                 if (data.source.type === 'minecraft') {
                     if (data.payload.event.connect) {
@@ -16,7 +16,10 @@ module.exports = {
                     }
                 }
                 break;
+            }
+            case default: {
+            	break;
+            }
         }
-
     }
 }

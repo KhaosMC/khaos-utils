@@ -10,10 +10,6 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         const [subcmd, target] = args;
-        if (!subcmd) {
-            message.channel.send("Available subcommands: disable, enable, list");
-            return;
-        }
 
         switch (subcmd) {
             case 'list': {
@@ -49,6 +45,10 @@ module.exports = {
             	});
             	message.channel.send(`Successfully disabled ${target} command group`);
             	break;
+            }
+            case default: {
+                message.channel.send("Available subcommands: list, enable, disable");
+                break;
             }
         }
     }
