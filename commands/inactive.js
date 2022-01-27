@@ -13,7 +13,7 @@ module.exports = {
         message.delete();
         let reason = args.join(" ");
         //if they haven't specified a reason display this message
-        if (!args) reason = 'Member did not specify reason';
+        if (!reason) reason = 'Member did not specify reason';
 
         // Check if member doesn't have an inactive role, if they do give them the role.
         if (!(message.member.roles.cache.get(bot.config.inactiveRole))) {
