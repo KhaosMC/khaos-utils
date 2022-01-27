@@ -105,7 +105,7 @@ async function applicationsCheck(bot, message) {
             const applicant = message.embeds[0].fields[1].value.toString();
             const user = message.guild.members.cache.find(u => u.user.tag === applicant);
             if (!user) return message.guild.channels.cache.get(bot.config.memberChannel).send(`Failed to get user for latest app.`);
-            else await bot.db.run('UPDATE application_channels SET message_id = ? WHERE user_id = ? AND open;', message.id, user.id)
+            await bot.db.run('UPDATE application_channels SET message_id = ? WHERE user_id = ? AND open;', message.id, user.id)
         }
     }    
  }
