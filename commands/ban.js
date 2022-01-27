@@ -11,8 +11,7 @@ module.exports = {
     run: async (bot, message, args) => {
         // Check permission and if person specified a user
         const toBan = message.mentions.members.first() || bot.client.users.cache.get(args[0]);
-        let reason = args.slice(1).join(" ");
-        if (!reason) reason = 'Unknown';
+        let reason = args[1] ? args.slice(1).join(" ") : "Unknown";
         const member = message.guild.members.resolve(toBan);
         if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         if(member.permissions.has('BAN_MEMBERS')) return message.channel.send("You can't ban another staff member!").then(msg => msg.delete({timeout: bot.config.deleteTimer}));
