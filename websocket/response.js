@@ -7,7 +7,7 @@ module.exports = {
             	bot.onlinePlayers[data.source.name] = data.payload.response.user_list;
             	break;
             }
-            case default: {
+            default: {
                 break;
             }
         }

@@ -17,7 +17,7 @@ module.exports = {
                 }
                 break;
             }
-            case default: {
+            default: {
             	break;
             }
         }

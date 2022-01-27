@@ -46,7 +46,7 @@ module.exports = {
             	message.channel.send(`Successfully disabled ${target} command group`);
             	break;
             }
-            case default: {
+            default: {
                 message.channel.send("Available subcommands: list, enable, disable");
                 break;
             }

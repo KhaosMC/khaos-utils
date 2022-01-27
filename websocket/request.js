@@ -7,7 +7,7 @@ module.exports = {
             	console.log(bot.onlinePlayers);
             	break;
             }
-            case default: {
+            default: {
                 break;
             }
         }
