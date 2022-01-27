@@ -12,7 +12,7 @@ module.exports = {
         let allCommands = [];
         let title;
         let footer;
-            if (args[0] !== undefined) {
+            if (args[0]) {
                 title = `Commands in group ${args[0]}!`
                 footer = '[] = required, () = optional'
                 bot.commands.forEach((value, commandName, commands) => {

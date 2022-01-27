@@ -1,5 +1,4 @@
 const { MessageEmbed, Permissions} = require('discord.js');
-const fs = require('fs');
 
 module.exports = {
     description: 'messageReactionAdd event',
