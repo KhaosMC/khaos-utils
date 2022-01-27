@@ -10,11 +10,9 @@ module.exports = {
     guildOwnerOnly: false,
     run: async (bot, message, args) => {
         let allCommands = [];
-        let title;
-        let footer;
+        let title = args[0] ? `Commands in group ${args[0]}`: "Command categories!";
+        let footer = args[0] ? '[] = required, () = optional' : `${bot.config.prefix}help [command group] for commands inside each command group`;
             if (args[0]) {
-                title = `Commands in group ${args[0]}!`
-                footer = '[] = required, () = optional'
                 bot.commands.forEach((value, commandName, commands) => {
                     const command = commands.get(commandName);
 
@@ -27,8 +25,6 @@ module.exports = {
                     }
                 })
             } else {
-                title = 'Command categories!'
-                footer = `${bot.config.prefix}help [command group] for commands inside each command group`
                 allCommands = Object.keys(bot.commandsConfig)
             }
         // Message if user doesn't have any available commands in a command group.
