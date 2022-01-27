@@ -1,4 +1,4 @@
-const { MessageEmbed, Snowflake} = require('discord.js'); 
+const { MessageEmbed } = require('discord.js');
 const { memberRole } = require('../config/config.json'); 
  
 async function isAppChannel(message, db) { 

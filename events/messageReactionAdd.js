@@ -1,6 +1,5 @@
 const { MessageEmbed, Permissions} = require('discord.js');
 const fs = require('fs');
-const Console = require("console");
 const config = JSON.parse(fs.readFileSync('./config/config.json'));
 const commandsConfig = JSON.parse(fs.readFileSync('./config/commands.json'));
 

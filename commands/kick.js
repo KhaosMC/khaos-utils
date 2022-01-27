@@ -1,4 +1,4 @@
-const { MessageEmbed, Permissions} = require('discord.js');
+const { Permissions} = require('discord.js');
 
 module.exports = {
     description: 'Kicks a user from the guild',
