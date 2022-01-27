@@ -13,7 +13,7 @@ module.exports = {
         const member = await bot.client.users.fetch(args[0]);
         if (!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         // Fetch all bans and get the mentioned members
-        let bannedMember = await message.guild.bans.fetch(member.id);
+        const bannedMember = await message.guild.bans.fetch(member.id);
         if (!bannedMember) return message.channel.send("User is not banned.").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         if (!bannedMember.reason) bannedMember.reason = 'Unknown';
         // Create embed with info and send it
