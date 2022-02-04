@@ -1,6 +1,12 @@
 module.exports = {
     run: async function(bot) {
         let invalid = false;
+        // Check for discord token
+        if (!process.env.token || process.env.token === "discord-token") {
+            console.log("Invalid token in .env");
+            invalid = true;
+        }
+        
         // Check application specific configs
         if (bot.commandsConfig.applications) {
             if (!process.env.applicationUrl.startsWith("http")) {
