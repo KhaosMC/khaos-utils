@@ -23,9 +23,7 @@ To download the bot (and its dependencies). You may need to install `build-essen
 ```
 git clone https://github.com/KhaosMC/khaos-utils
 cd khaos-utils
-npm i sqlite3 --save
-npm i sqlite --save
-npm i discord.js@13 ws ms fs moment crypto node-fetch@2 dotenv relevant-urban
+yarn install
 ```
 
 # Usage
