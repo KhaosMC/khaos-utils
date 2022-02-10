@@ -15,7 +15,7 @@ module.exports = {
             if (args[0]) {
                 bot.commands.forEach((value, commandName, commands) => {
                     const command = commands.get(commandName);
-
+                    // Jag glum vad det här gör 💀
                     if ((command.requiredRole === null || message.member.roles.cache.get(command.requiredRole)) && args[0] === command.commandGroup) {
                         if (command.requiredPermission !== null && !(message.member.permissions.has(command.requiredPermission)));
                         else if ((command.guildOwnerOnly && message.author !== message.guild.owner) ||  !bot.commandsConfig[command.commandGroup]);
