@@ -1,6 +1,7 @@
 node_modules/*
 db/*
 logs/*
+config/servers.json
 .env
 .idea
 package.json
