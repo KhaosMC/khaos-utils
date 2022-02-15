@@ -9,6 +9,7 @@ async function initialize() {
 		client: await init.discord(),
 		logger: require('./modules/logger.js'),
 		utils: require('./modules/utils.js'),
+		moderationUtils: require('./modules/moderationUtils.js'),
 		config: await JSON.parse(fs.readFileSync('./config/config.json')),
                 commandsConfig: await JSON.parse(fs.readFileSync('./config/commands.json')),
                 tags: await JSON.parse(fs.readFileSync('./config/tags.json')),
