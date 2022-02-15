@@ -2,11 +2,13 @@
   "serverNames": [
   "Survival", 
   "Creative", 
-  "Lobby" 
+  "Mirror",
+  "Proxy" 
   ],
   "serverIps": [
-  "survival.ip.com:port",
-  "creative.ip.com:port",
-  "other.ip.com:port"
+  "khaosmc.asuscomm.com",
+  "khaosmc.asuscomm.com:25566",
+  "khaos.trainsley69.me",
+  "khaosmc.asuscomm.com:42069"
   ]
 }

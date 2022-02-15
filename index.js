@@ -24,6 +24,7 @@ async function initialize() {
 	
 	require('./modules/commandhandler.js')(bot);
 	require('./modules/eventhandler')(bot);
+	require('./modules/slashhandler.js')(bot)
 	if (bot.commandsConfig.chatbridge) require('./modules/websockethandler')(bot);
 }
 

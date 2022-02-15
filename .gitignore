@@ -1,6 +1,6 @@
 node_modules/*
 db/*
-logs/
+logs/*
 .env
 .idea
 package.json

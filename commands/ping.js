@@ -1,13 +1,18 @@
 const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const description = 'Check your ping to the bot';
 
 module.exports = {
-    description: 'Check your ping to the bot',
+    description: description,
     usage: '',
     commandGroup: 'misc',
     requiredRole: null,
     guildOnly: false,
     requiredPermission: null,
     guildOwnerOnly: false,
+    info: new SlashCommandBuilder()
+        .setName('ping')
+        .setDescription(description),
     run: async (bot, message, args) => {
         const embed = new MessageEmbed()
         .setTitle('Pong! 🏓')
