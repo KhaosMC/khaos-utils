@@ -2,9 +2,11 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
 module.exports = async function handleSlashCommand(bot) {
+    // Timeout to wait for all the variables to be setup
     setTimeout(() => {
         deployCommands(bot)
     }, 3000)
+    
     // Handle slash commands on the event
     bot.client.on('interactionCreate', async interaction => {
         // Check if interaction is a command
@@ -31,19 +33,22 @@ function deployCommands(bot) {
         if (command.hasOwnProperty('info')) commands.push(command.info.toJSON());
     })
 
-    // TODO: Check if commands are already registered, otherwise just ignore this below
+    // Check if commands are already registered, otherwise just ignore this below
     let identical = false;
     bot.fs.exists('./logs/registeredCommands.json', exists => {
         if (exists) {
+            // Fetch the currently registered commands
             const alreadyRegistered = JSON.parse(bot.fs.readFileSync('./logs/registeredCommands.json'));
-            console.log(alreadyRegistered)
-            console.log(commands)
+            // Stringify to json to compare
             if (JSON.stringify(alreadyRegistered) === JSON.stringify(commands)) {
+                // If true, set the identical boolean to skip the next registration of the commands
                 identical = true;
             } else {
+                // If false, write the current commands to the file
                 bot.fs.writeFileSync('./logs/registeredCommands.json', JSON.stringify(commands));
             }
         } else {
+            // If the file doesn't exist, write the current (to be) registered commands to file
             bot.fs.writeFileSync('./logs/registeredCommands.json', JSON.stringify(commands));
         }
     })
