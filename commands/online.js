@@ -1,13 +1,18 @@
 const { MessageEmbed } = require('discord.js');
+const {SlashCommandBuilder} = require("@discordjs/builders");
+const description = 'Check all the players online'
 
 module.exports = {
-    description: 'Check all the players online',
+    description: description,
     usage: '',
     commandGroup: 'chatbridge',
     requiredRole: null,
     guildOnly: true,
     requiredPermission: null,
     guildOwnerOnly: false,
+    info: new SlashCommandBuilder()
+        .setName('online')
+        .setDescription(description),
     run: async (bot, message, args) => {
         const servers = Object.keys(bot.onlinePlayers);
         const onlinePlayers = []

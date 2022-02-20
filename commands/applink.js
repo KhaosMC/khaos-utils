@@ -1,16 +1,20 @@
 const { MessageEmbed } = require('discord.js');
 const fs = require('fs');
 const { fullMemberRole } = require('../config/config.json');
-
+const {SlashCommandBuilder} = require("@discordjs/builders");
+const description = 'Send application link with valid token in channel'
 
 module.exports = {
-    description: 'Send application link with valid token in channel',
+    description: description,
     usage: '',
     commandGroup: 'applications',
     requiredRole: fullMemberRole,
     guildOnly: false,
     requiredPermission: null,
     guildOwnerOnly: false,
+    info: new SlashCommandBuilder()
+        .setName('applink')
+        .setDescription(description),
     run: async (bot, message, args) => {
         if(!fs.existsSync('./logs/authTokens')) {
             fs.closeSync(fs.openSync('./logs/authTokens', 'w'));

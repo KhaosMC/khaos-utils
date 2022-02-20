@@ -1,8 +1,9 @@
 const { MessageEmbed } = require('discord.js');
 const {SlashCommandBuilder} = require("@discordjs/builders");
+const description = 'Get info about server'
 
 module.exports = {
-    description: 'Get info about server',
+    description: description,
     usage: '',
     commandGroup: 'misc',
     requiredRole: null,
@@ -11,7 +12,7 @@ module.exports = {
     guildOwnerOnly: false,
     info: new SlashCommandBuilder()
         .setName('serverinfo')
-        .setDescription("description"),
+        .setDescription(description),
     run: async (bot, message, args) => {
         // Randomize a color by randomizing between 0-2^24-1
         const color = Math.floor(Math.random() * (Math.pow(2, 24)) - 1);
