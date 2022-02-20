@@ -48,10 +48,14 @@ module.exports = {
 
     replyEmbed: async function(bot,context,embed){
         if(context instanceof Message){
-                await context.reply({embeds : [embed]})
+            await context.reply({embeds : [embed]})
         }else {
             context.reply({embeds : [embed]})
         }
+    },
+
+    getCommandUser(context){
+        return context instanceof Message ? context.author : context.user
     }
 
 }
