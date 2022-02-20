@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const {SlashCommandBuilder} = require("@discordjs/builders");
 
 module.exports = {
     description: 'Get info about server',
@@ -8,6 +9,9 @@ module.exports = {
     guildOnly: true,
     requiredPermission: null,
     guildOwnerOnly: false,
+    info: new SlashCommandBuilder()
+        .setName('serverinfo')
+        .setDescription("description"),
     run: async (bot, message, args) => {
         // Randomize a color by randomizing between 0-2^24-1
         const color = Math.floor(Math.random() * (Math.pow(2, 24)) - 1);
@@ -27,8 +31,9 @@ module.exports = {
         .addField("Minecraft Members", `${activeMembers}/${allMembers} active`, true)
         .addField("Emojis", message.guild.emojis.cache.size.toString(), true)
         .addField("Roles", message.guild.roles.cache.size.toString(), true)
-        .setFooter(message.author.tag, message.author.avatarURL());
+        .setFooter(bot.utils.getCommandUser(message).tag, bot.utils.getCommandUser(message).avatarURL());
 
-        message.channel.send({embeds: [embed]});
+        //message.channel.send({embeds: [embed]});
+        await bot.utils.replyEmbed(message, embed)
     }
 }

@@ -14,8 +14,9 @@ module.exports = {
         .setTitle('All tokens in database')
         .setColor(message.guild.me.displayColor)
         .setDescription(authTokens)
-        .setFooter(message.author.tag, message.author.avatarURL())
-        message.channel.send({embeds: [embed]});
+        .setFooter(bot.utils.getCommandUser(message).tag, bot.utils.getCommandUser(message).avatarURL())
+
+        await bot.utils.replyEmbed(message, embed)
 
     }
 }

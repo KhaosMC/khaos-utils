@@ -27,6 +27,6 @@ module.exports = {
         .setColor(message.guild.me.displayColor)
         .setTimestamp();
 
-        message.channel.send({embeds: [embed]});
+        await bot.utils.replyEmbed(message, embed)
     }
 }

@@ -21,6 +21,6 @@ module.exports = {
         .setDescription(Date.now() - message.createdTimestamp + 'ms')
         .setFooter(bot.utils.getCommandUser(message).tag, bot.utils.getCommandUser(message).avatarURL());
 
-        await bot.utils.replyEmbed(bot, message, embed)
+        await bot.utils.replyEmbed(message, embed)
     }
 }
