@@ -40,7 +40,7 @@ module.exports = {
 
     reply: async function(bot,context,messageContent, temporary = false){
         if(context instanceof Message){
-            await temporary ? context.reply(messageContent) : context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
+            temporary ? await context.reply(messageContent) : await context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         }else {
             context.reply({content: messageContent, ephemeral: temporary})
         }
