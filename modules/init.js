@@ -28,15 +28,11 @@ module.exports = {
         Intents.FLAGS.GUILDS, Intents.FLAGS.DIRECT_MESSAGES, Intents.FLAGS.GUILD_MESSAGES,
         Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILD_BANS,Intents.FLAGS.GUILD_MESSAGE_REACTIONS
     );
-	const client = new Client({
-    		intents: intents
-	});
-	return client;
+	return new Client({intents: intents});
     },
     websocket: async function(commandsConfig, config, chatbridge) {
         if (!commandsConfig.chatbridge) return;
-        const socket = new WebSocket(process.env.chatbridgeUrl);
-        return socket;
+        return new WebSocket(process.env.chatbridgeUrl);
     },
     env: async function() {
         dotenv.config();
