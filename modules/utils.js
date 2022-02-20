@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Interaction, Message} = require('discord.js');
 const ms = require("ms");
 
 module.exports = {
@@ -37,5 +37,16 @@ module.exports = {
             .setTimestamp()
         await channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
     },
+
+    reply: async function(context,messageContent, temporary = false){
+        if(context instanceof Message){
+            if(!temporary)
+                await context.reply(messageContent)
+            else
+                await context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
+        }else {
+            context.reply({content: messageContent, ephemeral: temporary})
+        }
+    }
 
 }
