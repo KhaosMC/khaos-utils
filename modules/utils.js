@@ -38,7 +38,7 @@ module.exports = {
         await channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
     },
 
-    reply: async function(context,messageContent, temporary = false){
+    reply: async function(bot,context,messageContent, temporary = false){
         if(context instanceof Message){
             if(!temporary)
                 await context.reply(messageContent)
@@ -46,6 +46,14 @@ module.exports = {
                 await context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         }else {
             context.reply({content: messageContent, ephemeral: temporary})
+        }
+    },
+
+    replyEmbed: async function(bot,context,embed){
+        if(context instanceof Message){
+                await context.reply({embeds : [embed]})
+        }else {
+            context.reply({embeds : [embed]})
         }
     }
 
