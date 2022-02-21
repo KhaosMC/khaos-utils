@@ -18,6 +18,6 @@ module.exports = {
         if(member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return message.channel.send("You can't ban another staff member!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
 
         // calls a function which bans the user and do then call another function for logging
-        await bot.utils.createBanWithLog(bot, message, member, reason)
+        await bot.moderationUtils.createBanWithLog(bot, message, member, reason)
     }
 }

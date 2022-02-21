@@ -13,6 +13,6 @@ module.exports = {
         const toUnban = await bot.client.users.fetch(args[0]);
         if (!toUnban) return message.channel.send("Something went wrong! Maybe incorrect user or they're not banned?").then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
 
-        await bot.utils.removeBanWithLog(bot,message, toUnban, "Reasons not supported yet")
+        await bot.moderationUtils.removeBanWithLog(bot,message, toUnban, "Reasons not supported yet")
     }
 }

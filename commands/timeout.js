@@ -19,6 +19,6 @@ module.exports = {
         if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         if(member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) return message.channel.send("You can't timeout another staff member!").then(msg => setTimeout(() => msg.delete()), 5000);
 
-        await bot.utils.timeoutUserWithLog(bot, message, member, reason, duration)
+        await bot.moderationUtils.timeoutUserWithLog(bot, message, member, reason, duration)
     }
 }
