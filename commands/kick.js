@@ -1,21 +1,38 @@
-const { Permissions} = require('discord.js');
+const { Permissions, Message} = require('discord.js');
+const {SlashCommandBuilder, SlashCommandUserOption, SlashCommandStringOption} = require("@discordjs/builders");
+const description = 'Kicks a user from the guild'
 
 module.exports = {
-    description: 'Kicks a user from the guild',
+    description: description,
     usage: '[user] (reason)',
     commandGroup: 'moderation',
     requiredRole: null,
     guildOnly: true,
     requiredPermission: Permissions.FLAGS.KICK_MEMBERS,
     guildOwnerOnly: false,
+    info: new SlashCommandBuilder()
+        .setName('kick')
+        .setDescription(description)
+        .addUserOption(
+            new SlashCommandUserOption()
+                .setName('target')
+                .setRequired(true)
+                .setDescription('User you want to kick')
+        )
+        .addStringOption(
+            new SlashCommandStringOption()
+                .setName('reason')
+                .setRequired(false)
+                .setDescription('reason for kicking')
+        ),
     run: async (bot, message, args) => {
         // Check permission and if person specified a user
-        const toKick = message.mentions.members.first() || bot.client.users.cache.get(args[0]);
-        const reason = args[1] ? args.slice(1).join(" ") : "Unknown";
+        const toKick = message instanceof Message ? message.mentions.members.first() || bot.client.users.cache.get(args[0]) : args.getUser('target');
+        const reason = message instanceof Message ? args[1] ? args.slice(1).join(" ") : "Unknown" : args.getString('reason') ? args.getString('reason') : "Unknown";
         const member = message.guild.members.resolve(toKick);
-        if(!member) return message.channel.send("You need to specify a user!").then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
-        if(member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return message.channel.send("You can't kick another staff member!").then(msg => setTimeout(() => msg.delete()), 5000);
+        if(!member) return bot.utils.reply(message,"You need to specify a user!",true);
+        if(member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return bot.utils.reply(message,"You can't kick another staff member!",true);
 
-        await bot.utils.kickUserWithLog(bot, message, member, reason)
+        await bot.moderationUtils.kickUserWithLog(bot, message, member, reason)
     }
 }
