@@ -39,7 +39,7 @@ module.exports = {
         channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
     },
 
-    replyTemp: async function(context, messageContent, isSlashCommand, duration = null) {
+    replyTemp: async function(context, messageContent, isSlashCommand, duration) {
         if(isSlashCommand){
            context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),duration);
         }else {
