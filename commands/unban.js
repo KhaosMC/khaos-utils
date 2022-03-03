@@ -29,7 +29,7 @@ module.exports = {
         const isSlashCommand = !(message instanceof Message)
         // Check permission and if person specified a user
         const toUnban = await bot.client.users.fetch(bot.utils.getCommandArgString(message,isSlashCommand,args,'target_id',0));
-        if (!toUnban) return bot.utils.reply(message,"Something went wrong! Maybe incorrect user or they're not banned?",isSlashCommand,bot.config.deleteTimer)
+        if (!toUnban) return bot.utils.replyTemp(message,"Something went wrong! Maybe incorrect user or they're not banned?",isSlashCommand,bot.config.deleteTimer)
         await bot.moderationUtils.removeBanWithLog(bot,message, toUnban, "Reasons not supported yet",isSlashCommand)
     }
 }

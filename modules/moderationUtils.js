@@ -5,10 +5,10 @@ module.exports = {
         try{
             await targetMember.ban({reason: reason})
         }catch {
-            return bot.utils.reply(message,"Failed to ban user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)
+            return bot.utils.replyTemp(message,"Failed to ban user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)
         }
 
-        await message.reply(`Successfully banned ${targetMember.user.tag}`)
+        message.reply(`Successfully banned ${targetMember.user.tag}`)
         await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, bot.utils.getCommandUser(message,isSlashCommand).tag,reason,'banned')
     },
 
@@ -16,7 +16,7 @@ module.exports = {
         try{
             await message.guild.members.unban(targetUser.id,reason)
         }catch {
-            return bot.utils.reply(message,"Failed to unban user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)//.then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
+            return bot.utils.replyTemp(message,"Failed to unban user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)//.then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
         }
 
         await message.reply(`Successfully unbanned ${targetUser.tag}`)
@@ -29,7 +29,7 @@ module.exports = {
         try{
             await targetMember.kick({reason: reason})
         }catch {
-            return bot.utils.reply(message,"Failed to kick user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)
+            return bot.utils.replyTemp(message,"Failed to kick user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)
         }
 
         if(!isBotAction) await message.reply(`Successfully kicked ${targetMember.user.tag}`) //message.reply(`Successfully kicked ${targetMember.user.tag}`);
@@ -43,7 +43,7 @@ module.exports = {
         try {
             await targetMember.timeout(duration, reason);
         } catch {
-            return bot.utils.reply(message,"Failed to timeout user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)
+            return bot.utils.replyTemp(message,"Failed to timeout user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)
         }
 
         if(!isBotAction) await message.reply(`Successfully timed out ${targetMember.user.tag}`)

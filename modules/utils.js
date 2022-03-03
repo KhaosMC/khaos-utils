@@ -25,7 +25,7 @@ module.exports = {
 
         if(duration !== 0) userEmbed.addField('Duration', ms(duration),false)
 
-        await member.send({embeds : [userEmbed]}).catch(err => console.log(err));
+        member.send({embeds : [userEmbed]}).catch(err => console.log(err));
     },
 
     sendAlertLogEmbed: async function(channel,message, alertType = "Anti-Spam"){
@@ -35,12 +35,13 @@ module.exports = {
             .addField('User',message.author.tag,false)
             .addField(`Message Content`,`\`${message.content}\``,false)
             .setTimestamp()
-        await channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
+
+        channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
     },
 
-    reply: async function(context, messageContent, isSlashCommand, duration = null) {
+    replyTemp: async function(context, messageContent, isSlashCommand, duration = null) {
         if(isSlashCommand){
-            !duration ?  await context.reply(messageContent) : await context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),duration);
+           context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),duration);
         }else {
             context.reply({content: messageContent, ephemeral: duration !== null})
         }
@@ -48,7 +49,7 @@ module.exports = {
 
     replyEmbed: async function(context,isSlashCommand,embed){
         if(isSlashCommand){
-            await context.reply({embeds : [embed]})
+            context.reply({embeds : [embed]})
         }else {
             context.reply({embeds : [embed]})
         }

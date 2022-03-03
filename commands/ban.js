@@ -31,8 +31,8 @@ module.exports = {
         const toBan = message instanceof Message ? message.mentions.members.first() || bot.client.users.cache.get(args[0]) : args.getUser("target");
         const reason = bot.utils.getCommandArgString(message,isSlashCommand,args,"reason",1,true,"Unknown");
         const member = message.guild.members.resolve(toBan);
-        if(!member) return bot.utils.reply(message,"You need to specify a user!",isSlashCommand,bot.config.deleteTimer);
-        if(member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return bot.utils.reply(message,"You can't kick another staff member!",isSlashCommand,bot.config.deleteTimer);
+        if(!member) return bot.utils.replyTemp(message,"You need to specify a user!",isSlashCommand,bot.config.deleteTimer);
+        if(member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return bot.utils.replyTemp(message,"You can't kick another staff member!",isSlashCommand,bot.config.deleteTimer);
 
         // calls a function which bans the user and do then call another function for logging
         await bot.moderationUtils.createBanWithLog(bot, message, member, reason,isSlashCommand)
