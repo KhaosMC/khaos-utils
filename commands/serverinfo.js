@@ -33,7 +33,7 @@ module.exports = {
         .addField("Minecraft Members", `${activeMembers}/${allMembers} active`, true)
         .addField("Emojis", message.guild.emojis.cache.size.toString(), true)
         .addField("Roles", message.guild.roles.cache.size.toString(), true)
-        .setFooter(bot.utils.getCommandUser(message).tag, bot.utils.getCommandUser(message).avatarURL());
+        .setFooter(bot.utils.getCommandUser(message,isSlashCommand).tag, bot.utils.getCommandUser(message,isSlashCommand).avatarURL());
 
         //message.channel.send({embeds: [embed]});
         await bot.utils.replyEmbed(message,isSlashCommand, embed)

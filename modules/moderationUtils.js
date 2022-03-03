@@ -9,7 +9,7 @@ module.exports = {
         }
 
         await message.reply(`Successfully banned ${targetMember.user.tag}`)
-        await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, bot.utils.getCommandUser(message).tag,reason,'banned')
+        await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, bot.utils.getCommandUser(message,isSlashCommand).tag,reason,'banned')
     },
 
     removeBanWithLog: async function(bot,message,targetUser,reason,isSlashCommand){
@@ -20,7 +20,7 @@ module.exports = {
         }
 
         await message.reply(`Successfully unbanned ${targetUser.tag}`)
-        await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetUser.tag, bot.utils.getCommandUser(message).tag,reason,'unbanned')
+        await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetUser.tag, bot.utils.getCommandUser(message,isSlashCommand).tag,reason,'unbanned')
     },
 
     kickUserWithLog: async function(bot,message,targetMember,reason,isSlashCommand, isBotAction = false){
@@ -34,7 +34,7 @@ module.exports = {
 
         if(!isBotAction) await message.reply(`Successfully kicked ${targetMember.user.tag}`) //message.reply(`Successfully kicked ${targetMember.user.tag}`);
 
-        await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, !isBotAction ? bot.utils.getCommandUser(message).tag : bot.client.user.tag, reason,'kicked')
+        await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, !isBotAction ? bot.utils.getCommandUser(message,isSlashCommand).tag : bot.client.user.tag, reason,'kicked')
     },
 
     timeoutUserWithLog: async function(bot,message,targetMember,reason,duration,isSlashCommand,isBotAction = false) {
@@ -48,6 +48,6 @@ module.exports = {
 
         if(!isBotAction) await message.reply(`Successfully timed out ${targetMember.user.tag}`)
 
-        await bot.utils.sendModLogEmbed(bot,message.guild.channels.cache.get(bot.config.staffChannel),targetMember.user.tag,!isBotAction ? bot.utils.getCommandUser(message).tag : bot.client.user.tag,reason,"muted",duration);
+        await bot.utils.sendModLogEmbed(bot,message.guild.channels.cache.get(bot.config.staffChannel),targetMember.user.tag,!isBotAction ? bot.utils.getCommandUser(message,isSlashCommand).tag : bot.client.user.tag,reason,"muted",duration);
     }
 }

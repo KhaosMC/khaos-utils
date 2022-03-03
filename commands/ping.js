@@ -20,7 +20,7 @@ module.exports = {
         .setTitle('Pong! 🏓')
         .setColor(0x32CD32)
         .setDescription(Date.now() - message.createdTimestamp + 'ms')
-        .setFooter(bot.utils.getCommandUser(message).tag, bot.utils.getCommandUser(message).avatarURL());
+        .setFooter(bot.utils.getCommandUser(message,isSlashCommand).tag, bot.utils.getCommandUser(message,isSlashCommand).avatarURL());
 
         await bot.utils.replyEmbed(message,isSlashCommand, embed)
     }
