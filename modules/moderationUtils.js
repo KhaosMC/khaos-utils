@@ -5,10 +5,10 @@ module.exports = {
         try{
             await targetMember.ban({reason: reason})
         }catch {
-            return bot.utils.reply(message,"Failed to ban user. Maybe bad permissions?",true)
+            return await bot.utils.reply(message,"Failed to ban user. Maybe bad permissions?",bot,true)
         }
 
-        message.reply(`Successfully banned ${targetMember.user.tag}`)
+        await message.reply(`Successfully banned ${targetMember.user.tag}`)
         await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, bot.utils.getCommandUser(message).tag,reason,'banned')
     },
 
@@ -16,10 +16,10 @@ module.exports = {
         try{
             await message.guild.members.unban(targetUser.id,reason)
         }catch {
-            return bot.utils.reply(message,"Failed to unban user. Maybe bad permissions?")//.then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
+            return await bot.utils.reply(message,"Failed to unban user. Maybe bad permissions?",bot,true)//.then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
         }
 
-        message.reply(`Successfully unbanned ${targetUser.tag}`)
+        await message.reply(`Successfully unbanned ${targetUser.tag}`)
         await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetUser.tag, bot.utils.getCommandUser(message).tag,reason,'unbanned')
     },
 
@@ -29,10 +29,10 @@ module.exports = {
         try{
             await targetMember.kick({reason: reason})
         }catch {
-            return bot.utils.reply(message,"Failed to kick user. Maybe bad permissions?",true)
+            return bot.utils.reply(message,"Failed to kick user. Maybe bad permissions?",bot,true)
         }
 
-        if(!isBotAction) await bot.utils.reply(message, `Successfully kicked ${targetMember.user.tag}`) //message.reply(`Successfully kicked ${targetMember.user.tag}`);
+        if(!isBotAction) await message.reply(`Successfully kicked ${targetMember.user.tag}`) //message.reply(`Successfully kicked ${targetMember.user.tag}`);
 
         await bot.utils.sendModLogEmbed(bot, message.guild.channels.cache.get(bot.config.staffChannel), targetMember.user.tag, !isBotAction ? bot.utils.getCommandUser(message).tag : bot.client.user.tag, reason,'kicked')
     },
@@ -43,10 +43,10 @@ module.exports = {
         try {
             await targetMember.timeout(duration, reason);
         } catch {
-            return bot.utils.reply(message,"Failed to timeout user. Maybe bad permissions?",true)
+            return bot.utils.reply(message,"Failed to timeout user. Maybe bad permissions?",bot,true)
         }
 
-        if(!isBotAction) message.reply(`Successfully timed out ${targetMember.user.tag}`)
+        if(!isBotAction) await message.reply(`Successfully timed out ${targetMember.user.tag}`)
 
         await bot.utils.sendModLogEmbed(bot,message.guild.channels.cache.get(bot.config.staffChannel),targetMember.user.tag,!isBotAction ? bot.utils.getCommandUser(message).tag : bot.client.user.tag,reason,"muted",duration);
     }

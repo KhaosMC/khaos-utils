@@ -38,9 +38,9 @@ module.exports = {
         await channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
     },
 
-    reply: async function(context,messageContent, temporary = false){
+    reply: async function(context, messageContent, bot, temporary = false){
         if(context instanceof Message){
-            temporary ? await context.reply(messageContent) : await context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
+            !temporary ?  await context.reply(messageContent) : await context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
         }else {
             context.reply({content: messageContent, ephemeral: temporary})
         }
@@ -56,6 +56,24 @@ module.exports = {
 
     getCommandUser(context){
         return context instanceof Message ? context.author : context.user
+    },
+
+    getCommandArgValue(context, args, bot, argName, argIndex, coalesceArgs = false, defaultValue = null){
+        let isSlashCommand = !(context instanceof Message)
+        let value = isSlashCommand ? args.getUser(argName) : args[argIndex]
+        //let value = context instanceof Message ? (argName === "target" ? context.mentions.members.first() || bot.client.users.cache.get(args[argIndex]) : (!coalesceArgs ? args[argIndex] : args.slice(1).join(" "))) : args.getUser(argName)
+
+        if(!isSlashCommand){
+            if(argName === "target")
+                value = context.mentions.members.first() || bot.client.users.cache.get(args[argIndex])
+            else if(coalesceArgs)
+                value = args[argIndex] ? args.slice(argIndex).join(" ") : defaultValue
+        }
+
+        if(!value && defaultValue != null)
+            value = defaultValue
+
+        return value
     }
 
 }

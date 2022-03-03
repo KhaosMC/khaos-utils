@@ -27,11 +27,11 @@ module.exports = {
         ),
     run: async (bot, message, args) => {
         // Check permission and if person specified a user
-        const toKick = message instanceof Message ? message.mentions.members.first() || bot.client.users.cache.get(args[0]) : args.getUser('target');
-        const reason = message instanceof Message ? args[1] ? args.slice(1).join(" ") : "Unknown" : args.getString('reason') ? args.getString('reason') : "Unknown";
+        const toKick = bot.utils.getCommandArgValue(message,args,bot,"target",0)//message instanceof Message ? message.mentions.members.first() || bot.client.users.cache.get(args[0]) : args.getUser('target');
+        const reason = bot.utils.getCommandArgValue(message,args,bot,"reason",1,true,"Unknown")//message instanceof Message ? args[1] ? args.slice(1).join(" ") : "Unknown" : args.getString('reason') ? args.getString('reason') : "Unknown";
         const member = message.guild.members.resolve(toKick);
-        if(!member) return bot.utils.reply(message,"You need to specify a user!",true);
-        if(member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return bot.utils.reply(message,"You can't kick another staff member!",true);
+        if(!member) return bot.utils.reply(message,"You need to specify a user!",bot,true);
+        if(member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) return bot.utils.reply(message,"You can't kick another staff member!",bot,true);
 
         await bot.moderationUtils.kickUserWithLog(bot, message, member, reason)
     }
