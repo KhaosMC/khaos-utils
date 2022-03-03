@@ -59,7 +59,7 @@ module.exports = {
     },
 
     getCommandArgString(context,isSlashCommand, args, argName, argIndex, coalesce = false, defaultValue = null){
-        let value = isSlashCommand ? (coalesce ? args.slice(argIndex).join(" ") : args[argIndex]) : args.getString(argName)
+        const value = isSlashCommand ? (coalesce ? args.slice(argIndex).join(" ") : args[argIndex]) : args.getString(argName)
         return !value && defaultValue !== null ? defaultValue : value
     }
 
