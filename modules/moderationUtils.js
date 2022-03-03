@@ -5,7 +5,7 @@ module.exports = {
         try{
             await targetMember.ban({reason: reason})
         }catch {
-            return await bot.utils.reply(message,"Failed to ban user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)
+            return bot.utils.reply(message,"Failed to ban user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)
         }
 
         await message.reply(`Successfully banned ${targetMember.user.tag}`)
@@ -16,7 +16,7 @@ module.exports = {
         try{
             await message.guild.members.unban(targetUser.id,reason)
         }catch {
-            return await bot.utils.reply(message,"Failed to unban user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)//.then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
+            return bot.utils.reply(message,"Failed to unban user. Maybe bad permissions?",isSlashCommand,bot.config.deleteTimer)//.then(msg => setTimeout(() => msg.delete()), bot.config.deleteTimer);
         }
 
         await message.reply(`Successfully unbanned ${targetUser.tag}`)

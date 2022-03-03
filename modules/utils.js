@@ -42,7 +42,7 @@ module.exports = {
         if(isSlashCommand){
             !duration ?  await context.reply(messageContent) : await context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),duration);
         }else {
-            context.reply({content: messageContent, ephemeral: duration != null})
+            context.reply({content: messageContent, ephemeral: duration !== null})
         }
     },
 
@@ -60,7 +60,7 @@ module.exports = {
 
     getCommandArgString(context,isSlashCommand, args, argName, argIndex, coalesce = false, defaultValue = null){
         let value = isSlashCommand ? (coalesce ? args.slice(argIndex).join(" ") : args[argIndex]) : args.getString(argName)
-        return !value && defaultValue != null ? defaultValue : value
+        return !value && defaultValue !== null ? defaultValue : value
     }
 
 }
