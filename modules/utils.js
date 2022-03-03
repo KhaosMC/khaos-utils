@@ -58,22 +58,9 @@ module.exports = {
         return context instanceof Message ? context.author : context.user
     },
 
-    getCommandArgValue(context, args, bot, argName, argIndex, coalesceArgs = false, defaultValue = null){
-        let isSlashCommand = !(context instanceof Message)
-        let value = isSlashCommand ? args.getUser(argName) : args[argIndex]
-        //let value = context instanceof Message ? (argName === "target" ? context.mentions.members.first() || bot.client.users.cache.get(args[argIndex]) : (!coalesceArgs ? args[argIndex] : args.slice(1).join(" "))) : args.getUser(argName)
-
-        if(!isSlashCommand){
-            if(argName === "target")
-                value = context.mentions.members.first() || bot.client.users.cache.get(args[argIndex])
-            else if(coalesceArgs)
-                value = args[argIndex] ? args.slice(argIndex).join(" ") : defaultValue
-        }
-
-        if(!value && defaultValue != null)
-            value = defaultValue
-
-        return value
+    getCommandArgString(context, args, argName, argIndex, coalesce = false, defaultValue = null){
+        let value = context instanceof Message ? (coalesce ? args.slice(argIndex).join(" ") : args[argIndex]) : args.getString(argName)
+        return !value && defaultValue != null ? defaultValue : value
     }
 
 }

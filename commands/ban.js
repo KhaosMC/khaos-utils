@@ -1,4 +1,4 @@
-const { Permissions } = require('discord.js');
+const { Permissions, Message} = require('discord.js');
 const {SlashCommandBuilder, SlashCommandUserOption, SlashCommandStringOption} = require("@discordjs/builders");
 const description = 'Bans a user from the guild'
 
@@ -27,8 +27,8 @@ module.exports = {
         ),
     run: async (bot, message, args) => {
         // Check permission and if person specified a user
-        const toBan = bot.utils.getCommandArgValue(message,args,bot,"target",0);
-        const reason = bot.utils.getCommandArgValue(message,args,bot,"reason",1,true,"Unknown");
+        const toBan = message instanceof Message ? message.mentions.members.first() || bot.client.users.cache.get(args[0]) : args.getUser("target");
+        const reason = bot.utils.getCommandArgString(message,args,"reason",1,true,"Unknown");
         const member = message.guild.members.resolve(toBan);
         if(!member) return bot.utils.reply(message,"You need to specify a user!",bot,true);
         if(member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) return bot.utils.reply(message,"You can't kick another staff member!",bot,true);
