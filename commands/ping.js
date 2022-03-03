@@ -15,12 +15,13 @@ module.exports = {
         .setName('ping')
         .setDescription(description),
     run: async (bot, message, args) => {
+        const isSlashCommand =!(message instanceof Message)
         const embed = new MessageEmbed()
         .setTitle('Pong! 🏓')
         .setColor(0x32CD32)
         .setDescription(Date.now() - message.createdTimestamp + 'ms')
         .setFooter(bot.utils.getCommandUser(message).tag, bot.utils.getCommandUser(message).avatarURL());
 
-        await bot.utils.replyEmbed(message, embed)
+        await bot.utils.replyEmbed(message,isSlashCommand, embed)
     }
 }

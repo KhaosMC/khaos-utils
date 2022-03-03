@@ -33,15 +33,16 @@ module.exports = {
                 .setDescription('reason for banning')
         ),
     run: async (bot, message, args) => {
+        const isSlashCommand = !(message instanceof Message)
         // Check permission and if person specified a user
         const toTimeout = message instanceof Message ? message.mentions.members.first() || bot.client.users.cache.get(args[0]) : args.getUser("target");
-        const duration = ms(bot.utils.getCommandArgString(message,args,"duration",1));
-        if (!duration) return bot.utils.reply(message,"You need to specify a duration!",bot,true)
-        const reason = bot.utils.getCommandArgString(message,args,"reason",2,true,"Unknown")//args[2] ? args.slice(2).join(" ") : "Unknown";
+        const duration = ms(bot.utils.getCommandArgString(message,isSlashCommand,args,"duration",1));
+        if (!duration) return bot.utils.reply(message,"You need to specify a duration!",isSlashCommand,bot.config.deleteTimer)
+        const reason = bot.utils.getCommandArgString(message,isSlashCommand,args,"reason",2,true,"Unknown")//args[2] ? args.slice(2).join(" ") : "Unknown";
         const member = message.guild.members.resolve(toTimeout);
-        if(!member) return bot.utils.reply(message,"You need to specify a user!",bot,true);
-        if(member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) return bot.utils.reply(message,"You can't kick another staff member!",bot,true);
+        if(!member) return bot.utils.reply(message,"You need to specify a user!",isSlashCommand,bot.config.deleteTimer);
+        if(member.permissions.has(Permissions.FLAGS.MODERATE_MEMBERS)) return bot.utils.reply(message,"You can't kick another staff member!",isSlashCommand,bot.config.deleteTimer);
 
-        await bot.moderationUtils.timeoutUserWithLog(bot, message, member, reason, duration)
+        await bot.moderationUtils.timeoutUserWithLog(bot, message, member, reason, duration,isSlashCommand)
     }
 }

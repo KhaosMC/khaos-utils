@@ -1,4 +1,4 @@
-const { Permissions} = require('discord.js');
+const { Permissions, Message} = require('discord.js');
 const {SlashCommandBuilder, SlashCommandUserOption, SlashCommandStringOption} = require("@discordjs/builders");
 const description = 'Unbans a user from the guild'
 
@@ -26,9 +26,10 @@ module.exports = {
                 .setDescription('reason for banning')
         ),
     run: async (bot, message, args) => {
+        const isSlashCommand = !(message instanceof Message)
         // Check permission and if person specified a user
-        const toUnban = await bot.client.users.fetch(bot.utils.getCommandArgString(message,args,'target_id',0));
-        if (!toUnban) return bot.utils.reply(message,"Something went wrong! Maybe incorrect user or they're not banned?",bot,true)
-        await bot.moderationUtils.removeBanWithLog(bot,message, toUnban, "Reasons not supported yet")
+        const toUnban = await bot.client.users.fetch(bot.utils.getCommandArgString(message,isSlashCommand,args,'target_id',0));
+        if (!toUnban) return bot.utils.reply(message,"Something went wrong! Maybe incorrect user or they're not banned?",isSlashCommand,bot.config.deleteTimer)
+        await bot.moderationUtils.removeBanWithLog(bot,message, toUnban, "Reasons not supported yet",isSlashCommand)
     }
 }

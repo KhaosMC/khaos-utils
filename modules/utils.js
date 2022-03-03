@@ -38,28 +38,28 @@ module.exports = {
         await channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
     },
 
-    reply: async function(context, messageContent, bot, temporary = false){
-        if(context instanceof Message){
-            !temporary ?  await context.reply(messageContent) : await context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
+    reply: async function(context, messageContent, isSlashCommand, duration = null) {
+        if(isSlashCommand){
+            !duration ?  await context.reply(messageContent) : await context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),duration);
         }else {
-            context.reply({content: messageContent, ephemeral: temporary})
+            context.reply({content: messageContent, ephemeral: duration != null})
         }
     },
 
-    replyEmbed: async function(context,embed){
-        if(context instanceof Message){
+    replyEmbed: async function(context,isSlashCommand,embed){
+        if(isSlashCommand){
             await context.reply({embeds : [embed]})
         }else {
             context.reply({embeds : [embed]})
         }
     },
 
-    getCommandUser(context){
-        return context instanceof Message ? context.author : context.user
+    getCommandUser(context,isSlashCommand){
+        return isSlashCommand ? context.author : context.user
     },
 
-    getCommandArgString(context, args, argName, argIndex, coalesce = false, defaultValue = null){
-        let value = context instanceof Message ? (coalesce ? args.slice(argIndex).join(" ") : args[argIndex]) : args.getString(argName)
+    getCommandArgString(context,isSlashCommand, args, argName, argIndex, coalesce = false, defaultValue = null){
+        let value = isSlashCommand ? (coalesce ? args.slice(argIndex).join(" ") : args[argIndex]) : args.getString(argName)
         return !value && defaultValue != null ? defaultValue : value
     }
 
