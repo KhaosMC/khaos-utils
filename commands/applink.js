@@ -34,7 +34,7 @@ module.exports = {
         // Embed the new token to a message
         const embed = new MessageEmbed()
             .setTitle('Click here to apply!')
-            .setURL(bot.config.applicationURL + newAuthToken)
+            .setURL(prcoess.env.applicationURL + newAuthToken)
             .setDescription('Authentication token is included in the URL, your application will not work without it.')
             .setColor(0x00ff40)
             .setFooter(message.author.tag, message.author.avatarURL());
