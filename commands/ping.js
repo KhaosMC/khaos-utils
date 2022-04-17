@@ -1,5 +1,6 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Message} = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const {isApplicationCommandGuildInteraction} = require("discord-api-types/utils");
 const description = 'Check your ping to the bot';
 
 module.exports = {
@@ -14,12 +15,13 @@ module.exports = {
         .setName('ping')
         .setDescription(description),
     run: async (bot, message, args) => {
+        const isSlashCommand =!(message instanceof Message)
         const embed = new MessageEmbed()
         .setTitle('Pong! 🏓')
         .setColor(0x32CD32)
         .setDescription(Date.now() - message.createdTimestamp + 'ms')
-        .setFooter(message.author.tag, message.author.avatarURL());
+        .setFooter(bot.utils.getCommandUser(message,isSlashCommand).tag, bot.utils.getCommandUser(message,isSlashCommand).avatarURL());
 
-        message.channel.send({embeds: [embed]});
+        await bot.utils.replyEmbed(message,isSlashCommand, embed)
     }
 }

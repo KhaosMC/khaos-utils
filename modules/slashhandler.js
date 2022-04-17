@@ -1,5 +1,6 @@
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+const {errorMonitor} = require("ws");
 
 module.exports = async function handleSlashCommand(bot) {
     // Timeout to wait for all the variables to be setup
@@ -19,7 +20,7 @@ module.exports = async function handleSlashCommand(bot) {
         // Try to execute the command, if it fails, let the user know
         try {
             await command.run(bot, interaction, interaction.options)
-        } catch {
+        } catch(error) {
             console.error(error);
             await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
         }
@@ -53,13 +54,13 @@ function deployCommands(bot) {
         }
     })
     // Register the commands to discord
-    if (identical) {
+    //if (identical) {
         const rest = new REST({ version: '9' }).setToken(process.env.token);
         rest.put(Routes.applicationGuildCommands(bot.client.user.id, bot.config.serverId), { body: commands })
         .then(() => console.log(`Successfully registered ${commands.length} application commands.`))
         .catch(console.error);
-    } else {
-        console.log(`${commands.length} already registered, skipping..`);
-    }
+    //} else {
+      //  console.log(`${commands.length} already registered, skipping..`);
+    //}
 }
 

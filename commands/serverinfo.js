@@ -1,14 +1,20 @@
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Message} = require('discord.js');
+const {SlashCommandBuilder} = require("@discordjs/builders");
+const description = 'Get info about server'
 
 module.exports = {
-    description: 'Get info about server',
+    description: description,
     usage: '',
     commandGroup: 'misc',
     requiredRole: null,
     guildOnly: true,
     requiredPermission: null,
     guildOwnerOnly: false,
+    info: new SlashCommandBuilder()
+        .setName('serverinfo')
+        .setDescription(description),
     run: async (bot, message, args) => {
+        const isSlashCommand = !(message instanceof Message)
         // Randomize a color by randomizing between 0-2^24-1
         const color = Math.floor(Math.random() * (Math.pow(2, 24)) - 1);
         const age = Math.floor((Date.now() - message.guild.createdTimestamp) / (1000*60*60*24));
@@ -27,8 +33,9 @@ module.exports = {
         .addField("Minecraft Members", `${activeMembers}/${allMembers} active`, true)
         .addField("Emojis", message.guild.emojis.cache.size.toString(), true)
         .addField("Roles", message.guild.roles.cache.size.toString(), true)
-        .setFooter(message.author.tag, message.author.avatarURL());
+        .setFooter(bot.utils.getCommandUser(message,isSlashCommand).tag, bot.utils.getCommandUser(message,isSlashCommand).avatarURL());
 
-        message.channel.send({embeds: [embed]});
+        //message.channel.send({embeds: [embed]});
+        await bot.utils.replyEmbed(message,isSlashCommand, embed)
     }
 }

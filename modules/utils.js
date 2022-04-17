@@ -25,7 +25,7 @@ module.exports = {
 
         if(duration !== 0) userEmbed.addField('Duration', ms(duration),false)
 
-        await member.send({embeds : [userEmbed]}).catch(err => console.log(err));
+        member.send({embeds : [userEmbed]}).catch(err => console.log(err));
     },
 
     sendAlertLogEmbed: async function(channel,message, alertType = "Anti-Spam"){
@@ -35,23 +35,33 @@ module.exports = {
             .addField('User',message.author.tag,false)
             .addField(`Message Content`,`\`${message.content}\``,false)
             .setTimestamp()
-        await channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
+
+        channel.send({embeds : [alertEmbed]}).catch(err => console.log(err))
     },
 
-    reply: async function(bot,context,messageContent, temporary = false){
-        if(context instanceof Message){
-            await temporary ? context.reply(messageContent) : context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),bot.config.deleteTimer);
+    replyTemp: async function(context, messageContent, isSlashCommand, duration) {
+        if(isSlashCommand){
+           context.reply(messageContent).then(msg => setTimeout(() => msg.delete()),duration);
         }else {
-            context.reply({content: messageContent, ephemeral: temporary})
+            context.reply({content: messageContent, ephemeral: duration !== null})
         }
     },
 
-    replyEmbed: async function(bot,context,embed){
-        if(context instanceof Message){
-                await context.reply({embeds : [embed]})
+    replyEmbed: async function(context,isSlashCommand,embed){
+        if(isSlashCommand){
+            context.reply({embeds : [embed]})
         }else {
             context.reply({embeds : [embed]})
         }
+    },
+
+    getCommandUser(context,isSlashCommand){
+        return isSlashCommand ? context.author : context.user
+    },
+
+    getCommandArgString(context,isSlashCommand, args, argName, argIndex, coalesce = false, defaultValue = null){
+        const value = isSlashCommand ? (coalesce ? args.slice(argIndex).join(" ") : args[argIndex]) : args.getString(argName)
+        return !value && defaultValue !== null ? defaultValue : value
     }
 
 }
