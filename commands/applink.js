@@ -43,7 +43,7 @@ module.exports = {
             .setURL(process.env.applicationURL + newAuthToken)
             .setDescription('Authentication token is included in the URL, your application will not work without it.')
             .setColor(0x00ff40)
-            .setFooter(bot.utils.getCommandUser(message,isSlashCommand).tag, bot.utils.getCommandUser(message,isSlashCommand).avatarURL());
+            //.setFooter(bot.utils.getCommandUser(message,isSlashCommand).tag, bot.utils.getCommandUser(message,isSlashCommand).avatarURL());
 
         // Embed another message which says who created the apply form and the token
         const embed2 = new MessageEmbed()
